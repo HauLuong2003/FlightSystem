@@ -1,0 +1,11 @@
+D:\Project_C#\FlightSystem\FlightSystem.Models\bin\Debug\net6.0\FlightSystem.Domain.deps.json
+D:\Project_C#\FlightSystem\FlightSystem.Models\bin\Debug\net6.0\FlightSystem.Domain.dll
+D:\Project_C#\FlightSystem\FlightSystem.Models\bin\Debug\net6.0\FlightSystem.Domain.pdb
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.AssemblyInfoInputs.cache
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.AssemblyInfo.cs
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.csproj.CoreCompileInputs.cache
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.dll
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\refint\FlightSystem.Domain.dll
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.pdb
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\ref\FlightSystem.Domain.dll
