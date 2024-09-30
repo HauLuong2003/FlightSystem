@@ -77,3 +77,4 @@ D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\refint\Back-End.dll
 D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.pdb
 D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.genruntimeconfig.cache
 D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\ref\Back-End.dll
+D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.sourcelink.json

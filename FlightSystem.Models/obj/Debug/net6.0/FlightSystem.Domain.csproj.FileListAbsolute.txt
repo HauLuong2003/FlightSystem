@@ -9,3 +9,4 @@ D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Dom
 D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\refint\FlightSystem.Domain.dll
 D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.pdb
 D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\ref\FlightSystem.Domain.dll
+D:\Project_C#\FlightSystem\FlightSystem.Models\obj\Debug\net6.0\FlightSystem.Domain.sourcelink.json

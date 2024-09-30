@@ -15,6 +15,8 @@ namespace FlightSystem.Domain.Domain.Entities
         [StringLength (255)]
         public string Note { get; set; }
         public string Document_File { get; set; }
+        [StringLength(255)]
+        public string Signature { get; set; }
         public DateTime Create_at {  get; set;}
         public DateTime Update_at { get; set; }
 

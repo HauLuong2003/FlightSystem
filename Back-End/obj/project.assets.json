@@ -985,28 +985,15 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "FluentValidation.DependencyInjectionExtensions": "10.0.0",
-          "MediatR": "9.0.0"
+          "Application": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.0"
         },
         "compile": {
           "bin/placeholder/Infrastructure.dll": {}
         },
         "runtime": {
           "bin/placeholder/Infrastructure.dll": {}
-        }
-      },
-      "Presentation/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "FluentValidation.DependencyInjectionExtensions": "10.0.1",
-          "MediatR": "9.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Presentation.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Presentation.dll": {}
         }
       }
     }
@@ -2673,11 +2660,6 @@
       "type": "project",
       "path": "../Infrastructure/Infrastructure.csproj",
       "msbuildProject": "../Infrastructure/Infrastructure.csproj"
-    },
-    "Presentation/1.0.0": {
-      "type": "project",
-      "path": "../Presentation/Presentation.csproj",
-      "msbuildProject": "../Presentation/Presentation.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2688,7 +2670,6 @@
       "Microsoft.EntityFrameworkCore >= 6.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.0",
-      "Presentation >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -2725,9 +2706,6 @@
             },
             "D:\\Project_C#\\FlightSystem\\Infrastructure\\Infrastructure.csproj": {
               "projectPath": "D:\\Project_C#\\FlightSystem\\Infrastructure\\Infrastructure.csproj"
-            },
-            "D:\\Project_C#\\FlightSystem\\Presentation\\Presentation.csproj": {
-              "projectPath": "D:\\Project_C#\\FlightSystem\\Presentation\\Presentation.csproj"
             }
           }
         }

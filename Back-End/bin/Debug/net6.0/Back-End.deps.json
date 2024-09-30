@@ -559,8 +559,9 @@
       },
       "Infrastructure/1.0.0": {
         "dependencies": {
-          "FluentValidation.DependencyInjectionExtensions": "11.9.0",
-          "MediatR": "12.1.1"
+          "Application": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.0"
         },
         "runtime": {
           "Infrastructure.dll": {}

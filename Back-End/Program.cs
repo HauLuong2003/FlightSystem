@@ -1,5 +1,4 @@
 
-using Back_End.Data;
 using Microsoft.EntityFrameworkCore;
 using Application;
 using Infrastructure;
@@ -13,8 +12,8 @@ namespace Back_End
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<FlightSystemDBContext>(options => 
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+            //builder.Services.AddDbContext<FlightSystemDBContext>(options => 
+            //options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,7 +21,7 @@ namespace Back_End
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddApplication()
-                            .AddInfrastructure()
+                            .AddInfrastructure(builder.Configuration)
                             .AddPresentation();
 
             var app = builder.Build();

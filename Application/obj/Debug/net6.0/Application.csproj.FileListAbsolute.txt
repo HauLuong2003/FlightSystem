@@ -13,3 +13,4 @@ D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.dll
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\refint\Application.dll
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.pdb
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\ref\Application.dll
+D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.sourcelink.json

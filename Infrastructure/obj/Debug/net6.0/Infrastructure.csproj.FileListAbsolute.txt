@@ -10,3 +10,11 @@ D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
 D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\refint\Infrastructure.dll
 D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
 D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\Infrastructure.sourcelink.json
+D:\Project_C#\FlightSystem\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
+D:\Project_C#\FlightSystem\Infrastructure\bin\Debug\net6.0\Application.dll
+D:\Project_C#\FlightSystem\Infrastructure\bin\Debug\net6.0\FlightSystem.Domain.dll
+D:\Project_C#\FlightSystem\Infrastructure\bin\Debug\net6.0\Application.pdb
+D:\Project_C#\FlightSystem\Infrastructure\bin\Debug\net6.0\FlightSystem.Domain.pdb
+D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\Infrastr.15EFFBFE.Up2Date
+D:\Project_C#\FlightSystem\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache

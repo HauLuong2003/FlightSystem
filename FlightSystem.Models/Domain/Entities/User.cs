@@ -20,9 +20,7 @@ namespace FlightSystem.Domain.Domain.Entities
         public DateTime Create_at { get; set; }
        
         public DateTime Update_at { get; set; }
-        [ForeignKey("RoleId")]
-        public Guid RoleId { get; set; }
-        public Role Role { get; set; }
+     
         
         public Setting Setting { get; set; }
         [ForeignKey("GroupId")]
