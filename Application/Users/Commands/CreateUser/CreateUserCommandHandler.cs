@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 namespace Application.Users.Commands.CreateUser
 {
     //xử lý command CreateUserCommand và trả về một UserDTO.
-    public class CreateUserCommandHandle : IRequestHandler<CreateUserCommand, UserDTO>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserDTO>
     {
         private readonly IUserService _userService; //IUserService để thực hiện việc tạo người dùng
         private readonly IMapper _mapper;// IMapper để ánh xạ từ entity User sang UserDTO.
 
-        public CreateUserCommandHandle(IUserService userService, IMapper mapper)
+        public CreateUserCommandHandler(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;

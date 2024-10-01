@@ -26,7 +26,7 @@ namespace Infrastructure.Repositories
             return user;
         }
 
-        public async Task DeleteUser(Guid Id)
+        public async Task<Guid> DeleteUser(Guid Id)
         {
             var userId = await _dbContext.Users.FindAsync(Id);
             if (userId == null)
@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
             }
             _dbContext.Users.Remove(userId);
             _dbContext.SaveChanges();
-            
+            return Id;
         }
 
         public async Task<List<User>> GetAllUser()
@@ -53,10 +53,21 @@ namespace Infrastructure.Repositories
             return user;
         }
 
-        public Task<User> UpdateUser(Guid Id, User User)
+        public async Task<User> UpdateUser(Guid Id, User user)
         {
-
-            throw new NotImplementedException("not found");
+            var userID = await _dbContext.Users.FindAsync(Id);
+            if(userID == null)
+            {
+                throw new NotImplementedException("user is null");
+            }
+            userID.Name = user.Name;          
+            userID.Password = user.Password;
+            userID.Email = user.Email;
+            userID.Phone = user.Phone;
+            userID.IsActive = user.IsActive;
+            userID.Update_at = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return userID;
         }
     }
 }

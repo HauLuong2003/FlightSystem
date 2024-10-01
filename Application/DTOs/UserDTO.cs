@@ -7,6 +7,7 @@ namespace Application.DTOs
     // truyền dữ liệu  giữa Controller và Service.
     public class UserDTO : IMapFrom<User>//interface được sử dụng để ánh xạ từ entity User sang UserDTO thông qua AutoMapper.
     {
+        public Guid UserId { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required, MinLength(6)]
