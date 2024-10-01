@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Application;
 using Infrastructure;
-using Presentation;
+using AutoMapper;
 namespace Back_End
 {
     public class Program
@@ -20,9 +20,9 @@ namespace Back_End
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
-            builder.Services.AddApplication()
-                            .AddInfrastructure(builder.Configuration)
-                            .AddPresentation();
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
+                         
 
             var app = builder.Build();
 

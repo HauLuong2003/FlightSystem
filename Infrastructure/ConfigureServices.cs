@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data;
+﻿using FlightSystem.Domain.Services;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +13,12 @@ namespace Infrastructure
            (this IServiceCollection services, IConfiguration configuration)
 
         {
+            //đăng kí database
             services.AddDbContext<FlightSystemDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default"))
             );
-
-            //services.AddTransient<IBlogRepository, BlogRepository>();
+            //đăng kí service
+            services.AddScoped<IUserService, UserRepository>();
             return services;
 
         }

@@ -10,11 +10,11 @@ namespace FlightSystem.Domain.Domain.Entities
         [StringLength(150)]
         public string Group_Name { get; set; } = string.Empty;
         [StringLength(255)]
-        public string Note { get; set; } = string.Empty;
-        public DateTime Create_at { get; set; }
-        public DateTime Update_at { get; set;} 
-        public ICollection<User> Users { get; set; }
-        public ICollection<Document> Documents { get; set; }
-        public ICollection<Permission> Permissions { get; set; }
+        public string? Note { get; set; }
+        public DateTime? Create_at { get; set; }
+        public DateTime? Update_at { get; set;} 
+        public ICollection<User>? Users { get; set; }
+        public ICollection<Document>? Documents { get; set; }
+        public ICollection<Permission>? Permissions { get; set; }
     }
 }

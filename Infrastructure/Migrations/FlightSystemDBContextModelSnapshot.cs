@@ -28,7 +28,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Document_File")
@@ -40,32 +40,30 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("Document_TypeTypeId")
+                    b.Property<Guid?>("Document_TypeTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Flight_No")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Flight_No1")
+                    b.Property<Guid?>("Flight_No1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Signature")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<Guid>("TypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Version")
@@ -88,11 +86,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -101,7 +98,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TypeId");
@@ -150,7 +147,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Group_Name")
@@ -159,11 +156,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("GroupId");
@@ -199,27 +195,25 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Captcha")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Logo")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Theme")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("SettingId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Settings", (string)null);
                 });
@@ -230,7 +224,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -238,14 +232,13 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("GroupId")
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -255,11 +248,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserId");
@@ -273,15 +265,11 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("FlightSystem.Domain.Domain.Entities.Document_Type", "Document_Type")
                         .WithMany("Documents")
-                        .HasForeignKey("Document_TypeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Document_TypeTypeId");
 
                     b.HasOne("FlightSystem.Domain.Domain.Entities.Flight", "Flight")
                         .WithMany("Documents")
-                        .HasForeignKey("Flight_No1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Flight_No1");
 
                     b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
                         .WithMany("Documents")
@@ -311,9 +299,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("FlightSystem.Domain.Domain.Entities.User", "User")
                         .WithOne("Setting")
-                        .HasForeignKey("FlightSystem.Domain.Domain.Entities.Setting", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FlightSystem.Domain.Domain.Entities.Setting", "UserId");
 
                     b.Navigation("User");
                 });
@@ -322,9 +308,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
                         .WithMany("Users")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
@@ -350,8 +334,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Setting")
-                        .IsRequired();
+                    b.Navigation("Setting");
                 });
 #pragma warning restore 612, 618
         }

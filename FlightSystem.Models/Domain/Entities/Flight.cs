@@ -18,7 +18,7 @@ namespace FlightSystem.Domain.Domain.Entities
         public string Point_Of_UnLoadding { get; set; } = string.Empty;
         public TimeSpan TimeFlight {get; set; } 
 
-        public ICollection<Document> Documents { get; set; }
+        public ICollection<Document>? Documents { get; set; }
       
     }
 }
