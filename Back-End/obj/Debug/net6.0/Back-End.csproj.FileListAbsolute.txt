@@ -9,13 +9,11 @@ D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\AutoMapper.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\FluentValidation.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
-D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Humanizer.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\MediatR.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\MediatR.Contracts.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.Identity.Client.dll
@@ -76,3 +74,5 @@ D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.pdb
 D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.genruntimeconfig.cache
 D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\ref\Back-End.dll
 D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.sourcelink.json
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Humanizer.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll

@@ -13,6 +13,7 @@ namespace FlightSystem.Domain.Domain.Entities
         [StringLength(20)]
         public string Password { get; set; }
         [StringLength(255)]
+        
         public string Email { get; set; }
         [StringLength(10)]
         public string? Phone { get; set; }
@@ -24,7 +25,7 @@ namespace FlightSystem.Domain.Domain.Entities
         
         public Setting? Setting { get; set; }
         [ForeignKey("GroupId")]
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
         public Group? Group { get; set; }
     }
 }

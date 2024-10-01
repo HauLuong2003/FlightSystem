@@ -9,13 +9,7 @@ namespace Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Settings_Users_UserId",
-                table: "Settings");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Users_Groups_GroupId",
-                table: "Users");
 
             migrationBuilder.DropIndex(
                 name: "IX_Settings_UserId",
@@ -43,13 +37,6 @@ namespace Infrastructure.Migrations
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Settings_Users_UserId",
-                table: "Settings",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Users_Groups_GroupId",

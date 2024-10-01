@@ -18,11 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<Document_Type> Document_Types { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("default", options =>
-        //        options.MigrationsAssembly("FlightSystem.Domain")); // Thay thế "Back-End" bằng tên của assembly chứa migration
-        //}
+
 
     }
 }

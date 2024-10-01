@@ -1,4 +1,4 @@
-﻿using Application.Users.Commands;
+﻿using Application.Users.Commands.CreateUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
