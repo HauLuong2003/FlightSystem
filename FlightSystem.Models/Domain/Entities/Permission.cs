@@ -9,10 +9,9 @@ namespace FlightSystem.Domain.Domain.Entities
         [Key]
         public Guid PermissionId { get; set; }
         [StringLength(255)]
+
         public string Permission_Name { get; set; } = string.Empty;
-        
-        public Guid GroupId { get; set; }
-        public Group? Group { get; set; }
+        public ICollection<Group>? Groups { get; set; }
 
     }
 }

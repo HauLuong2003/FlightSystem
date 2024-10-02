@@ -26,18 +26,21 @@ namespace Back_End.Controllers
             var delete = await Mediator.Send(new DeleteUserCommand { Id = Id });
             return Ok(delete);
         }
+        //lấy thông tin theo user id
         [HttpGet("{Id}")]
         public  async Task<IActionResult> GetUserById(Guid Id)
         {
             var user = await Mediator.Send(new GetUserByIdQuery { Id = Id });
             return Ok(user);
         }
+        //lấy thông tin List user
         [HttpGet]
         public async Task<IActionResult> GetUser()
         {
             var users = await Mediator.Send(new GetUserAllQuery());
             return Ok(users);
         }
+        //update thông tin user
         [HttpPut("{Id}")]
         public async Task<IActionResult> UpdateUser(Guid Id, UpdateUserCommand user)
         {

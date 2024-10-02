@@ -21,11 +21,11 @@ namespace FlightSystem.Domain.Domain.Entities
         public DateTime? Create_at { get; set; }
        
         public DateTime? Update_at { get; set; }
-     
-        
+
+        public ICollection<Document>? Documents { get; set; }
         public Setting? Setting { get; set; }
         [ForeignKey("GroupId")]
-        public Guid? GroupId { get; set; }
+        public Guid GroupId { get; set; }
         public Group? Group { get; set; }
     }
 }

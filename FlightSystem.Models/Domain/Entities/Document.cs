@@ -19,17 +19,17 @@ namespace FlightSystem.Domain.Domain.Entities
         public string? Signature { get; set; }
         public DateTime? Create_at {  get; set;}
         public DateTime? Update_at { get; set; }
+        [StringLength(255)]
+        public string Creator { get; set; }
 
-  
         public Guid Flight_No { get; set; }
-        public Flight? Flight { get; set; }
+        public Flight Flight { get; set; }
 
         
         public Guid TypeId { get; set; }
-        public Document_Type? Document_Type { get; set; }
+        public Document_Type Document_Type { get; set; }
 
-      
-        public Guid GroupId { get; set; }
-        public Group? Group { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
     }
 }

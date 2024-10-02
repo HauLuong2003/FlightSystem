@@ -19,8 +19,9 @@ namespace Infrastructure
             );
             //đăng kí service
             services.AddScoped<IUserService, UserRepository>();
-            return services;
+            services.AddScoped<IGroupService, GroupRepository>();
 
+            return services;
         }
     }
 }

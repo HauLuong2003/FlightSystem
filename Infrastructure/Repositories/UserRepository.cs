@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepository : IUserService
+    public class UserRepository : IUserService // implement IUserService để xử lý code
     {
-        private readonly FlightSystemDBContext _dbContext;
+        private readonly FlightSystemDBContext _dbContext; // DI FlightSystemDBContext 
         public UserRepository(FlightSystemDBContext dbContext) 
         { 
             _dbContext = dbContext;
         }
-
+        // code xử lý thêm vào db
         public async Task<User> CreateUser(User user)
         {
             user.Create_at = DateTime.Now;
@@ -25,24 +25,24 @@ namespace Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return user;
         }
-
+        //code xử lý xóa user
         public async Task<Guid> DeleteUser(Guid Id)
         {
             var userId = await _dbContext.Users.FindAsync(Id);
             if (userId == null)
             {
-                throw new NotImplementedException("Id is null");
+                throw new NotImplementedException("user is null");
             }
             _dbContext.Users.Remove(userId);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return Id;
         }
-
+        // code xử lý lấy thông tin list user
         public async Task<List<User>> GetAllUser()
         {
             return await _dbContext.Users.ToListAsync();
         }
-
+        //code xử lý lấy thông tin user theo Id
         public async Task<User> GetUserById(Guid Id)
         {
             var user = await _dbContext.Users.FindAsync(Id);
@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
             }
             return user;
         }
-
+        // code xử lý update user
         public async Task<User> UpdateUser(Guid Id, User user)
         {
             var userID = await _dbContext.Users.FindAsync(Id);
