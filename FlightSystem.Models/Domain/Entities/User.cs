@@ -22,7 +22,7 @@ namespace FlightSystem.Domain.Domain.Entities
        
         public DateTime? Update_at { get; set; }
 
-        public ICollection<Document>? Documents { get; set; }
+        
         public Setting? Setting { get; set; }
         [ForeignKey("GroupId")]
         public Guid GroupId { get; set; }

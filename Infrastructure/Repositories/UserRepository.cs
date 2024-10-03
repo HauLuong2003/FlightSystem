@@ -42,6 +42,9 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Users.ToListAsync();
         }
+
+
+
         //code xử lý lấy thông tin user theo Id
         public async Task<User> GetUserById(Guid Id)
         {
@@ -68,6 +71,16 @@ namespace Infrastructure.Repositories
             userID.Update_at = DateTime.Now;
             await _dbContext.SaveChangesAsync();
             return userID;
+        }
+        // lấy list user theo groupId
+        public async Task<List<User>> GetUserByGroupId(Guid groupId)
+        {
+            var user = await _dbContext.Users.Where(u => u.GroupId == groupId).ToListAsync();
+            if (user == null)
+            {
+                throw new NotImplementedException("user  null");
+            }
+            return user;
         }
     }
 }

@@ -22,6 +22,6 @@ namespace Application.DTOs
         public string Point_Of_Loadding { get; set; } = string.Empty;
         [Required]
         public string Point_Of_UnLoadding { get; set; } = string.Empty;
-
+        public List<DocumentDTO>? Documents { get; set; }
     }
 }

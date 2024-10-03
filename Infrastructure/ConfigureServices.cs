@@ -20,7 +20,8 @@ namespace Infrastructure
             //đăng kí service
             services.AddScoped<IUserService, UserRepository>();
             services.AddScoped<IGroupService, GroupRepository>();
-
+            services.AddScoped<IAccountService, AccountRepository>();
+            services.AddScoped<IFlightService, FlightRepository>();
             return services;
         }
     }

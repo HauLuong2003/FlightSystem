@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Common.ServiceResponse;
+using AutoMapper;
 using FlightSystem.Domain.Services;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Users.Commands.DeleteUser
 {
-    public class DeleteUserCommandHanler :IRequestHandler<DeleteUserCommand,Guid>
+    public class DeleteUserCommandHanler :IRequestHandler<DeleteUserCommand,ServiceResponse>
     {
         private readonly IUserService _userService;
        // private readonly IMapper _mapper;
@@ -19,9 +20,14 @@ namespace Application.Users.Commands.DeleteUser
              _userService = userService;
         }
 
-        public async Task<Guid> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-                return await _userService.DeleteUser(request.Id);           
+             var deleteId =  await _userService.DeleteUser(request.Id);
+            if(deleteId != request.Id)
+            {
+                return new ServiceResponse(false, "Delete don't successfully");
+            }
+             return new ServiceResponse(true, "Delete successfully");
         }
     }
 }

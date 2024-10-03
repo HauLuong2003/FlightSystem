@@ -1,4 +1,5 @@
-﻿using Application.DTOs;
+﻿using Application.Common.ServiceResponse;
+using Application.DTOs;
 using AutoMapper;
 using FlightSystem.Domain.Domain.Entities;
 using FlightSystem.Domain.Services;
@@ -23,14 +24,16 @@ namespace Application.Groups.Commands.CreateGroup
 
         public async Task<GroupDTO> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
-            var group = new Group()
-            {
-                Group_Name = request.Group_Name,
-                Note = request.Note,
-                PermissionId = request.PermissionId,
-            };
-            var result = await _groupService.CreateGroup(group);
-            return _mapper.Map<GroupDTO>(result);
+
+                var group = new Group()
+                {
+                    Group_Name = request.Group_Name,
+                    Note = request.Note,
+                    PermissionId = request.PermissionId,
+                };
+                var result = await _groupService.CreateGroup(group);
+                return _mapper.Map<GroupDTO>(result);     
+
         }
     }
 }

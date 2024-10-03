@@ -2,6 +2,7 @@
 using Application.Users.Commands.DeleteUser;
 using Application.Users.Commands.UpdateUser;
 using Application.Users.Queries.GetUser;
+using Application.Users.Queries.GetUserByGroupId;
 using Application.Users.Queries.GetUserById;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace Back_End.Controllers
         }
         //lấy thông tin theo user id
         [HttpGet("{Id}")]
-        public  async Task<IActionResult> GetUserById(Guid Id)
+        public async Task<IActionResult> GetUserById(Guid Id)
         {
             var user = await Mediator.Send(new GetUserByIdQuery { Id = Id });
             return Ok(user);
@@ -44,12 +45,19 @@ namespace Back_End.Controllers
         [HttpPut("{Id}")]
         public async Task<IActionResult> UpdateUser(Guid Id, UpdateUserCommand user)
         {
-            if(Id != user.UserId)
+            if (Id != user.UserId)
             {
                 return BadRequest();
             }
             var userId = await Mediator.Send(user);
             return Ok(userId);
+        }
+        //lấy thông tin user từ groupId
+        [HttpGet("groupId/{Id}")]
+        public async Task<IActionResult> GetUserByGroupId(Guid Id)
+        {
+            var users = await Mediator.Send(new GetUserByGroupQuery { GroupId = Id });
+            return Ok(users);
         }
     }
 }

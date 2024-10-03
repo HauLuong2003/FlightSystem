@@ -1,4 +1,8 @@
-﻿using System;
+﻿
+using Application.Common.ServiceResponse;
+using FlightSystem.Domain.Domain.Entities;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public class Login 
+    public class LoginDTO : IRequest<ServiceResponse>
     {
         [Required,EmailAddress]
         public string Email { get; set; } = string.Empty;

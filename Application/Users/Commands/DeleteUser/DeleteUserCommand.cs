@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Common.ServiceResponse;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Users.Commands.DeleteUser
 {
-    public class DeleteUserCommand : IRequest<Guid>
+    public class DeleteUserCommand : IRequest<ServiceResponse>
     {
         public Guid Id { get; set; }
     }

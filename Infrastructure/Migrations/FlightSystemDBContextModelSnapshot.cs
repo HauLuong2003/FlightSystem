@@ -54,6 +54,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Flight_No1")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Note")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -68,9 +71,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Version")
                         .HasColumnType("int");
 
@@ -80,7 +80,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Flight_No1");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Documents");
                 });
@@ -104,7 +104,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Permission")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -176,7 +175,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Members")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -300,9 +298,9 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.User", "User")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
                         .WithMany("Documents")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -310,7 +308,7 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Flight");
 
-                    b.Navigation("User");
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
@@ -356,6 +354,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("Users");
                 });
 
@@ -366,8 +366,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Documents");
-
                     b.Navigation("Setting");
                 });
 #pragma warning restore 612, 618

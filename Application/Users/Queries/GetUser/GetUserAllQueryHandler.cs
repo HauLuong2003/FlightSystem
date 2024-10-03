@@ -19,7 +19,7 @@ namespace Application.Users.Queries.GetUser
             _userService = userService;
             _mapper = mapper;
         }
-
+        // send từ controller tới handle xử lý
         public async Task<List<UserDTO>> Handle(GetUserAllQuery request, CancellationToken cancellationToken)
         {
             var users = await _userService.GetAllUser();
