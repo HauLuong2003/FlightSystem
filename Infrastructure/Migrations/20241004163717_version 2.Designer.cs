@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FlightSystemDBContext))]
-    [Migration("20241004025126_reomve-fligh")]
-    partial class reomvefligh
+    [Migration("20241004163717_version 2")]
+    partial class version2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,13 +47,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("Document_TypeTypeId")
+                    b.Property<Guid?>("Document_TypeTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Flight_No")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Flight_No1")
+                    b.Property<Guid>("FlightId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GroupId")
@@ -80,7 +77,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Document_TypeTypeId");
 
-                    b.HasIndex("Flight_No1");
+                    b.HasIndex("FlightId");
 
                     b.HasIndex("GroupId");
 
@@ -124,25 +121,30 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
                 {
-                    b.Property<Guid>("Flight_No")
+                    b.Property<Guid>("FlightId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Departure_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Rotue")
+                    b.Property<string>("FlightNo")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<string>("Rotue")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<TimeSpan>("TimeFlight")
                         .HasColumnType("time");
 
-                    b.Property<int>("Total_Document")
+                    b.Property<int?>("Total_Document")
                         .HasColumnType("int");
 
-                    b.HasKey("Flight_No");
+                    b.HasKey("FlightId");
 
                     b.ToTable("Flights");
                 });
@@ -278,15 +280,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
                 {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Document_Type", "Document_Type")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Document_Type", null)
                         .WithMany("Documents")
-                        .HasForeignKey("Document_TypeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Document_TypeTypeId");
 
                     b.HasOne("FlightSystem.Domain.Domain.Entities.Flight", "Flight")
                         .WithMany("Documents")
-                        .HasForeignKey("Flight_No1")
+                        .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -295,8 +295,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Document_Type");
 
                     b.Navigation("Flight");
 

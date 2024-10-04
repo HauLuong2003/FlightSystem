@@ -12,7 +12,8 @@ namespace Application.DTOs
     public class FlightDTO : IMapFrom<Flight>
     {
         
-        public Guid Flight_No { get; set; }       
+        public Guid FlightId { get; set; }    
+        public string FlightNo { get; set; }
         public string Rotue { get; set; } = string.Empty;
         public DateTime Departure_Date { get; set; }
         public TimeSpan TimeFlight { get; set; }

@@ -19,7 +19,7 @@ namespace Application.Documents.Commands.UpdateDocumentCommand
 
         public string? Signature { get; set; }
 
-        public Guid Flight_No { get; set; }
+        public Guid FlightId { get; set; }
         public string Creator { get; set; }
         public Guid TypeId { get; set; }
     }

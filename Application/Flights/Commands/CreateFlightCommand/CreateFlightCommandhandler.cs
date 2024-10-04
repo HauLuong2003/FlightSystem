@@ -27,6 +27,7 @@ namespace Application.Flights.Commands.CreateFlightCommand
         {
             var flight = new Flight()
             {
+                FlightNo = request.FlightNo,
                 Rotue = request.Rotue,
                 TimeFlight = request.TimeFlight,
                 Departure_Date = request.Departure_Date

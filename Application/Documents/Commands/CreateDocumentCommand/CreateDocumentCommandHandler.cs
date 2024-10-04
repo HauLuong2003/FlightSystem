@@ -28,7 +28,7 @@ namespace Application.Documents.Commands.CreateDocumentCommand
                 Document_Name = request.Document_Name,
                 Note = request.Note,
                 TypeId = request.TypeId,
-                Flight_No = request.Flight_No,
+                FlightId = request.FlightId,
                 Creator = request.Creator
             };
             var result = await _documentService.CreateDocument(document);

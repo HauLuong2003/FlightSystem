@@ -12,7 +12,7 @@ namespace FlightSystem.Domain.Services
         Task<Document> CreateDocument(Document document);
         Task<Document> UpdateDocument(Guid Id,Document document);
         Task<bool> DeleteDocument(Guid Id);
-        Task<Document> GetDocument();
+        Task<List<Document>> GetDocument();
         Task<Document> GetDocumentById(Guid id);
     }
 }

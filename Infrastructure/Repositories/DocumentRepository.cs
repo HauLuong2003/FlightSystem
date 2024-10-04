@@ -1,6 +1,7 @@
 ﻿using FlightSystem.Domain.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,14 +37,24 @@ namespace Infrastructure.Repositories
             return true;
         }
 
-        public Task<Document> GetDocument()
+        public async Task<List<Document>> GetDocument()
         {
-            throw new NotImplementedException();
+           var document = await _dbContext.Documents.ToListAsync();
+            if(document == null)
+            {
+                return null!;
+            }
+            return document;
         }
 
-        public Task<Document> GetDocumentById(Guid id)
+        public async Task<Document> GetDocumentById(Guid id)
         {
-            throw new NotImplementedException();
+            var document =await _dbContext.Documents.FindAsync(id);
+            if (document == null) 
+            { 
+               throw new ArgumentNullException(nameof(document),"document is null");
+            }
+            return document;
         }
 
         public async Task<Document> UpdateDocument(Guid Id, Document document)
@@ -58,8 +69,8 @@ namespace Infrastructure.Repositories
             documentId.Document_File = document.Document_File;
             documentId.Signature = document.Signature;
             documentId.Update_at = DateTime.Now;
-            documentId.Document_Type = document.Document_Type;
-            documentId.Flight_No = document.Flight_No;
+            documentId.TypeId = document.TypeId;
+            documentId.FlightId = document.FlightId;
             await _dbContext.SaveChangesAsync();
             return documentId;
         }

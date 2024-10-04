@@ -11,6 +11,8 @@ namespace Application.Flights.Commands.CreateFlightCommand
 {
     public class CreateFlightCommand : IRequest<FlightDTO>
     {
+        [Required]
+        public string FlightNo { get; set; }
         [Required] 
         public string Rotue { get; set; } = string.Empty;
         [Required]

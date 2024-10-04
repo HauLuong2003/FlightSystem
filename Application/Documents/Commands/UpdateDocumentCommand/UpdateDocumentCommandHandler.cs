@@ -29,7 +29,7 @@ namespace Application.Documents.Commands.UpdateDocumentCommand
                 Note = request.Note,
                 Document_File = request.Document_File,
                 Signature = request.Signature,
-                Flight_No = request.Flight_No,
+                FlightId = request.FlightId,
                 TypeId = request.TypeId,
             };
             var result = await _documentService.UpdateDocument(request.DocumentId,document);

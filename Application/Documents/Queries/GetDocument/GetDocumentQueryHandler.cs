@@ -20,9 +20,10 @@ namespace Application.Documents.Queries.GetDocument
             _mapper = mapper;
         }
 
-        public Task<List<DocumentDTO>> Handle(GetDocumentQuery request, CancellationToken cancellationToken)
+        public async Task<List<DocumentDTO>> Handle(GetDocumentQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var document = await _documentService.GetDocument();
+            return _mapper.Map<List<DocumentDTO>>(document);
         }
     }
 }

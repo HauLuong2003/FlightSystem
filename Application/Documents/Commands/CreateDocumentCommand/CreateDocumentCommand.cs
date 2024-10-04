@@ -18,7 +18,7 @@ namespace Application.Documents.Commands.CreateDocumentCommand
         [Required]
         public string Document_File { get; set; }
         [Required]
-        public Guid Flight_No { get; set; }
+        public Guid FlightId { get; set; }
         [Required]
         public string Creator { get; set; }
         [Required]

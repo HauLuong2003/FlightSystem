@@ -12,27 +12,31 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FlightSystemDBContext))]
-    [Migration("20240927142336_VD")]
-    partial class VD
+    [Migration("20241004162506_version 1 database")]
+    partial class version1database
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Back_End.Models.Entities.Document", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
                 {
                     b.Property<Guid>("DocumentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Document_File")
                         .IsRequired()
@@ -46,21 +50,24 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Document_TypeTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Flight_No")
+                    b.Property<Guid>("FlightId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
-                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Signature")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<Guid>("TypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Version")
@@ -70,33 +77,41 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Document_TypeTypeId");
 
-                    b.HasIndex("Flight_No");
+                    b.HasIndex("FlightId");
 
                     b.HasIndex("GroupId");
 
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Document_Type", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document_Type", b =>
                 {
                     b.Property<Guid>("TypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Note")
+                    b.Property<string>("Creator")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Permission")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Type_Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TypeId");
@@ -104,75 +119,80 @@ namespace Infrastructure.Migrations
                     b.ToTable("Document_Types");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Flight", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
                 {
-                    b.Property<Guid>("Flight_No")
+                    b.Property<Guid>("FlightId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Departure_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Point_Of_Loadding")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Point_Of_UnLoadding")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Rotue")
+                    b.Property<string>("FlightNo")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<string>("Rotue")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<TimeSpan>("TimeFlight")
                         .HasColumnType("time");
 
-                    b.Property<int>("Total_Document")
+                    b.Property<int?>("Total_Document")
                         .HasColumnType("int");
 
-                    b.HasKey("Flight_No");
+                    b.HasKey("FlightId");
 
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Group", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
                 {
                     b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Group_Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("Members")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("GroupId");
 
+                    b.HasIndex("PermissionId");
+
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Permission", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
                 {
                     b.Property<Guid>("PermissionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Permission_Name")
@@ -182,66 +202,46 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("PermissionId");
 
-                    b.HasIndex("GroupId");
-
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Role", b =>
-                {
-                    b.Property<Guid>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Role_Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Back_End.Models.Entities.Setting", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
                 {
                     b.Property<Guid>("SettingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Captcha")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Logo")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Theme")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("SettingId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.User", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime?>("Create_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -256,7 +256,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -266,40 +265,34 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Document", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
                 {
-                    b.HasOne("Back_End.Models.Entities.Document_Type", "Document_Type")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Document_Type", "Document_Type")
                         .WithMany("Documents")
                         .HasForeignKey("Document_TypeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Back_End.Models.Entities.Flight", "Flight")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Flight", "Flight")
                         .WithMany("Documents")
-                        .HasForeignKey("Flight_No")
+                        .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Back_End.Models.Entities.Group", "Group")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
                         .WithMany("Documents")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,75 +305,62 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Permission", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
                 {
-                    b.HasOne("Back_End.Models.Entities.Group", "Group")
-                        .WithMany("Permissions")
-                        .HasForeignKey("GroupId")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Permission", "Premisstion")
+                        .WithMany("Groups")
+                        .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Group");
+                    b.Navigation("Premisstion");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Setting", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
                 {
-                    b.HasOne("Back_End.Models.Entities.User", "User")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.User", "User")
                         .WithOne("Setting")
-                        .HasForeignKey("Back_End.Models.Entities.Setting", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FlightSystem.Domain.Domain.Entities.Setting", "UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.User", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
                 {
-                    b.HasOne("Back_End.Models.Entities.Group", "Group")
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
                         .WithMany("Users")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Back_End.Models.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Group");
-
-                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Document_Type", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document_Type", b =>
                 {
                     b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Flight", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
                 {
                     b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Group", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
                 {
                     b.Navigation("Documents");
-
-                    b.Navigation("Permissions");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.Role", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("Back_End.Models.Entities.User", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Setting")
-                        .IsRequired();
+                    b.Navigation("Setting");
                 });
 #pragma warning restore 612, 618
         }
