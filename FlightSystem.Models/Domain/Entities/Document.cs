@@ -32,10 +32,10 @@ namespace FlightSystem.Domain.Domain.Entities
         // Foreign Key to Flight
         public Guid FlightId { get; set; }  // Ensure it maps to Flight_No in Flight class
         public Flight Flight { get; set; }
+        public Guid TypeId { get; set; }  // Explicit foreign key property
 
-        // Foreign Key to Document_Type
-        public Guid TypeId { get; set; }
-       // public Document_Type DocumentType { get; set; }
+        [ForeignKey("TypeId")]
+        public DocumentType DocumentType { get; set; }
 
         public Guid GroupId { get; set; }
         public Group Group { get; set; }

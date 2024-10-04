@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FlightSystemDBContext))]
-    partial class FlightSystemDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241004172247_version 4")]
+    partial class version4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Documents", (string)null);
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.DocumentType", b =>
@@ -111,7 +113,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("TypeId");
 
-                    b.ToTable("DocumentTypes", (string)null);
+                    b.ToTable("DocumentTypes");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
@@ -141,7 +143,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("FlightId");
 
-                    b.ToTable("Flights", (string)null);
+                    b.ToTable("Flights");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
@@ -181,7 +183,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
@@ -197,7 +199,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("PermissionId");
 
-                    b.ToTable("Permissions", (string)null);
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
@@ -227,7 +229,7 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("Settings", (string)null);
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
@@ -270,7 +272,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public class Document_TypeDTO : IMapFrom<Document_Type>
+    public class Document_TypeDTO : IMapFrom<DocumentType>
     {
     }
 }

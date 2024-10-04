@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FlightSystem.Domain.Domain.Entities
 {
     
-    public class Document_Type
+    public class DocumentType
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

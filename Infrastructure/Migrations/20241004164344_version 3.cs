@@ -9,8 +9,6 @@ namespace Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
-
             migrationBuilder.AddColumn<Guid>(
                 name: "TypeId",
                 table: "Documents",

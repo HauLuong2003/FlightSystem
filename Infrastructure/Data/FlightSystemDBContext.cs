@@ -16,7 +16,7 @@ namespace Infrastructure.Data
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Flight> Flights  { get;set; }
         public DbSet<Document> Documents { get; set; }
-        public DbSet<Document_Type> Document_Types { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
 
 
 
