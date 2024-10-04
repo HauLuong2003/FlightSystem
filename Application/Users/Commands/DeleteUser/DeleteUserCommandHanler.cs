@@ -11,23 +11,24 @@ using System.Threading.Tasks;
 
 namespace Application.Users.Commands.DeleteUser
 {
-    public class DeleteUserCommandHanler :IRequestHandler<DeleteUserCommand,ServiceResponse>
+    public class DeleteUserCommandHanler : IRequestHandler<DeleteUserCommand, ServiceResponse>
     {
         private readonly IUserService _userService;
-       // private readonly IMapper _mapper;
+        // private readonly IMapper _mapper;
         public DeleteUserCommandHanler(IUserService userService)
         {
-             _userService = userService;
+            _userService = userService;
         }
 
         public async Task<ServiceResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-             var deleteId =  await _userService.DeleteUser(request.Id);
-            if(deleteId != request.Id)
+            if (request == null) throw new ArgumentNullException("userId is null");
+            var deleteId = await _userService.DeleteUser(request.Id);
+            if (deleteId != request.Id)
             {
                 return new ServiceResponse(false, "Delete don't successfully");
             }
-             return new ServiceResponse(true, "Delete successfully");
+            return new ServiceResponse(true, "Delete successfully");
         }
     }
 }

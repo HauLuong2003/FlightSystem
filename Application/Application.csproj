@@ -15,4 +15,8 @@
     <ProjectReference Include="..\FlightSystem.Models\FlightSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Documents\Queries\GetDocumetById\" />
+  </ItemGroup>
+
 </Project>

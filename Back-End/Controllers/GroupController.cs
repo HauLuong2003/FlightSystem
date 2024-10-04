@@ -10,7 +10,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GroupController : FlightControllerBase
+    public class GroupController : FlightSystemControllerBase
     {
         // lay list group
         [HttpGet]

@@ -16,9 +16,11 @@ namespace Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public Task<Flight> CreateFilght(Flight flight)
+        public async Task<Flight> CreateFilght(Flight flight)
         {
-            return null!;
+            await _dbContext.AddAsync(flight);
+            await _dbContext.SaveChangesAsync();
+            return flight;
         }
     }
 }

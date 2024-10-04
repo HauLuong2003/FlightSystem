@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public class DocumentDTO : IMapFrom<Document>
+    public class DocumentDTO 
     {
         public Guid DocumentId { get; set; }
         
@@ -23,7 +23,8 @@ namespace Application.DTOs
         public string? Signature { get; set; }
         public DateTime? Create_at { get; set; }
         public DateTime? Update_at { get; set; }
-        [StringLength(255)]
+        public Guid Flight_No { get; set; }
         public string Creator { get; set; }
+        public Guid TypeId { get; set; }
     }
 }

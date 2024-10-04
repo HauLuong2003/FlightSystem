@@ -9,19 +9,15 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public class FilghtDTO : IMapFrom<Flight>
+    public class FlightDTO : IMapFrom<Flight>
     {
-        [Required]
-        public Guid Flight_No { get; set; }
-        [Required]
+        
+        public Guid Flight_No { get; set; }       
         public string Rotue { get; set; } = string.Empty;
         public DateTime Departure_Date { get; set; }
         public TimeSpan TimeFlight { get; set; }
         public int Total_Document { get; set; }
-        [Required]
-        public string Point_Of_Loadding { get; set; } = string.Empty;
-        [Required]
-        public string Point_Of_UnLoadding { get; set; } = string.Empty;
+
         public List<DocumentDTO>? Documents { get; set; }
     }
 }

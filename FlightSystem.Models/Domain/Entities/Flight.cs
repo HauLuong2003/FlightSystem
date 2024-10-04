@@ -8,14 +8,11 @@ namespace FlightSystem.Domain.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid Flight_No { get; set; }
-        [StringLength(15)]
+        [StringLength(150)]
         public string Rotue { get; set; } = string.Empty;
         public DateTime Departure_Date { get; set; }
-        public int Total_Document { get; set; }
-        [StringLength(255)]
-        public string Point_Of_Loadding { get; set; } = string.Empty;
-        [StringLength(255)]
-        public string Point_Of_UnLoadding { get; set; } = string.Empty;
+        public int? Total_Document { get; set; }
+
         public TimeSpan TimeFlight {get; set; } 
 
         public ICollection<Document> Documents { get; set; }

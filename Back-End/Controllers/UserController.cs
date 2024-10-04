@@ -11,7 +11,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : FlightControllerBase
+    public class UserController : FlightSystemControllerBase
     {
         // thêm mới user
         [HttpPost]

@@ -6,7 +6,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightControllerBase : ControllerBase
+    public class FlightSystemControllerBase : ControllerBase
     {
         private ISender? _mediator;
         //Nếu _mediatorlà null, phía bên phải của ??=toán tử sẽ được thực thi.

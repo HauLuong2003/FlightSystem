@@ -9,16 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.LoginQuery
+namespace Application.Account.LoginCommand
 {
-    public class LoginQueryHanlder : IRequestHandler<LoginDTO, ServiceResponse>
+    public class LoginCommandHanlder : IRequestHandler<Login, ServiceResponse>
     {
         private readonly IAccountService _accountService;
-        public LoginQueryHanlder(IAccountService accountService) 
+        public LoginCommandHanlder(IAccountService accountService) 
         {
             _accountService = accountService;
         }
-        public async Task<ServiceResponse> Handle(LoginDTO request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse> Handle(Login request, CancellationToken cancellationToken)
         {
             var login = new User()
             {

@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "GCJKWb9CiCJg2LZeP8Rwex9wtrWS9ic+8TBDkOX0TXE=",
+  "Hash": "a7AtQ/zbkANZDMZvxg9kB2bsT59V92mLZas0Ocpwivo=",
   "Source": "Back-End",
   "BasePath": "_content/Back-End",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "Back-End\\wwwroot",
+      "Source": "Back-End",
+      "ContentRoot": "D:\\Project_C#\\FlightSystem\\Back-End\\wwwroot\\",
+      "BasePath": "_content/Back-End",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Project_C#\\FlightSystem\\Back-End\\wwwroot\\FileDocument\\CV_LuongMinhHau.docx",
+      "SourceId": "Back-End",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project_C#\\FlightSystem\\Back-End\\wwwroot\\",
+      "BasePath": "_content/Back-End",
+      "RelativePath": "FileDocument/CV_LuongMinhHau.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\FileDocument\\CV_LuongMinhHau.docx"
+    }
+  ]
 }

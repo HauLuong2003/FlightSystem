@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
             var groupId = await _dBContext.Groups.FindAsync(Id);
             if (groupId == null)
             {
-                throw new NotImplementedException("Group is null");
+                throw new ArgumentNullException(nameof(groupId),"group is null");      
             }
              _dBContext.Groups.Remove(groupId);
             await _dBContext.SaveChangesAsync();
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             var groupId = await _dBContext.Groups.FindAsync(Id);
             if (groupId == null)
             {
-                throw new NotImplementedException("Group is null");
+                throw new ArgumentNullException(nameof(groupId),"Group is null");
             }
             return groupId;
         }
@@ -58,7 +58,7 @@ namespace Infrastructure.Repositories
             var groupId = await _dBContext.Groups.FindAsync(Id);
             if (groupId == null)
             {
-                throw new NotImplementedException("Group is null");
+                throw new ArgumentNullException(nameof(groupId),"Group is null");
             }
             groupId.Group_Name = group.Group_Name;
             groupId.Note = group.Note;

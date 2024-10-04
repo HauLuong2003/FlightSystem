@@ -129,16 +129,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Departure_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Point_Of_Loadding")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Point_Of_UnLoadding")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("Rotue")
                         .IsRequired()
                         .HasMaxLength(15)

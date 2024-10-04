@@ -22,6 +22,9 @@ namespace Infrastructure
             services.AddScoped<IGroupService, GroupRepository>();
             services.AddScoped<IAccountService, AccountRepository>();
             services.AddScoped<IFlightService, FlightRepository>();
+            services.AddScoped<IFileStorageService, FileStorageRepository>();
+            services.AddScoped<IDocumentService, DocumentRepository>();
+
             return services;
         }
     }

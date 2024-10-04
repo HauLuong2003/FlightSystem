@@ -23,6 +23,7 @@ namespace Application.Users.Commands.UpdateUser
 
         public async Task<UserDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            if (request == null) throw new ArgumentNullException("user is null");
             var userEntity = new User()
             {
                 Name = request.Name,

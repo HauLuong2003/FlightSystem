@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public class LoginDTO : IRequest<ServiceResponse>
+    public class Login : IRequest<ServiceResponse>
     {
         [Required,EmailAddress]
         public string Email { get; set; } = string.Empty;

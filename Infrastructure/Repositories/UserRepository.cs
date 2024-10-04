@@ -20,6 +20,7 @@ namespace Infrastructure.Repositories
         // code xử lý thêm vào db
         public async Task<User> CreateUser(User user)
         {
+          
             user.Create_at = DateTime.Now;
             await _dbContext.Users.AddAsync(user);          
             await _dbContext.SaveChangesAsync();
@@ -31,7 +32,7 @@ namespace Infrastructure.Repositories
             var userId = await _dbContext.Users.FindAsync(Id);
             if (userId == null)
             {
-                throw new NotImplementedException("user is null");
+                throw new ArgumentNullException(nameof(userId),"user is null");  
             }
             _dbContext.Users.Remove(userId);
             await _dbContext.SaveChangesAsync();
@@ -51,7 +52,7 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Users.FindAsync(Id);
             if (user == null)
             {
-                throw new NotImplementedException("not found");
+                throw new ArgumentNullException(nameof(user),"user is null");
             }
             return user;
         }
@@ -61,7 +62,7 @@ namespace Infrastructure.Repositories
             var userID = await _dbContext.Users.FindAsync(Id);
             if(userID == null)
             {
-                throw new NotImplementedException("user is null");
+                throw new ArgumentNullException(nameof(user),"user is null");
             }
             userID.Name = user.Name;          
             userID.Password = user.Password;
@@ -78,7 +79,7 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Users.Where(u => u.GroupId == groupId).ToListAsync();
             if (user == null)
             {
-                throw new NotImplementedException("user  null");
+                throw new ArgumentNullException(nameof(user),"user is null");
             }
             return user;
         }

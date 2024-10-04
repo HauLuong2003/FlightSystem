@@ -26,7 +26,7 @@ namespace Application.Users.Commands.CreateUser
         public async Task<UserDTO> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             // Tạo đối tượng người dùng mới từ thông tin yêu cầu
-
+            if(request == null) throw new ArgumentNullException("user is null");
             var userEntity = new User()
             {
                 Name = request.Name,

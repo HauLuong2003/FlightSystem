@@ -23,9 +23,12 @@ namespace Infrastructure.Repositories
 
             public async Task<bool> Login(User login)
             {
-            var email = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
-            var password = await _dbContext.Users.FirstOrDefaultAsync(s => s.Password == login.Password);
-            if (email == null || password == null)
+            var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
+            if (account == null)
+            {
+                return false;
+            }
+            else if (account.Password != login.Password)
             {
                 return false;
             }

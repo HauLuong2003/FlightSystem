@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Application;
 using Infrastructure;
 using AutoMapper;
+using System.Reflection;
 namespace Back_End
 {
     public class Program
@@ -22,7 +23,8 @@ namespace Back_End
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
-                         
+           // builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
 
             var app = builder.Build();
 
