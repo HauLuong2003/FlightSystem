@@ -20,6 +20,8 @@ namespace Application.Account.LoginCommand
         }
         public async Task<ServiceResponse> Handle(Login request, CancellationToken cancellationToken)
         {
+            if (request == null) return new ServiceResponse(false, "userId is null");
+
             var login = new User()
             {
                 Email = request.Email,

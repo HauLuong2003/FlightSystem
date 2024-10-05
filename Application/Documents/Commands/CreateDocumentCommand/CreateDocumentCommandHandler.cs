@@ -26,10 +26,12 @@ namespace Application.Documents.Commands.CreateDocumentCommand
             var document = new Document()
             {
                 Document_Name = request.Document_Name,
-                Note = request.Note,
+                Note = request.Note,               
+                Creator = request.Creator,
+                Signature = request.Signature,
                 TypeId = request.TypeId,
                 FlightId = request.FlightId,
-                Creator = request.Creator
+                GroupId = request.GroupId,
             };
             var result = await _documentService.CreateDocument(document);
             return _mapper.Map<DocumentDTO>(result);

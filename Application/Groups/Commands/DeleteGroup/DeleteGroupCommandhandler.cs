@@ -18,7 +18,7 @@ namespace Application.Groups.Commands.DeleteGroup
         }
         public async Task<ServiceResponse> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
         {
-
+            if (request.Id == Guid.Empty) return new ServiceResponse(false, "userId is null");
             var deleteId = await _groupService.DeleteGroup(request.Id);
             if(deleteId != request.Id)
             {

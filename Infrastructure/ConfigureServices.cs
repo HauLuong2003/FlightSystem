@@ -24,7 +24,7 @@ namespace Infrastructure
             services.AddScoped<IFlightService, FlightRepository>();
             services.AddScoped<IFileStorageService, FileStorageRepository>();
             services.AddScoped<IDocumentService, DocumentRepository>();
-
+            services.AddScoped<IDocumentTypeService, DocumentTypeRepository>();
             return services;
         }
     }

@@ -14,5 +14,6 @@ namespace FlightSystem.Domain.Services
         Task<bool> DeleteDocument(Guid Id);
         Task<List<Document>> GetDocument();
         Task<Document> GetDocumentById(Guid id);
+        
     }
 }

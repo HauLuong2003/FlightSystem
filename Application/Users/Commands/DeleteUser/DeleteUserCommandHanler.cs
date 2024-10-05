@@ -22,7 +22,7 @@ namespace Application.Users.Commands.DeleteUser
 
         public async Task<ServiceResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            if (request == null) throw new ArgumentNullException("userId is null");
+            if (request.Id == Guid.Empty) return new ServiceResponse(false,"userId is null");
             var deleteId = await _userService.DeleteUser(request.Id);
             if (deleteId != request.Id)
             {

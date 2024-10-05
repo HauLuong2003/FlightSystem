@@ -23,8 +23,9 @@ namespace Application.DTOs
         public string? Signature { get; set; }
         public DateTime? Create_at { get; set; }
         public DateTime? Update_at { get; set; }
-        public Guid FlightNo { get; set; }
         public string Creator { get; set; }
+        public Guid FlightId { get; set; }
+        public Guid GroupId { get; set; }
         public Guid TypeId { get; set; }
     }
 }

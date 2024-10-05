@@ -2,6 +2,7 @@
 using Application.Documents.Commands.DeleteDocumentCommand;
 using Application.Documents.Commands.UpdateDocumentCommand;
 using Application.Documents.Queries.GetDocument;
+using Application.Documents.Queries.GetDocumetById;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace Back_End.Controllers
             return Ok(document);
         }
         //update document
-        [HttpPut]
+        [HttpPut("{Id}")]
         public async Task<IActionResult> UpdateDocument(Guid Id, UpdateDocumentCommand command)
         {
             if (Id != command.DocumentId)
@@ -35,10 +36,17 @@ namespace Back_End.Controllers
             var document = await Mediator.Send(new GetDocumentQuery());
             return Ok(document);
         }
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteDocument(Guid Id)
         {
             var document = await Mediator.Send(new DeleteDocumentCommand { DocumentId = Id });
+            return Ok(document);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetDocumentById(Guid Id)
+        {
+            var document = await Mediator.Send(new GetDocumentByIdQuery { DocumentId = Id });
             return Ok(document);
         }
     }

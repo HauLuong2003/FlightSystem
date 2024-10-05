@@ -21,14 +21,14 @@ namespace Application.Documents.Commands.DeleteDocumentCommand
         {
             if (request.DocumentId == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(request),"Id is null");
+                return new ServiceResponse(false,"Id is null");
             }
 
             var documentId = request.DocumentId;
             var result = await _documentService.DeleteDocument(documentId);
             if (result == false)
             {
-                return new ServiceResponse(false, "Delete document success");
+                return new ServiceResponse(false, "Delete don't document success");
             }
 
             return new ServiceResponse(true,"Delete document success");
