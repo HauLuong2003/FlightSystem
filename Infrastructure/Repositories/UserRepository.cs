@@ -83,5 +83,15 @@ namespace Infrastructure.Repositories
             }
             return user;
         }
+
+        public async Task<List<User>> GetUserByActive(bool active)
+        {
+           var user = await _dbContext.Users.Where(u => u.IsActive == active).ToListAsync();
+            if (user == null) 
+            {
+                throw new ArgumentNullException(nameof(user),"don't user");
+            }
+            return user;
+        }
     }
 }

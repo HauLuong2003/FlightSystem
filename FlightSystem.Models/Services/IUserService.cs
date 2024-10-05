@@ -15,5 +15,6 @@ namespace FlightSystem.Domain.Services
         Task<User> UpdateUser(Guid Id,User user);
         Task<User> CreateUser(User user);
         Task<List<User>> GetUserByGroupId(Guid groupId);
+        Task<List<User>> GetUserByActive(bool active);
     }
 }

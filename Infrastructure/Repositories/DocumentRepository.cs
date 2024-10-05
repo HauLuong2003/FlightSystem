@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Document> GetDocumentById(Guid id)
         {
-            var document =await _dbContext.Documents.FindAsync(id);
+            var document = await _dbContext.Documents.FindAsync(id);
             if (document == null) 
             { 
                throw new ArgumentNullException(nameof(document),"document is null");

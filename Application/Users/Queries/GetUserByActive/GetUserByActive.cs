@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DocumentTypes.Queries.GetDocumentType
+namespace Application.Users.Queries.GetUserByActive
 {
-    public class GetDocumentTypeQuery : IRequest<List<DocumentTypeDTO>>
+    public class GetUserByActive : IRequest<List<UserDTO>>
     {
-        
+        public bool IsActive { get; set; }
     }
 }

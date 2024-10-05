@@ -2,6 +2,7 @@
 using Application.Users.Commands.DeleteUser;
 using Application.Users.Commands.UpdateUser;
 using Application.Users.Queries.GetUser;
+using Application.Users.Queries.GetUserByActive;
 using Application.Users.Queries.GetUserByGroupId;
 using Application.Users.Queries.GetUserById;
 using Microsoft.AspNetCore.Http;
@@ -57,6 +58,12 @@ namespace Back_End.Controllers
         public async Task<IActionResult> GetUserByGroupId(Guid Id)
         {
             var users = await Mediator.Send(new GetUserByGroupQuery { GroupId = Id });
+            return Ok(users);
+        }
+        [HttpGet("userActive/{active}")]
+        public async Task<IActionResult> GetUserByActive(bool Active)
+        {
+            var users = await Mediator.Send(new GetUserByActive { IsActive = Active});
             return Ok(users);
         }
     }

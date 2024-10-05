@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.DocumentTypes.Queries.GetDocumentType
 {
-    public class GetDocumentTypeQueryHandler : IRequestHandler<GetDocumentTypeQuery, DocumentTypeDTO>
+    public class GetDocumentTypeQueryHandler : IRequestHandler<GetDocumentTypeQuery, List<DocumentTypeDTO>>
     {
         public readonly IDocumentTypeService _documentTypeService;
         public readonly IMapper _mapper;
@@ -20,10 +20,14 @@ namespace Application.DocumentTypes.Queries.GetDocumentType
             _mapper = mapper;
         }
 
-        public async Task<DocumentTypeDTO> Handle(GetDocumentTypeQuery request, CancellationToken cancellationToken)
+        public async Task<List<DocumentTypeDTO>> Handle(GetDocumentTypeQuery request, CancellationToken cancellationToken)
         {
             var documentType = await _documentTypeService.GetDocumentType();
-            return _mapper.Map<DocumentTypeDTO>(documentType);
+            if (documentType == null)
+            {
+                throw new ArgumentNullException(nameof(documentType),"document type is null");
+            }
+            return _mapper.Map<List<DocumentTypeDTO>>(documentType);
         }
     }
 }

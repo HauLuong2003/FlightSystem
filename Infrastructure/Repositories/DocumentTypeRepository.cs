@@ -27,12 +27,12 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> DeleteDocumentType(Guid Id)
         {
-            var document = await _dbContext.DocumentTypes.FindAsync(Id);
-            if (document == null)
+            var documentType = await _dbContext.DocumentTypes.FindAsync(Id);
+            if (documentType == null)
             {
                 return false;
             }
-             _dbContext.Remove(document);
+             _dbContext.Remove(documentType);
             await _dbContext.SaveChangesAsync();
             return true;
         }
@@ -44,12 +44,12 @@ namespace Infrastructure.Repositories
 
         public async Task<DocumentType> GetDocumentTypeById(Guid Id)
         {
-            var document = await _dbContext.DocumentTypes.FindAsync(Id);
-            if (document == null) 
+            var documentType = await _dbContext.DocumentTypes.FindAsync(Id);
+            if (documentType == null) 
             {
-                throw new ArgumentNullException(nameof(document),"document type id is null");
+                throw new ArgumentNullException(nameof(documentType),"document type id is null");
             }
-            return document;
+            return documentType;
         }
 
         public async Task<DocumentType> UpdateDocumentType(Guid Id, DocumentType documentType)
