@@ -23,6 +23,9 @@ namespace Application.Documents.Queries.GetDocument
         public async Task<List<DocumentDTO>> Handle(GetDocumentQuery request, CancellationToken cancellationToken)
         {
             var document = await _documentService.GetDocument();
+            if (document == null) {
+             throw new ArgumentNullException(nameof(document),"document is null");
+            }
             return _mapper.Map<List<DocumentDTO>>(document);
         }
     }

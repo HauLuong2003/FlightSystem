@@ -27,6 +27,11 @@ namespace Application.Users.Commands.CreateUser
         {
             // Tạo đối tượng người dùng mới từ thông tin yêu cầu
             if(request == null) throw new ArgumentNullException("user is null");
+            //  kiễm tra chuỗi kết thúc có đúng với @vietjetair.com
+            else if (!request.Email.EndsWith("@vietjetair.com", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentNullException("Email must have the extension @vietjetair.com");
+            }
             var userEntity = new User()
             {
                 Name = request.Name,

@@ -23,6 +23,10 @@ namespace Application.Groups.Queries.GetGroup
         public async Task<List<GroupDTO>> Handle(GetGroupQuery request, CancellationToken cancellationToken)
         {
             var groups = await _groupService.GetAllGroup();
+            if(groups == null)
+            {
+                throw new ArgumentNullException(nameof(groups),"groups is null");
+            }
             return _mapper.Map<List<GroupDTO>>(groups);
         }
     }

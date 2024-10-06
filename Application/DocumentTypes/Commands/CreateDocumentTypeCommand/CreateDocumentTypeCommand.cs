@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
 {
+    //Command này triển khai từ IRequest<DocumentTypeDTO>, nó sẽ trả về một DocumentTypeDTO khi hoàn tất.
+
     public class CreateDocumentTypeCommand : IRequest<DocumentTypeDTO>
-    {
-        
+    {       
         [Required]
         public string Type_Name { get; set; } = string.Empty;
         [Required]

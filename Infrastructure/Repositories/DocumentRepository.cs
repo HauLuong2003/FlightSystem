@@ -21,6 +21,7 @@ namespace Infrastructure.Repositories
         {
             document.Version = 1;
             document.Create_at = DateTime.Now;
+           
             await _dbContext.AddAsync(document);
             await _dbContext.SaveChangesAsync();
             return document;
@@ -53,6 +54,16 @@ namespace Infrastructure.Repositories
             if (document == null) 
             { 
                throw new ArgumentNullException(nameof(document),"document is null");
+            }
+            return document;
+        }
+
+        public async Task<List<Document>> GetDocumentByName(string name)
+        {
+            var document = await _dbContext.Documents.Where(doc => doc.Document_Name == name).ToListAsync();
+            if (document == null) 
+            {
+                throw new ArgumentNullException(nameof(document), "document is null");
             }
             return document;
         }

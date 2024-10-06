@@ -11,7 +11,7 @@ namespace FlightSystem.Domain.Services
     {
         Task<List<User>> GetAllUser();
         Task<User> GetUserById(Guid Id);
-        Task<Guid> DeleteUser(Guid Id);
+        Task<bool> DeleteUser(Guid Id);
         Task<User> UpdateUser(Guid Id,User user);
         Task<User> CreateUser(User user);
         Task<List<User>> GetUserByGroupId(Guid groupId);

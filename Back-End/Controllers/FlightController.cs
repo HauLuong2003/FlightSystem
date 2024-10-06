@@ -1,4 +1,6 @@
 ﻿using Application.Flights.Commands.CreateFlightCommand;
+using Application.Flights.Queries.GetFlight;
+using Application.Flights.Queries.GetFlightByNo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +15,18 @@ namespace Back_End.Controllers
         {
             var fligh = await Mediator.Send(command);
             return Ok(fligh);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetFlight()
+        {
+            var flight = await Mediator.Send(new GetFlightQuery());
+            return Ok(flight);
+        }
+        [HttpGet("{flightNo}")]
+        public async Task<IActionResult> GetFlightByNo (string flightNo)
+        {
+            var flight = await Mediator.Send(new GetFlightByNoQuery { FlightNo = flightNo });
+            return Ok(flight);
         }
     }
 }

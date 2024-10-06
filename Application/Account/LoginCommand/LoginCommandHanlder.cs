@@ -21,6 +21,10 @@ namespace Application.Account.LoginCommand
         public async Task<ServiceResponse> Handle(Login request, CancellationToken cancellationToken)
         {
             if (request == null) return new ServiceResponse(false, "userId is null");
+            else if (!request.Email.EndsWith("@vietjetair.com",StringComparison.OrdinalIgnoreCase))
+            {
+                return new ServiceResponse(false, "Email must have the extension @vietjetair.com\r\n");
+            }
 
             var login = new User()
             {

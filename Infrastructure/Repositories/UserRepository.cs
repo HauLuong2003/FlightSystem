@@ -27,16 +27,16 @@ namespace Infrastructure.Repositories
             return user;
         }
         //code xử lý xóa user
-        public async Task<Guid> DeleteUser(Guid Id)
+        public async Task<bool> DeleteUser(Guid Id)
         {
             var userId = await _dbContext.Users.FindAsync(Id);
             if (userId == null)
             {
-                throw new ArgumentNullException(nameof(userId),"user is null");  
+                return false;  
             }
             _dbContext.Users.Remove(userId);
             await _dbContext.SaveChangesAsync();
-            return Id;
+            return true;
         }
         // code xử lý lấy thông tin list user
         public async Task<List<User>> GetAllUser()

@@ -28,10 +28,10 @@ namespace Application.Documents.Commands.DeleteDocumentCommand
             var result = await _documentService.DeleteDocument(documentId);
             if (result == false)
             {
-                return new ServiceResponse(false, "Delete don't document success");
+                return new ServiceResponse(result, "Delete don't document success");
             }
 
-            return new ServiceResponse(true,"Delete document success");
+            return new ServiceResponse(result, "Delete document success");
         }
     }
 }

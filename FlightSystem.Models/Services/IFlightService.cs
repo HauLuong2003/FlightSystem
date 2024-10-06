@@ -10,5 +10,7 @@ namespace FlightSystem.Domain.Services
     public interface IFlightService
     {
         Task<Flight> CreateFilght(Flight flight);
+        Task<List<Flight>> GetFlight();
+        Task<Flight> GetFlightByNo(string flightNo);
     }
 }

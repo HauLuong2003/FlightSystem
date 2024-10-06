@@ -24,11 +24,11 @@ namespace Application.Users.Commands.DeleteUser
         {
             if (request.Id == Guid.Empty) return new ServiceResponse(false,"userId is null");
             var deleteId = await _userService.DeleteUser(request.Id);
-            if (deleteId != request.Id)
+            if (deleteId == false)
             {
-                return new ServiceResponse(false, "Delete don't successfully");
+                return new ServiceResponse(deleteId, "Delete don't successfully");
             }
-            return new ServiceResponse(true, "Delete successfully");
+            return new ServiceResponse(deleteId, "Delete successfully");
         }
     }
 }

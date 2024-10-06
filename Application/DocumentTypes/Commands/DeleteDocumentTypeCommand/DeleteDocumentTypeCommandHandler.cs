@@ -26,9 +26,9 @@ namespace Application.DocumentTypes.Commands.DeleteDocumentTypeCommand
             var documentType = await _documentTypeService.DeleteDocumentType(request.Id);
             if(documentType == false)
             {
-                return new ServiceResponse(false, "delete documentType don't success");
+                return new ServiceResponse(documentType, "delete documentType don't success");
             }
-            return new ServiceResponse(true, "delete documentType success");
+            return new ServiceResponse(documentType, "delete documentType success");
         }
     }
 }

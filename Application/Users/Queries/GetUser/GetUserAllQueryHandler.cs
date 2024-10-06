@@ -23,6 +23,10 @@ namespace Application.Users.Queries.GetUser
         public async Task<List<UserDTO>> Handle(GetUserAllQuery request, CancellationToken cancellationToken)
         {
             var users = await _userService.GetAllUser();
+            if(users == null)
+            {
+                throw new ArgumentNullException(nameof(users),"users is null");
+            }
             return _mapper.Map<List<UserDTO>>(users);
         }
     }

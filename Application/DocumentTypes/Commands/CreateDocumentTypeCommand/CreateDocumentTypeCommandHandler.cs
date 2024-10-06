@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
 {
+    //xử lý command CreateDocumentTypeCommand và trả về một DocumentTypeDTO.
     public class CreateDocumentTypeCommandHandler : IRequestHandler<CreateDocumentTypeCommand, DocumentTypeDTO>
     {
         private readonly IDocumentTypeService _documentTypeService;
