@@ -20,6 +20,7 @@ namespace Infrastructure.Repositories
         public async Task<DocumentType> CreateDocumentType(DocumentType documentType)
         {
             documentType.Create_at = DateTime.Now;
+            documentType.Update_at = DateTime.Now;
             await _dbContext.DocumentTypes.AddAsync(documentType);
             await _dbContext.SaveChangesAsync();
             return documentType;

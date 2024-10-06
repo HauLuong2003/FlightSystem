@@ -22,6 +22,7 @@ namespace Infrastructure.Repositories
         {
           
             user.Create_at = DateTime.Now;
+            user.Update_at = DateTime.Now;
             await _dbContext.Users.AddAsync(user);          
             await _dbContext.SaveChangesAsync();
             return user;

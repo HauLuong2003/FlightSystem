@@ -25,6 +25,7 @@ namespace Infrastructure
             services.AddScoped<IFileStorageService, FileStorageRepository>();
             services.AddScoped<IDocumentService, DocumentRepository>();
             services.AddScoped<IDocumentTypeService, DocumentTypeRepository>();
+            services.AddScoped<IGroupDocumentService, GroupDocumentRepository>();
             return services;
         }
     }

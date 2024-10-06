@@ -48,9 +48,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("FlightId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Note")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -71,8 +68,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("DocumentId");
 
                     b.HasIndex("FlightId");
-
-                    b.HasIndex("GroupId");
 
                     b.HasIndex("TypeId");
 
@@ -184,6 +179,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocument", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GroupId", "DocumentId");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("GroupDocuments");
+                });
+
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
                 {
                     b.Property<Guid>("PermissionId")
@@ -281,12 +291,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
-                        .WithMany("Documents")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FlightSystem.Domain.Domain.Entities.DocumentType", "DocumentType")
                         .WithMany("Documents")
                         .HasForeignKey("TypeId")
@@ -296,8 +300,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("DocumentType");
 
                     b.Navigation("Flight");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
@@ -309,6 +311,25 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Premisstion");
+                });
+
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocument", b =>
+                {
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Document", "Document")
+                        .WithMany("GroupDocuments")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
+                        .WithMany("GroupDocuments")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
@@ -331,6 +352,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
+                {
+                    b.Navigation("GroupDocuments");
+                });
+
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.DocumentType", b =>
                 {
                     b.Navigation("Documents");
@@ -343,7 +369,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
                 {
-                    b.Navigation("Documents");
+                    b.Navigation("GroupDocuments");
 
                     b.Navigation("Users");
                 });

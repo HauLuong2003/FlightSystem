@@ -22,5 +22,6 @@ namespace Application.Documents.Commands.UpdateDocumentCommand
         public Guid FlightId { get; set; }
         public string Creator { get; set; }
         public Guid TypeId { get; set; }
+
     }
 }

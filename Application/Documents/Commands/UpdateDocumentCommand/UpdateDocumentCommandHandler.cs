@@ -14,11 +14,13 @@ namespace Application.Documents.Commands.UpdateDocumentCommand
     public class UpdateDocumentCommandHandler : IRequestHandler<UpdateDocumentCommand, DocumentDTO>
     {
         private readonly IDocumentService _documentService;
+ 
         private readonly IMapper _mapper;
         public UpdateDocumentCommandHandler(IDocumentService documentService, IMapper mapper)
         {
             _documentService = documentService;
             _mapper = mapper;
+           
         }
         public async Task<DocumentDTO> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
         {
@@ -32,7 +34,9 @@ namespace Application.Documents.Commands.UpdateDocumentCommand
                 FlightId = request.FlightId,
                 TypeId = request.TypeId,
             };
-            var result = await _documentService.UpdateDocument(request.DocumentId,document);
+
+            var result = await _documentService.UpdateDocument(request.DocumentId, document);
+
             return _mapper.Map<DocumentDTO>(result);
         }
     }

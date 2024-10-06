@@ -36,9 +36,8 @@ namespace FlightSystem.Domain.Domain.Entities
 
         [ForeignKey("TypeId")]
         public DocumentType DocumentType { get; set; }
+        public ICollection<GroupDocument> GroupDocuments { get; set; }
 
-        public Guid GroupId { get; set; }
-        public Group Group { get; set; }
     }
 
 }

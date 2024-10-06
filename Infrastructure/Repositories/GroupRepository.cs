@@ -21,6 +21,7 @@ namespace Infrastructure.Repositories
         public async Task<Group> CreateGroup(Group group)
         {
             group.Create_at = DateTime.Now;
+            group.Update_at = DateTime.Now;
             await _dBContext.AddAsync(group);
             await _dBContext.SaveChangesAsync();
             return group;
