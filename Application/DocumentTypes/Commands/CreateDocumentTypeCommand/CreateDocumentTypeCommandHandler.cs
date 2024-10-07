@@ -16,10 +16,12 @@ namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
     {
         private readonly IDocumentTypeService _documentTypeService;
         private readonly IMapper _mapper;
-        public CreateDocumentTypeCommandHandler(IDocumentTypeService documentTypeService, IMapper mapper)
+        private readonly IGroupDocumentTypeService _groupDocumentTypeService;
+        public CreateDocumentTypeCommandHandler(IDocumentTypeService documentTypeService, IMapper mapper,IGroupDocumentTypeService groupDocumentTypeService)
         {
             _documentTypeService = documentTypeService;
             _mapper = mapper;
+            _groupDocumentTypeService = groupDocumentTypeService;
         }
 
         public async Task<DocumentTypeDTO> Handle(CreateDocumentTypeCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,13 @@ namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
                 Creator = request.Creator               
             };
             var result = await _documentTypeService.CreateDocumentType(documentType);
+            var groupDocumentType = new GroupDocumentType()
+            {
+                GroupId = request.GroupId,
+                TypeId = result.TypeId
+            };
+             await _groupDocumentTypeService.UpdateGroupDocumentType(groupDocumentType);
+
             return _mapper.Map<DocumentTypeDTO>(result);
         }
     }

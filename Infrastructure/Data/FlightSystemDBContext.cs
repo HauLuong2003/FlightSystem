@@ -18,7 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<GroupDocument> GroupDocuments { get; set; }
-
+        public DbSet<GroupDocumentType> GroupDocumentsTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Composite primary key for GroupDocument
@@ -36,6 +36,19 @@ namespace Infrastructure.Data
                 .HasOne(gd => gd.Document)
                 .WithMany(d => d.GroupDocuments)
                 .HasForeignKey(gd => gd.DocumentId);
+
+            modelBuilder.Entity<GroupDocumentType>()
+           .HasKey(gd => new { gd.GroupId, gd.TypeId });
+            modelBuilder.Entity<GroupDocumentType>()
+             .HasOne(gd => gd.Group)
+             .WithMany(g => g.GroupDocumentTypes)
+             .HasForeignKey(gd => gd.GroupId);
+
+            // Relationship between Document and GroupDocument (one-to-many)
+            modelBuilder.Entity<GroupDocumentType>()
+                .HasOne(gd => gd.DocumentType)
+                .WithMany(d => d.GroupDocumentTypes)
+                .HasForeignKey(gd => gd.TypeId);
         }
     }
 }

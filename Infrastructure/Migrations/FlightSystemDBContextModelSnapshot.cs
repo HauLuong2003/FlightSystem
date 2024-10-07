@@ -194,6 +194,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("GroupDocuments");
                 });
 
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocumentType", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GroupId", "TypeId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("GroupDocumentsTypes");
+                });
+
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
                 {
                     b.Property<Guid>("PermissionId")
@@ -332,6 +347,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocumentType", b =>
+                {
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
+                        .WithMany("GroupDocumentTypes")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FlightSystem.Domain.Domain.Entities.DocumentType", "DocumentType")
+                        .WithMany("GroupDocumentTypes")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentType");
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
                 {
                     b.HasOne("FlightSystem.Domain.Domain.Entities.User", "User")
@@ -360,6 +394,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.DocumentType", b =>
                 {
                     b.Navigation("Documents");
+
+                    b.Navigation("GroupDocumentTypes");
                 });
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
@@ -369,6 +405,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
                 {
+                    b.Navigation("GroupDocumentTypes");
+
                     b.Navigation("GroupDocuments");
 
                     b.Navigation("Users");

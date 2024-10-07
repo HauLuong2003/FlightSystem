@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
 
         public async Task CreateGroupDocument(GroupDocument groupDocument)
         {
-            await _dbContext.AddAsync(groupDocument);
+            await _dbContext.GroupDocuments.AddAsync(groupDocument);
             await _dbContext.SaveChangesAsync();
             
         }

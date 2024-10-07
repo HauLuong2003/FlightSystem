@@ -16,12 +16,14 @@ namespace Application.Documents.Commands.CreateDocumentCommand
     {
         private readonly IDocumentService _documentService;
         private readonly IGroupDocumentService _groupDocumentService;
+
         private readonly IMapper _mapper;
         public CreateDocumentCommandHandler(IDocumentService documentService, IMapper mapper, IGroupDocumentService groupDocumentService)
         {
             _documentService = documentService;
             _mapper = mapper;
             _groupDocumentService = groupDocumentService;
+
         }
         public async Task<DocumentDTO> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
         {

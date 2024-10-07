@@ -22,5 +22,7 @@ namespace FlightSystem.Domain.Domain.Entities
         public Guid PermissionId { get; set; }
         public Permission? Premisstion { get; set; }
         public ICollection<GroupDocument> GroupDocuments { get; set; }
+        public ICollection<GroupDocumentType> GroupDocumentTypes { get; set; }
+
     }
 }

@@ -50,7 +50,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Document> GetDocumentById(Guid id)
         {
-            var document = await _dbContext.Documents.Include(d => d.GroupDocuments)
+            var document = await _dbContext.Documents.Include(d => d.GroupDocuments)                                                       
                                                       .ThenInclude(gd => gd.Group)
                                                       .FirstOrDefaultAsync(d => d.DocumentId == id);
             if (document == null) 

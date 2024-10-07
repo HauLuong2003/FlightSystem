@@ -67,5 +67,6 @@ namespace Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return type;
         }
+
     }
 }

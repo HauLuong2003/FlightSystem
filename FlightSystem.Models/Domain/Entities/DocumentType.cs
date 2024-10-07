@@ -21,5 +21,6 @@ namespace FlightSystem.Domain.Domain.Entities
         public DateTime? Update_at { get; set; }
 
         public ICollection<Document> Documents { get; set; }
+        public ICollection<GroupDocumentType> GroupDocumentTypes { get; set; }
     }
 }

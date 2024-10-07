@@ -1,4 +1,5 @@
-﻿using Application.DTOs;
+﻿using Application.Account.ChangePasswordCommand;
+using Application.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,12 @@ namespace Back_End.Controllers
             var logins = await Mediator.Send(login);
             return Ok(logins);
 
+        }
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+        {
+            var resetPass = await Mediator.Send(command);
+            return Ok(resetPass);
         }
     }
 }

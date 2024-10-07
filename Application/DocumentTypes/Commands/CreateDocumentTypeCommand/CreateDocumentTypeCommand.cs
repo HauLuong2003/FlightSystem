@@ -19,6 +19,6 @@ namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
         public string? Note { get; set; }
         [Required]
         public string Creator { get; set; }
-
+        public Guid GroupId { get; set; }
     }
 }

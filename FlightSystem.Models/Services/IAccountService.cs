@@ -10,5 +10,7 @@ namespace FlightSystem.Domain.Services
     public interface IAccountService
     {
       Task<bool>  Login(User login);
+      Task<bool> Logout();
+      Task<bool> ChangePassword(User login);
     }
 }

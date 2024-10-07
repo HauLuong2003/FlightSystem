@@ -23,7 +23,7 @@ namespace Application.Account.LoginCommand
             if (request == null) return new ServiceResponse(false, "userId is null");
             else if (!request.Email.EndsWith("@vietjetair.com",StringComparison.OrdinalIgnoreCase))
             {
-                return new ServiceResponse(false, "Email must have the extension @vietjetair.com\r\n");
+                return new ServiceResponse(false, "Email must have the extension @vietjetair.com");
             }
 
             var login = new User()

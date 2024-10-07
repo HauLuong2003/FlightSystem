@@ -94,5 +94,16 @@ namespace Infrastructure.Repositories
             }
             return user;
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var userEmail =await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (userEmail == null)
+            {
+                throw new ArgumentNullException(nameof(userEmail), "don't user");
+
+            }
+            return userEmail;
+        }
     }
 }

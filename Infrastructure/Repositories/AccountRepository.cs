@@ -20,8 +20,19 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<bool> ChangePassword(User login)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Password = login.Password;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
 
-            public async Task<bool> Login(User login)
+        public async Task<bool> Login(User login)
             {
             var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
             if (account == null)
@@ -34,6 +45,11 @@ namespace Infrastructure.Repositories
             }
 
             return true;
+        }
+
+        public Task<bool> Logout()
+        {
+            throw new NotImplementedException();
         }
     }
 }
