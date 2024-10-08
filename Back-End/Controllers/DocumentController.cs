@@ -51,7 +51,7 @@ namespace Back_End.Controllers
             return Ok(document);
         }
         //lay document theo ten
-        [HttpGet("GetName/{Name}")]
+        [HttpGet("Name/{Name}")]
         public async Task<IActionResult> GetDocumentByName(string Name)
         {
             var document = await Mediator.Send(new GetDocumentByNameQuery { Name = Name });

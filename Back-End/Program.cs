@@ -23,8 +23,7 @@ namespace Back_End
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
-           // builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
+          
 
             var app = builder.Build();
 
@@ -38,7 +37,7 @@ namespace Back_End
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
 
             app.MapControllers();
 

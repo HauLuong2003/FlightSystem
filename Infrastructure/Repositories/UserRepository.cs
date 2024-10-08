@@ -105,5 +105,15 @@ namespace Infrastructure.Repositories
             }
             return userEmail;
         }
+
+        public async Task<List<User>> GetUserByName(string name)
+        {
+            var user = await _dbContext.Users.Where(u => u.Name!.Contains(name)).ToListAsync();
+            if(user == null)
+            {
+                throw new ArgumentNullException(nameof(user),"user name is null");
+            }
+            return user;
+        }
     }
 }

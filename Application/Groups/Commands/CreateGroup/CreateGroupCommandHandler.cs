@@ -29,6 +29,7 @@ namespace Application.Groups.Commands.CreateGroup
                 {
                     Group_Name = request.Group_Name,
                     Note = request.Note,
+                    Creator = request.Creator,
                     PermissionId = request.PermissionId,
                 };
                 var result = await _groupService.CreateGroup(group);

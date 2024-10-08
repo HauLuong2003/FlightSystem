@@ -17,5 +17,6 @@ namespace FlightSystem.Domain.Services
         Task<List<User>> GetUserByGroupId(Guid groupId);
         Task<List<User>> GetUserByActive(bool active);
         Task<User> GetUserByEmail(string email);
+        Task<List<User>> GetUserByName(string name);
     }
 }

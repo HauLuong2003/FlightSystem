@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 namespace Application.Groups.Commands.CreateGroup
 {
     public class CreateGroupCommand : IRequest<GroupDTO>
-    {
-        
-        [StringLength(150)]
+    {       
         public string Group_Name { get; set; } = string.Empty;
-        [StringLength(255)]
+      
+        public string Creator { get; set; }
         public string? Note { get; set; }
         public Guid PermissionId { get; set; }
     }

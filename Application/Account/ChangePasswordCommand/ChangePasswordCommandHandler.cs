@@ -28,13 +28,18 @@ namespace Application.Account.ChangePasswordCommand
 
             }
             var user = await _userService.GetUserByEmail(request.Email);
+            //kiễm tra password nhập vào và kiễm tra password mới 
             if(user.Password ==  request.Password && request.newPassword == request.ConfirmPassword)
             {
+                if (user.IsActive == false)
+                {
+                    return new ServiceResponse(false, "account don't active");
+                }
                 var newPass = new User()
                 {
                     Email = request.Email,
                     Password = request.newPassword
-                };
+                };               
                 var result = await _accountService.ChangePassword(newPass);
                 if(result == false)
                 {

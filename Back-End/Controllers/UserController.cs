@@ -5,6 +5,7 @@ using Application.Users.Queries.GetUser;
 using Application.Users.Queries.GetUserByActive;
 using Application.Users.Queries.GetUserByGroupId;
 using Application.Users.Queries.GetUserById;
+using Application.Users.Queries.GetUserByName;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,6 +66,12 @@ namespace Back_End.Controllers
         {
             var users = await Mediator.Send(new GetUserByActive { IsActive = Active});
             return Ok(users);
+        }
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetUserByName (string name)
+        {
+            var user = await Mediator.Send(new GetUserByNameQuery { Name = name });
+            return Ok(user);
         }
     }
 }

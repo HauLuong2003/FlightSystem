@@ -1,5 +1,4 @@
 ﻿using Application.Common.ServiceResponse;
-using Application.DTOs;
 using FlightSystem.Domain.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
@@ -11,19 +10,23 @@ using System.Threading.Tasks;
 
 namespace Application.Account.LoginCommand
 {
-    public class LoginCommandHanlder : IRequestHandler<Login, ServiceResponse>
+    public class LoginCommandHanlder : IRequestHandler<Login, LoginResponse>
     {
         private readonly IAccountService _accountService;
-        public LoginCommandHanlder(IAccountService accountService) 
+        private readonly IJwtTokenService _jwtTokenService;
+        public LoginCommandHanlder(IAccountService accountService, IJwtTokenService jwtTokenService) 
         {
             _accountService = accountService;
+            _jwtTokenService = jwtTokenService;
         }
-        public async Task<ServiceResponse> Handle(Login request, CancellationToken cancellationToken)
+        public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
         {
-            if (request == null) return new ServiceResponse(false, "userId is null");
-            else if (!request.Email.EndsWith("@vietjetair.com",StringComparison.OrdinalIgnoreCase))
+            if (request.Password == null || request.Email == null) {
+                throw new ArgumentNullException(nameof(request), "userId is null");
+            }
+            else if (!request.Email.EndsWith("@vietjetair.com", StringComparison.OrdinalIgnoreCase))
             {
-                return new ServiceResponse(false, "Email must have the extension @vietjetair.com");
+                throw new ArgumentException(nameof(request), "Email must have the extension @vietjetair.com");
             }
 
             var login = new User()
@@ -32,11 +35,9 @@ namespace Application.Account.LoginCommand
                 Password = request.Password,
             };
             var loginUser = await _accountService.Login(login);
-            if (loginUser == false)
-            {
-                return new ServiceResponse(loginUser, "login don't successfully");
-            }
-            return new ServiceResponse(loginUser, "login sucessfully");
+
+            var jwt =  _jwtTokenService.GenerateToken(loginUser);
+            return new LoginResponse { Token = jwt};
         }
     }
 }

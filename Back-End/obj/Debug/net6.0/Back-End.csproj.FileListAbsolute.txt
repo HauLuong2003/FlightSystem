@@ -77,3 +77,7 @@ D:\Project_C#\FlightSystem\Back-End\obj\Debug\net6.0\Back-End.sourcelink.json
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Humanizer.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Back-End.staticwebassets.runtime.json
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll

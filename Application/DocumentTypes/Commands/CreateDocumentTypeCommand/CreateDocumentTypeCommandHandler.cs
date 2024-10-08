@@ -42,7 +42,7 @@ namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
                 GroupId = request.GroupId,
                 TypeId = result.TypeId
             };
-             await _groupDocumentTypeService.UpdateGroupDocumentType(groupDocumentType);
+             await _groupDocumentTypeService.CreateGroupDocumentType(groupDocumentType);
 
             return _mapper.Map<DocumentTypeDTO>(result);
         }

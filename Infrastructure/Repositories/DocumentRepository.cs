@@ -62,7 +62,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<Document>> GetDocumentByName(string name)
         {
-            var document = await _dbContext.Documents.Where(doc => doc.Document_Name == name).ToListAsync();
+            var document = await _dbContext.Documents.Where(doc => doc.Document_Name.Contains(name)).ToListAsync();
             if (document == null) 
             {
                 throw new ArgumentNullException(nameof(document), "document is null");

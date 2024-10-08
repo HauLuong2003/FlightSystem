@@ -32,19 +32,20 @@ namespace Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> Login(User login)
-            {
+
+
+        public async Task<User> Login(User login)
+        {
             var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
             if (account == null)
             {
-                return false;
+                throw new ArgumentNullException(nameof(account),"user is null");
             }
-            else if (account.Password != login.Password)
+            else if (account.Password != login.Password || account.IsActive == false)
             {
-                return false;
+                throw new ArgumentNullException(nameof(account), "login don't success");
             }
-
-            return true;
+            return account;
         }
 
         public Task<bool> Logout()
