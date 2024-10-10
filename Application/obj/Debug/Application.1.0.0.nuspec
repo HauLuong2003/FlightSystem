@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Application</id>
+    <version>1.0.0</version>
+    <authors>Application</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="6e34e23a17e45cd97a1c7c240786530fcfc6c1b0" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="FlightSystem.Domain" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="AutoMapper.Extensions.Microsoft.DependencyInjection" version="12.0.1" exclude="Build,Analyzers" />
+        <dependency id="FluentValidation.DependencyInjectionExtensions" version="11.9.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\Application.dll" target="lib\net6.0\Application.dll" />
+  </files>
+</package>

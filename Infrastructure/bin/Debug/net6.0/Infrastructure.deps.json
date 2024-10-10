@@ -14,6 +14,7 @@
           "Microsoft.EntityFrameworkCore": "6.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.0",
+          "Microsoft.IdentityModel.JsonWebTokens": "6.34.0",
           "System.IdentityModel.Tokens.Jwt": "6.34.0"
         },
         "runtime": {

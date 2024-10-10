@@ -1,6 +1,7 @@
 ﻿using Application.Flights.Commands.CreateFlightCommand;
 using Application.Flights.Queries.GetFlight;
 using Application.Flights.Queries.GetFlightByNo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class FlightController : FlightSystemControllerBase
     {
         [HttpPost]

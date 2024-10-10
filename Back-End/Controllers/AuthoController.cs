@@ -1,5 +1,6 @@
 ﻿using Application.Account.ChangePasswordCommand;
 using Application.Account.LoginCommand;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AuthoController : FlightSystemControllerBase
     {
 

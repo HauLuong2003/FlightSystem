@@ -1,9 +1,11 @@
-
+﻿
 using Microsoft.EntityFrameworkCore;
 using Application;
 using Infrastructure;
-using AutoMapper;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 namespace Back_End
 {
     public class Program
@@ -19,11 +21,24 @@ namespace Back_End
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+           
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
-          
+            
+            //cấu hình swagger để xác nhận người dùng
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>(); 
+            });
 
             var app = builder.Build();
 
@@ -35,9 +50,8 @@ namespace Back_End
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

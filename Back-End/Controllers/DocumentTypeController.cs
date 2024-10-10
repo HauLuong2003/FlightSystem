@@ -5,6 +5,7 @@ using Application.DocumentTypes.Commands.DeleteDocumentTypeCommand;
 using Application.DocumentTypes.Commands.UpdateDocumentTypeCommand;
 using Application.DocumentTypes.Queries.GetDocumentType;
 using Application.DocumentTypes.Queries.GetDocumentTypeId;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,8 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+
     public class DocumentTypeController : FlightSystemControllerBase
     {
         [HttpGet]

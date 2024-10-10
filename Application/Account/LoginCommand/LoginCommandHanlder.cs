@@ -36,8 +36,8 @@ namespace Application.Account.LoginCommand
             };
             var loginUser = await _accountService.Login(login);
 
-            var jwt =  _jwtTokenService.GenerateToken(loginUser);
-            return new LoginResponse { Token = jwt};
+            var jwt =await _jwtTokenService.GenerateToken(loginUser);
+            return new LoginResponse { Token =  jwt };
         }
     }
 }

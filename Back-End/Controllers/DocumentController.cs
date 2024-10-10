@@ -4,6 +4,7 @@ using Application.Documents.Commands.UpdateDocumentCommand;
 using Application.Documents.Queries.GetDocument;
 using Application.Documents.Queries.GetDocumentByName;
 using Application.Documents.Queries.GetDocumetById;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,8 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
+  
     public class DocumentController : FlightSystemControllerBase
     {
         [HttpPost]

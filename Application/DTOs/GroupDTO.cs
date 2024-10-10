@@ -20,6 +20,7 @@ namespace Application.DTOs
         public DateTime? Create_at { get; set; }
         public DateTime? Update_at { get; set; }
         public Guid PermissionId { get; set; }
+       // public  PermissionDTO? PermissionDTO { get; set; }
         //public List<UserDTO>? Users { get; set; }
     }
 }

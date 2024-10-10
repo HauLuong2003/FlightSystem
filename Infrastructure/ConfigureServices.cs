@@ -20,27 +20,42 @@ namespace Infrastructure
             services.AddDbContext<FlightSystemDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default"))
             );
-            // cấu hình jwt 
-            services.AddAuthentication(options =>
-            {
-                // Xác định phương thức xác thực là JWT Bearer
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                // Xác định các tham số xác thực token
+
+            // Cấu hình xác thực JWT Bearer
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true, // Kiểm tra Issuer có hợp lệ không
-                    ValidateAudience = true, // Kiểm tra Audience có hợp lệ không
-                    ValidateLifetime = true, // Kiểm tra thời gian sống của token
-                    ValidateIssuerSigningKey = true, // Kiểm tra chữ ký của token
-                    ValidIssuer = configuration["Jwt:Issuer"], // Issuer mà bạn mong đợi vd: hệ thống 
-                    ValidAudience = configuration["Jwt:Audience"], // Audience mà bạn mong đợi vd: client
-                    // chữ kí dùng để mã hóa
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])) 
+                     ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                    .GetBytes(configuration.GetSection("AppSettings:Token").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                 };
-            });
+            //// Xử lý  "Bearer " trong token
+            //options.Events = new JwtBearerEvents
+            //{
+            //    OnMessageReceived = context =>
+            //    {
+            //        var token = context.Request.Headers["Authorization"].FirstOrDefault();
+            //        if (token != null && token.StartsWith("Bearer "))
+            //        {
+            //            context.Token = token.Substring(7); // Bỏ tiền tố "Bearer "
+            //        }
+            //        return Task.CompletedTask;
+            //    }
+            //};
+        });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ReadAndWritePolicy", policy =>
+            //        policy.RequireClaim("permission", "Read And Write"));
+
+            //    //options.AddPolicy("CanEditUsersPolicy", policy =>
+            //    //policy.RequireClaim("Permission", "CanEditUsers"));
+            //});
 
             //đăng kí service
             services.AddScoped<IUserService, UserRepository>();

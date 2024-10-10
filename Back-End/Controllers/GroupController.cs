@@ -3,6 +3,8 @@ using Application.Groups.Commands.DeleteGroup;
 using Application.Groups.Commands.UpdateGroup;
 using Application.Groups.Queries.GetGroup;
 using Application.Groups.Queries.GetGroupById;
+using FlightSystem.Domain.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +12,11 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class GroupController : FlightSystemControllerBase
     {
         // lay list group
+
         [HttpGet]
         public async Task<IActionResult> GetGroup()
         {

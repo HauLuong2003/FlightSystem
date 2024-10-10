@@ -6,6 +6,7 @@ using Application.Users.Queries.GetUserByActive;
 using Application.Users.Queries.GetUserByGroupId;
 using Application.Users.Queries.GetUserById;
 using Application.Users.Queries.GetUserByName;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles = "Admin")]
     public class UserController : FlightSystemControllerBase
     {
         // thêm mới user

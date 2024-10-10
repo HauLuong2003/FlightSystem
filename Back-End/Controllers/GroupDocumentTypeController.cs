@@ -1,6 +1,7 @@
 ﻿using Application.DocumentTypes.Commands.CreateDocumentTypeCommand;
 using Application.DocumentTypes.Commands.DeleteGroupDocumentType;
 using Application.DocumentTypes.Commands.UpdateGroupDocumentType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class GroupDocumentTypeController : FlightSystemControllerBase
     {
         [HttpPost]

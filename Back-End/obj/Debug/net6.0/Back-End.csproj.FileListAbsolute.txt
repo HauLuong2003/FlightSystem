@@ -81,3 +81,7 @@ D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Authen
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Scrutor.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll

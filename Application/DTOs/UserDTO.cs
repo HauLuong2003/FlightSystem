@@ -18,6 +18,7 @@ namespace Application.DTOs
         public string Phone { get; set; } = string.Empty;
         public bool IsActive { get; set;}
         public Guid GroupId { get; set;}
+        public GroupDTO? GroupDTO { get; set; }
         public DateTime? Create_at { get; set;}
         public DateTime? Update_at { get; set;}
     }
