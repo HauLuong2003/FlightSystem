@@ -1,10 +1,14 @@
 ﻿using FlightSystem.Domain.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
@@ -50,6 +54,16 @@ namespace Infrastructure.Repositories
             document.GroupId = groupDocument.GroupId;
             await _dbContext.SaveChangesAsync();
            
+        }
+
+
+        public async Task<bool> CheckGroupAccessDocument(GroupDocument groupDocument)
+        {
+            // Kiễm tra user sử dụng có được cấp quyền truy cập vào và có  quyền sửa hay không 
+            var groupHasAccess = await _dbContext.GroupDocuments
+                .AnyAsync(gd => gd.DocumentId == groupDocument.DocumentId && gd.GroupId == groupDocument.GroupId);
+
+            return groupHasAccess;
         }
     }
 }

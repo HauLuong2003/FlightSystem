@@ -1,4 +1,5 @@
-﻿using Application.DTOs;
+﻿using Application.Documents.Commands.CreateDocumentCommand;
+using Application.DTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,6 @@ namespace Application.Flights.Commands.CreateFlightCommand
         public DateTime Departure_Date { get; set; }
         [Required]
         public TimeSpan TimeFlight { get; set; }
+        public CreateDocumentCommand documentCommand { get; set; }
     }
 }

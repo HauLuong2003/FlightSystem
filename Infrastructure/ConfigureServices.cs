@@ -48,14 +48,25 @@ namespace Infrastructure
             //};
         });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("ReadAndWritePolicy", policy =>
-            //        policy.RequireClaim("permission", "Read And Write"));
-
-            //    //options.AddPolicy("CanEditUsersPolicy", policy =>
-            //    //policy.RequireClaim("Permission", "CanEditUsers"));
-            //});
+            services.AddAuthorization(options =>
+            {
+                // Kiễm tra người dùng Role là Admin hoặc permission là Read And Write hoặc only Read
+                options.AddPolicy("AdminReadAndWrite", policy =>
+                {
+                    policy.RequireAssertion(context =>
+                    context.User.IsInRole("Admin") ||
+                    context.User.HasClaim(c => c.Type == "Permission" &&
+                    (c.Value == "Read And Write" || c.Value == "Read Only")));
+                });
+                // Kiễm tra người dùng  là Admin hoặc permission là Read And Write
+                options.AddPolicy("AdminWrite", policy =>
+                {
+                    policy.RequireAssertion(context =>
+                    context.User.IsInRole("Admin") ||
+                    context.User.HasClaim(c => c.Type == "Permission" &&
+                    (c.Value == "Read And Write" )));
+                });
+            });
 
             //đăng kí service
             services.AddScoped<IUserService, UserRepository>();

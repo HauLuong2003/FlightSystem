@@ -65,7 +65,8 @@ namespace Infrastructure.Repositories
             }
             groupId.Group_Name = group.Group_Name;
             groupId.Note = group.Note;
-            groupId.Update_at = DateTime.Now;          
+            groupId.Update_at = DateTime.Now;
+           
             await _dBContext.SaveChangesAsync();
             return groupId;
         }

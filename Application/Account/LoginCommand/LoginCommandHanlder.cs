@@ -22,7 +22,7 @@ namespace Application.Account.LoginCommand
         public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
         {
             if (request.Password == null || request.Email == null) {
-                throw new ArgumentNullException(nameof(request), "userId is null");
+                throw new ArgumentNullException(nameof(request), "Email or password is null");
             }
             else if (!request.Email.EndsWith("@vietjetair.com", StringComparison.OrdinalIgnoreCase))
             {

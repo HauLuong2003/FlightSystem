@@ -78,6 +78,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(documentId),"document Id is null");
             }
             documentId.Document_Name = document.Document_Name;
+            documentId.Version = document.Version + 0.1;
             documentId.Note = document.Note;
             documentId.Document_File = document.Document_File;
             documentId.Signature = document.Signature;

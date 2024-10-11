@@ -8,7 +8,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminWrite")]
     public class UploadFileController : FlightSystemControllerBase
     {
 

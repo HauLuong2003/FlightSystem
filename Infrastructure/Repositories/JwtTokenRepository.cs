@@ -25,20 +25,21 @@ namespace Infrastructure.Repositories
         }
         public async Task<string> GenerateToken(User user)
         {
-            // Lấy permission từ group của user
+            //Lấy permission từ group của user
             var permission = await _dbContext.Users
                     .Where(u => u.Email == user.Email)
                     .Select(g => g.Group!.Premisstion!.Permission_Name)
                      .FirstOrDefaultAsync();
-            var role = await _dbContext.Users.Where(u => u.Email == user.Email)
-                        .Select(g => g.Group!.Group_Name).FirstOrDefaultAsync();       
+            var role = await _dbContext.Users.Where(u => u.UserId == user.UserId)
+                        .Select(g => g.Group!.Group_Name).FirstOrDefaultAsync();
             List<Claim> claims = new List<Claim>
             {
                 //yêu cầu là cặp khóa-giá trị chứa thông tin về người dùng
                 // payload
-                new Claim(ClaimTypes.NameIdentifier, user.Email),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, user.UserId.ToString()),
                 new Claim("permission" , permission ?? "no permission"),
+                new Claim("GroupId", user.GroupId.ToString()),
                 new Claim(ClaimTypes.Role, role ?? "user")
             };
             var Key = new SymmetricSecurityKey(Encoding.UTF8

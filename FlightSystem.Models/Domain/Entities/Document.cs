@@ -12,7 +12,7 @@ namespace FlightSystem.Domain.Domain.Entities
         [StringLength(255)]
         public string Document_Name { get; set; }
 
-        public int Version { get; set; }
+        public double Version { get; set; }
 
         [StringLength(255)]
         public string? Note { get; set; }
