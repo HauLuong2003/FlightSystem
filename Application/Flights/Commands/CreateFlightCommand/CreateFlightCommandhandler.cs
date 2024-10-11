@@ -56,6 +56,7 @@ namespace Application.Flights.Commands.CreateFlightCommand
                 GroupId = request.documentCommand.GroupId,
             };
             await _groupDocumentService.CreateGroupDocument(groupDocument);
+            
             return _mapper.Map<FlightDTO>(result);
         }
     }

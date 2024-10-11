@@ -19,6 +19,6 @@ namespace Application.DTOs
         public TimeSpan TimeFlight { get; set; }
         public int Total_Document { get; set; }
 
-        public List<DocumentDTO>? Documents { get; set; }
+      
     }
 }

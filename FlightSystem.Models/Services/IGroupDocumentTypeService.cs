@@ -12,5 +12,6 @@ namespace FlightSystem.Domain.Services
         Task<bool> CreateGroupDocumentType(GroupDocumentType groupDocumentType);
         Task<bool> DeleteGroupDocumentType(GroupDocumentType groupDocumentType);
         Task<bool> UpdateGroupDocumentType(GroupDocumentType groupDocumentType);
+        Task<bool> CheckGroupAccessDocument(GroupDocumentType groupDocumentType);
     }
 }

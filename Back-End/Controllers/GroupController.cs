@@ -7,16 +7,32 @@ using FlightSystem.Domain.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]// chỉ có admin mới thực hiện được
     public class GroupController : FlightSystemControllerBase
     {
-        // lay list group
 
+        // tao moi group
+        [HttpPost]
+        public async Task<IActionResult> CreateGroup(CreateGroupCommand command)
+        {
+            // lấy thông creator từ Jwt
+            var creator = User.FindFirst(ClaimTypes.Email);
+            if (creator == null)
+            {
+                return Forbid();
+            }
+            //gán creator  vào command 
+            command.Creator = creator.Value;
+            var group = await Mediator.Send(command);
+            return Ok(group);
+        }
+        // lay list group
         [HttpGet]
         public async Task<IActionResult> GetGroup()
         {
@@ -41,13 +57,7 @@ namespace Back_End.Controllers
             var group = await Mediator.Send(command);
             return Ok(group);
         }
-        // tao moi group
-        [HttpPost]
-        public async Task<IActionResult> CreateGroup(CreateGroupCommand command)
-        {
-            var group = await Mediator.Send(command);
-            return Ok(group);
-        }
+       
         // delete group
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteGroup(Guid Id)

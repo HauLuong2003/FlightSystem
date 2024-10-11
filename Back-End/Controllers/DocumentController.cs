@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Back_End.Controllers
 {
@@ -17,10 +19,18 @@ namespace Back_End.Controllers
     
     public class DocumentController : FlightSystemControllerBase
     {
-        [Authorize(Policy = "AdminWrite")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateDocument(CreateDocumentCommand command)
         {
+            //lấy thông tin creator từ jwt 
+            var creator = User.FindFirst(ClaimTypes.Email);
+            if (creator == null)
+            {
+                return Forbid();
+            }
+            //sau đó gán và command
+            command.Creator = creator.Value;
             var document = await Mediator.Send(command);
             return Ok(document);
         }
@@ -31,7 +41,7 @@ namespace Back_End.Controllers
         {
             if (Id != command.DocumentId)
             {
-                return BadRequest("Id don't ");
+                return BadRequest();
             }
             // Nếu là Admin thì được thực hiện 
             if(User.IsInRole("Admin"))
@@ -77,17 +87,57 @@ namespace Back_End.Controllers
             var document = await Mediator.Send(new GetDocumentQuery());
             return Ok(document);
         }
-        [Authorize(Policy = "AdminWrite")]
+        [Authorize]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteDocument(Guid Id)
         {
-            var document = await Mediator.Send(new DeleteDocumentCommand { DocumentId = Id });
-            return Ok(document);
+            // Nếu là Admin thì được thực hiện 
+            if (User.IsInRole("Admin"))
+            {
+                var document = await Mediator.Send(new DeleteDocumentCommand { DocumentId = Id });
+                return Ok(document);
+            }
+            //Nếu khác admin kiễm tra xem Document vs goup có được phép truy cập
+            else
+            {
+                // lấy goupId từ claim 
+                var groupID = User.FindFirst("GroupId");
+                //lấy permisson từ claim
+                var permisson = User.FindFirst("permisson")?.ToString();
+
+                if (groupID == null || permisson == null)
+                {
+                    return Unauthorized("Group or Permission information is missing from the token.");
+                }
+                // Kiễm tra permission xem có được Write không
+                if (permisson == "Read Only" || permisson == "No Permission")
+                {
+                    // Trả về không cho phép truy cập
+                    return Forbid("Your group does not have access to this document.");
+                }
+                var groupId = Guid.Parse(groupID.Value);
+                // gửi sang Handler để xử lý
+                var groupHasAccess = await Mediator.Send(new CheckDocumentAccessQuery { DocumentId = Id, GroupId = groupId });
+                if (groupHasAccess == false)
+                {
+                    return Forbid("Your group does not have access to this document.");
+                }
+                var document = await Mediator.Send(new DeleteDocumentCommand { DocumentId = Id });
+                return Ok(document);
+            }
         }
         [Authorize(Policy = "AdminReadAndWrite")]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetDocumentById(Guid Id)
         {
+            var groupID = User.FindFirst("GroupId");
+            var groupId = Guid.Parse(groupID!.Value);
+            // gửi sang Handler để xử lý
+            var groupHasAccess = await Mediator.Send(new CheckDocumentAccessQuery { DocumentId = Id, GroupId = groupId });
+            if (groupHasAccess == false)
+            {
+                return Forbid("Your group does not have access to this document.");
+            }
             var document = await Mediator.Send(new GetDocumentByIdQuery { DocumentId = Id });
             return Ok(document);
         }
@@ -96,6 +146,7 @@ namespace Back_End.Controllers
         [HttpGet("Name/{Name}")]
         public async Task<IActionResult> GetDocumentByName(string Name)
         {
+
             var document = await Mediator.Send(new GetDocumentByNameQuery { Name = Name });
             return Ok(document);
         }

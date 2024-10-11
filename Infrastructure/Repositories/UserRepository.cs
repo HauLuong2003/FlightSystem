@@ -23,6 +23,12 @@ namespace Infrastructure.Repositories
           
             user.Create_at = DateTime.Now;
             user.Update_at = DateTime.Now;
+            var groupUser = await _dbContext.Groups.FirstOrDefaultAsync(g => g.GroupId == user.GroupId); 
+            if (groupUser != null)
+            {
+                groupUser.Members += 1;
+                await _dbContext.SaveChangesAsync();
+            }
             await _dbContext.Users.AddAsync(user);          
             await _dbContext.SaveChangesAsync();
             return user;
@@ -34,6 +40,12 @@ namespace Infrastructure.Repositories
             if (userId == null)
             {
                 return false;  
+            }
+            var groupUser = await _dbContext.Groups.FirstOrDefaultAsync(g => g.GroupId == userId.GroupId);
+            if (groupUser != null)
+            {
+                //groupUser.Members -= 1;
+                await _dbContext.SaveChangesAsync();
             }
             _dbContext.Users.Remove(userId);
             await _dbContext.SaveChangesAsync();

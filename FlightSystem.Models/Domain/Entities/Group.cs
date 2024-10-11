@@ -16,8 +16,8 @@ namespace FlightSystem.Domain.Domain.Entities
         public DateTime? Create_at { get; set; }
         public DateTime? Update_at { get; set;} 
         public ICollection<User>? Users { get; set; }
-        [StringLength(150)]
-        public string? Members { set; get; }
+        
+        public int? Members { set; get; }
         [ForeignKey("PermissionId")]
         public Guid PermissionId { get; set; }
         public Permission? Premisstion { get; set; }

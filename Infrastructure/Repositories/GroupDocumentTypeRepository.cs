@@ -1,6 +1,7 @@
 ﻿using FlightSystem.Domain.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,5 +49,14 @@ namespace Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> CheckGroupAccessDocument(GroupDocumentType groupDocumentType)
+        {
+            var groupHasAccess = await _dbContext.GroupDocumentsTypes
+                .AnyAsync(gd => gd.TypeId == groupDocumentType.TypeId && gd.GroupId == groupDocumentType.GroupId);
+
+            return groupHasAccess;
+        }
+
     }
 }

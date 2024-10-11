@@ -19,6 +19,7 @@ namespace Infrastructure.Repositories
         }
         public async Task<Flight> CreateFilght(Flight flight)
         {
+            flight.Total_Document = 1;
             await _dbContext.AddAsync(flight);
             await _dbContext.SaveChangesAsync();
             return flight;

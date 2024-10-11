@@ -22,6 +22,13 @@ namespace Infrastructure.Repositories
             document.Version = 1;
             document.Create_at = DateTime.Now;
             document.Update_at = DateTime.Now;
+        
+            var flightDocument = await _dbContext.Flights.FirstOrDefaultAsync(f => f.FlightId == document.FlightId);
+            if (flightDocument != null)
+            {
+                flightDocument.Total_Document += 1; 
+                await _dbContext.SaveChangesAsync();
+            }
             await _dbContext.AddAsync(document);
             await _dbContext.SaveChangesAsync();
             return document;
@@ -33,7 +40,13 @@ namespace Infrastructure.Repositories
             if (documentId == null) {
                 return false;
             }
-             _dbContext.Documents.Remove(documentId);
+            var flightDocument = await _dbContext.Flights.FirstOrDefaultAsync(f => f.FlightId == documentId.FlightId);
+            if(flightDocument != null)
+            {
+                flightDocument.Total_Document -= 1;
+                await _dbContext.SaveChangesAsync();
+            }
+                _dbContext.Documents.Remove(documentId);
             await _dbContext.SaveChangesAsync();
             return true;
         }

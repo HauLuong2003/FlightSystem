@@ -22,7 +22,7 @@ namespace Application.Documents.Commands.CreateDocumentCommand
         public string Creator { get; set; }
         [Required]
         public Guid TypeId { get; set; }
-        [Required]
+        
         public Guid FlightId { get; set; }
         public Guid GroupId { get; set; }
       
