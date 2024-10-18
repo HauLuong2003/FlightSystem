@@ -15,5 +15,6 @@ namespace FlightSystem.Domain.Services
         Task<List<Document>> GetDocument();
         Task<Document> GetDocumentById(Guid id);
         Task<List<Document>> GetDocumentByName(string name);
+        Task<List<Document>> GetDocumentByType(Guid TypeId);
     }
 }

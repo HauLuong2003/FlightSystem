@@ -85,3 +85,6 @@ D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Microsoft.Extensions.Depend
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Scrutor.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\MailKit.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\MimeKit.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\BouncyCastle.Crypto.dll

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Flights.Queries.GetFlightByNo
+namespace Application.Permissions.Queries.GetPermission
 {
-    public class GetFlightByNoQuery : IRequest<FlightDTO>
+    public class GetPermissionQuery : IRequest<List<PermissionDTO>>
     {
-        public string FlightNo { get; set; } 
+
     }
 }

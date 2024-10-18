@@ -20,7 +20,7 @@ namespace Back_End.Controllers
 
         [Authorize(Policy = "AdminWrite")]
         [HttpPost]
-        public async Task<IActionResult> CreateDocumentType(CreateDocumentTypeCommand command)
+        public async Task<IActionResult> CreateDocumentType([FromBody] CreateDocumentTypeCommand command)
         {
             //lấy creator từ jwt là email
             var creator = User.FindFirst(ClaimTypes.Email);

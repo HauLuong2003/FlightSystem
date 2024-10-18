@@ -18,6 +18,8 @@ namespace FlightSystem.Domain.Domain.Entities
         [StringLength(10)]
         public string? Phone { get; set; }
         public bool IsActive { get; set; }
+        [StringLength(6)]
+        public string? VerificationCode { get; set; } = null;
         public DateTime? Create_at { get; set; }
        
         public DateTime? Update_at { get; set; }

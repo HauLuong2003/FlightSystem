@@ -13,7 +13,7 @@ namespace Back_End.Controllers
     public class GroupDocumentTypeController : FlightSystemControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateGroupDocumentType(CreateDocumentTypeCommand command)
+        public async Task<IActionResult> CreateGroupDocumentType([FromBody] CreateDocumentTypeCommand command)
         {
             var groupDocument = await Mediator.Send(command);
             return Ok(groupDocument);

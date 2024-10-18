@@ -1,6 +1,6 @@
 ﻿using Application.Flights.Commands.CreateFlightCommand;
 using Application.Flights.Queries.GetFlight;
-using Application.Flights.Queries.GetFlightByNo;
+using Application.Flights.Queries.GetFlightById;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +24,10 @@ namespace Back_End.Controllers
             var flight = await Mediator.Send(new GetFlightQuery());
             return Ok(flight);
         }
-        [HttpGet("{flightNo}")]
-        public async Task<IActionResult> GetFlightByNo (string flightNo)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetFlightById (Guid Id)
         {
-            var flight = await Mediator.Send(new GetFlightByNoQuery { FlightNo = flightNo });
+            var flight = await Mediator.Send(new GetFlightByIdQuery { Id = Id });
             return Ok(flight);
         }
     }

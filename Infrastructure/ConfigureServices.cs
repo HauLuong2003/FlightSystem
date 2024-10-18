@@ -66,6 +66,11 @@ namespace Infrastructure
                     context.User.HasClaim(c => c.Type == "Permission" &&
                     (c.Value == "Read And Write" )));
                 });
+                options.AddPolicy("Verification", policy =>
+                {
+                    policy.RequireClaim("Permission", "Verification");
+                });
+
             });
 
             //đăng kí service
@@ -79,6 +84,9 @@ namespace Infrastructure
             services.AddScoped<IGroupDocumentService, GroupDocumentRepository>();
             services.AddScoped<IGroupDocumentTypeService, GroupDocumentTypeRepository>();
             services.AddScoped<IJwtTokenService, JwtTokenRepository>();
+            services.AddScoped<IPermissionService,PermissionRepository>();
+            services.AddScoped<ISettingService,SettingRepository>();
+            services.AddScoped<ISendEmailService, SendEmailRepository>();
             return services;
         }
     }

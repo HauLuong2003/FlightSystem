@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Infrastructure.Repositories
 {
@@ -20,8 +21,25 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> CreateGroupDocumentType(GroupDocumentType groupDocumentType)
         {
+            
             await _dbContext.GroupDocumentsTypes.AddAsync(groupDocumentType);
             await _dbContext.SaveChangesAsync();
+
+            var GroupDocumentType = await _dbContext.DocumentTypes
+                   .FirstOrDefaultAsync(gd => gd.TypeId == groupDocumentType.TypeId);
+            if (GroupDocumentType != null)
+            {
+                if (GroupDocumentType!.Permission != 0)
+                {
+                    GroupDocumentType!.Permission += 1;
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    GroupDocumentType!.Permission = 1;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
             return true;
         }
 
@@ -32,7 +50,19 @@ namespace Infrastructure.Repositories
             {
                 return false;
             }
-             _dbContext.GroupDocumentsTypes.Remove(groupDocumentType1);
+            // truy vấn và kiễm tra xem số group được truy cập 
+            var GroupPermisson = await _dbContext.DocumentTypes
+                  .FirstOrDefaultAsync(gd => gd.TypeId == groupDocumentType.TypeId);
+            // lấy số hiện tại -1 
+            if (GroupPermisson != null)
+            {
+                if (GroupPermisson.Permission != 0)
+                {
+                    GroupPermisson.Permission  -= 1;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            _dbContext.GroupDocumentsTypes.Remove(groupDocumentType1);
             await _dbContext.SaveChangesAsync();
             return true;
         }
@@ -52,9 +82,10 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> CheckGroupAccessDocument(GroupDocumentType groupDocumentType)
         {
+            //kiễm tra xem groupId và DocumentType Id có mối quan hệ không
             var groupHasAccess = await _dbContext.GroupDocumentsTypes
-                .AnyAsync(gd => gd.TypeId == groupDocumentType.TypeId && gd.GroupId == groupDocumentType.GroupId);
-
+                        .AnyAsync(gd => gd.GroupId == groupDocumentType.GroupId && gd.TypeId == groupDocumentType.TypeId);
+            // trả về true false
             return groupHasAccess;
         }
 

@@ -22,15 +22,24 @@ namespace Infrastructure.Repositories
             document.Version = 1;
             document.Create_at = DateTime.Now;
             document.Update_at = DateTime.Now;
-        
+      
+            await _dbContext.AddAsync(document);
+            await _dbContext.SaveChangesAsync();
             var flightDocument = await _dbContext.Flights.FirstOrDefaultAsync(f => f.FlightId == document.FlightId);
             if (flightDocument != null)
             {
-                flightDocument.Total_Document += 1; 
-                await _dbContext.SaveChangesAsync();
+                if (flightDocument.Total_Document != 0)
+                {
+                    flightDocument.Total_Document += 1;
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    flightDocument.Total_Document = 1;
+                    await _dbContext.SaveChangesAsync();
+                }
             }
-            await _dbContext.AddAsync(document);
-            await _dbContext.SaveChangesAsync();
+
             return document;
         }
 
@@ -100,6 +109,16 @@ namespace Infrastructure.Repositories
             documentId.FlightId = document.FlightId;
             await _dbContext.SaveChangesAsync();
             return documentId;
+        }
+
+        public async Task<List<Document>> GetDocumentByType(Guid TypeId)
+        {
+            var document = await _dbContext.Documents.Where(x => x.TypeId == TypeId).ToListAsync();
+            if(document == null)
+            {
+                throw new ArgumentNullException(nameof(document),"document null"); 
+            }
+            return document;
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Infrastructure.Repositories
         {
             documentType.Create_at = DateTime.Now;
             documentType.Update_at = DateTime.Now;
+            // truy vấn và kiễm tra xem số group được truy cập 
+           
             await _dbContext.DocumentTypes.AddAsync(documentType);
             await _dbContext.SaveChangesAsync();
             return documentType;
@@ -33,7 +35,8 @@ namespace Infrastructure.Repositories
             {
                 return false;
             }
-             _dbContext.Remove(documentType);
+
+            _dbContext.Remove(documentType);
             await _dbContext.SaveChangesAsync();
             return true;
         }

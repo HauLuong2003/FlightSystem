@@ -19,7 +19,7 @@ namespace Back_End.Controllers
     {
         // thêm mới user
         [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateUserCommand user)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand user)
         {
             var create = await Mediator.Send(user);
             return Ok(create);

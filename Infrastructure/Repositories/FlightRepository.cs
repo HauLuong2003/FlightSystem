@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
         }
         public async Task<Flight> CreateFilght(Flight flight)
         {
-            flight.Total_Document = 1;
+          
             await _dbContext.AddAsync(flight);
             await _dbContext.SaveChangesAsync();
             return flight;
@@ -35,9 +35,9 @@ namespace Infrastructure.Repositories
             return flight;
         }
 
-        public async Task<Flight> GetFlightByNo(string flightNo)
+        public async Task<Flight> GetFlightById(Guid Id)
         {
-            var flight = await _dbContext.Flights.Include(f => f.Documents).FirstOrDefaultAsync(f => f.FlightNo == flightNo);
+            var flight = await _dbContext.Flights.Include(f => f.Documents).FirstOrDefaultAsync(f => f.FlightId == Id);
             if (flight == null)
             {
                 throw new ArgumentNullException(nameof(flight), "flight is null");

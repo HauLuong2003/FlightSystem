@@ -92,9 +92,8 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Permission")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<int?>("Permission")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type_Name")
                         .IsRequired()
@@ -289,6 +288,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("VerificationCode")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.HasKey("UserId");
 

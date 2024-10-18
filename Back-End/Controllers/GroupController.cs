@@ -19,7 +19,7 @@ namespace Back_End.Controllers
 
         // tao moi group
         [HttpPost]
-        public async Task<IActionResult> CreateGroup(CreateGroupCommand command)
+        public async Task<IActionResult> CreateGroup([FromBody] CreateGroupCommand command)
         {
             // lấy thông creator từ Jwt
             var creator = User.FindFirst(ClaimTypes.Email);

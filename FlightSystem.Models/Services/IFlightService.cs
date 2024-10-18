@@ -11,6 +11,6 @@ namespace FlightSystem.Domain.Services
     {
         Task<Flight> CreateFilght(Flight flight);
         Task<List<Flight>> GetFlight();
-        Task<Flight> GetFlightByNo(string flightNo);
+        Task<Flight> GetFlightById(Guid Id);
     }
 }

@@ -20,19 +20,25 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<bool> ChangePassword(User login)
+        public async Task<bool> ChangePassword(User user)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
-            if (user == null)
+            var users = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (users == null)
             {
                 return false;
             }
-            user.Password = login.Password;
+            users.Password = user.Password;
             await _dbContext.SaveChangesAsync();
             return true;
         }
 
-
+        public async Task<bool> FrogetPassword(string Email)
+        {
+            // kiễm tra email có tồn tại hay không
+            var userEmail = await _dbContext.Users.AnyAsync(u => u.Email == Email);
+           // trả về kết quả
+            return userEmail;
+        }
 
         public async Task<User> Login(User login)
         {
@@ -52,5 +58,6 @@ namespace Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
     }
 }

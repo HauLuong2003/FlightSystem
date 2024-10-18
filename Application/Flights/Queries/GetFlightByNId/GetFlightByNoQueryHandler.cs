@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Flights.Queries.GetFlightByNo
+namespace Application.Flights.Queries.GetFlightById
 {
-    public class GetFlightByNoQueryHandler : IRequestHandler<GetFlightByNoQuery, FlightDTO>
+    public class GetFlightByNoQueryHandler : IRequestHandler<GetFlightByIdQuery, FlightDTO>
     {
         private readonly IFlightService _flightService;
         private readonly IMapper _mapper;
@@ -20,13 +20,13 @@ namespace Application.Flights.Queries.GetFlightByNo
             _mapper = mapper;
         }
 
-        public async Task<FlightDTO> Handle(GetFlightByNoQuery request, CancellationToken cancellationToken)
+        public async Task<FlightDTO> Handle(GetFlightByIdQuery request, CancellationToken cancellationToken)
         {
-            if(request.FlightNo == null)
+            if(request.Id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(request.FlightNo),"Flight No is null");
+                throw new ArgumentNullException(nameof(request.Id),"Flight No is null");
             }
-            var flight = await _flightService.GetFlightByNo(request.FlightNo);
+            var flight = await _flightService.GetFlightById(request.Id);
             return _mapper.Map<FlightDTO>(flight);
         }
     }

@@ -30,7 +30,8 @@ namespace Application.Documents.Commands.CreateDocumentCommand
             var document = new Document()
             {
                 Document_Name = request.Document_Name,
-                Note = request.Note,               
+                Note = request.Note,   
+                Document_File = request.Document_File,
                 Creator = request.Creator,
                 Signature = request.Signature,
                 TypeId = request.TypeId,

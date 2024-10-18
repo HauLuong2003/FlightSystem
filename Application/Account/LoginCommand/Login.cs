@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Account.LoginCommand
 {
-    public class Login : IRequest<LoginResponse>
+    public class Login : IRequest<AccountResponse>
     {
         [Required, EmailAddress]
         public string Email { get; set; } = string.Empty;

@@ -10,5 +10,6 @@ namespace FlightSystem.Domain.Services
     public interface IJwtTokenService
     {
         Task<string> GenerateToken(User user);
+        Task<string> GenerateTokenVerification(string Email);
     }
 }

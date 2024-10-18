@@ -53,5 +53,26 @@ namespace Infrastructure.Repositories
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt; 
         }
+
+        public async Task<string> GenerateTokenVerification(string Email)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                //yêu cầu là cặp khóa-giá trị chứa thông tin về người dùng
+                // payload
+                 new Claim(ClaimTypes.Email, Email),
+                 new Claim("permission" , "Verification"),
+            };
+            var Key = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+
+            //HMAC SHA sẽ được sử dụng để ký mã thông báo, đây là thuật toán thường được sử dụng và an toàn cho JWT.
+            var credentials = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256Signature);
+            var token = new JwtSecurityToken(claims: claims,
+                            expires: DateTime.Now.AddMinutes(15),
+                            signingCredentials: credentials);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
+        }
     }
 }

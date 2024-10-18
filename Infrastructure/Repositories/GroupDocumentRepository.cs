@@ -59,10 +59,10 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> CheckGroupAccessDocument(GroupDocument groupDocument)
         {
-            // Kiễm tra user sử dụng có được cấp quyền truy cập vào và có  quyền sửa hay không 
+            // Kiễm tra có được cấp quyền truy cập  
             var groupHasAccess = await _dbContext.GroupDocuments
                 .AnyAsync(gd => gd.DocumentId == groupDocument.DocumentId && gd.GroupId == groupDocument.GroupId);
-
+            // trả về true or false
             return groupHasAccess;
         }
     }

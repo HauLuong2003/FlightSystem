@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public class DocumentDTO 
+    public class DocumentDTO : IMapFrom<Document>
     {
         public Guid DocumentId { get; set; }
         
@@ -27,6 +27,6 @@ namespace Application.DTOs
         public Guid FlightId { get; set; }
       
         public Guid TypeId { get; set; }
-        public ICollection<Group>? Groups { get; set; }
+      
     }
 }

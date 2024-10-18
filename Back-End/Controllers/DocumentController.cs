@@ -4,6 +4,7 @@ using Application.Documents.Commands.UpdateDocumentCommand;
 using Application.Documents.Queries.CheckDocumentAccess;
 using Application.Documents.Queries.GetDocument;
 using Application.Documents.Queries.GetDocumentByName;
+using Application.Documents.Queries.GetDocumentByType;
 using Application.Documents.Queries.GetDocumetById;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,13 +22,13 @@ namespace Back_End.Controllers
     {
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateDocument(CreateDocumentCommand command)
+        public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentCommand command)
         {
             //lấy thông tin creator từ jwt 
             var creator = User.FindFirst(ClaimTypes.Email);
             if (creator == null)
             {
-                return Forbid();
+                return BadRequest();
             }
             //sau đó gán và command
             command.Creator = creator.Value;
@@ -65,7 +66,7 @@ namespace Back_End.Controllers
                 if (permisson == "Read Only" || permisson == "No Permission")
                 {
                     // Trả về không cho phép truy cập
-                    return Forbid("Your group does not have access to this document.");
+                    return Forbid("Your  does not have access to this document.");
                 }
                 var groupId = Guid.Parse(groupID.Value);
                 // gửi sang Handler để xử lý
@@ -146,8 +147,14 @@ namespace Back_End.Controllers
         [HttpGet("Name/{Name}")]
         public async Task<IActionResult> GetDocumentByName(string Name)
         {
-
             var document = await Mediator.Send(new GetDocumentByNameQuery { Name = Name });
+            return Ok(document);
+        }
+        [Authorize(Policy = "AdminReadAndWrite")]
+        [HttpGet("Type/{TypeId}")]
+        public async Task<IActionResult> GetDocumentByType(Guid TypeId)
+        {
+            var document = await Mediator.Send(new GetDocumentByType { TypeId = TypeId });
             return Ok(document);
         }
     }

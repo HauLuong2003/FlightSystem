@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Account.LoginCommand
 {
-    public class LoginResponse
+    public class AccountResponse
     {
         public string Token { get; set; }
     }
