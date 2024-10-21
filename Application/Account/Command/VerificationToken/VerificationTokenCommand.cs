@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.VerificationToken
+namespace Application.Account.Command.VerificationToken
 {
     public class VerificationTokenCommand : IRequest<ServiceResponse>
     {
         [Required]
-        public string Email {  get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         [Required, StringLength(6, MinimumLength = 6)]
-        public string Token {  get; set; } =string.Empty;
+        public string Token { get; set; } = string.Empty;
     }
 }

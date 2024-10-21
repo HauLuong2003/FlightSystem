@@ -27,25 +27,13 @@ namespace Infrastructure
         {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                     ValidateIssuerSigningKey = true,
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                     .GetBytes(configuration.GetSection("AppSettings:Token").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-            //// Xử lý  "Bearer " trong token
-            //options.Events = new JwtBearerEvents
-            //{
-            //    OnMessageReceived = context =>
-            //    {
-            //        var token = context.Request.Headers["Authorization"].FirstOrDefault();
-            //        if (token != null && token.StartsWith("Bearer "))
-            //        {
-            //            context.Token = token.Substring(7); // Bỏ tiền tố "Bearer "
-            //        }
-            //        return Task.CompletedTask;
-            //    }
-            //};
+  
         });
 
             services.AddAuthorization(options =>
@@ -72,7 +60,7 @@ namespace Infrastructure
                 });
 
             });
-
+            
             //đăng kí service
             services.AddScoped<IUserService, UserRepository>();
             services.AddScoped<IGroupService, GroupRepository>();

@@ -1,4 +1,5 @@
-﻿using Application.DTOs;
+﻿using Application.Documents.Commands.CreateGroupDocumentCommand;
+using Application.DTOs;
 using AutoMapper;
 using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
@@ -11,21 +12,20 @@ using System.Threading.Tasks;
 
 namespace Application.Documents.Commands.CreateDocumentCommand
 {
-    public class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentCommand, DocumentDTO>
+    public class CreateDocumentCommandHandler : IRequestHandler<CreateDocument, DocumentDTO>
 
     {
         private readonly IDocumentService _documentService;
-        private readonly IGroupDocumentService _groupDocumentService;
-
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public CreateDocumentCommandHandler(IDocumentService documentService, IMapper mapper, IGroupDocumentService groupDocumentService)
+        public CreateDocumentCommandHandler(IDocumentService documentService, IMapper mapper, IMediator mediator)
         {
             _documentService = documentService;
             _mapper = mapper;
-            _groupDocumentService = groupDocumentService;
+            _mediator = mediator;
 
         }
-        public async Task<DocumentDTO> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<DocumentDTO> Handle(CreateDocument request, CancellationToken cancellationToken)
         {
             var document = new Document()
             {
@@ -39,12 +39,13 @@ namespace Application.Documents.Commands.CreateDocumentCommand
                
             };
             var result = await _documentService.CreateDocument(document);
-            var groupDocument = new GroupDocument()
+
+            // Thay thế CreateGroupDocumentCommand cho đúng kiểu
+            await _mediator.Send(new CreateGroupDocument
             {
+                DocumentId = result.DocumentId,
                 GroupId = request.GroupId,
-                DocumentId = result.DocumentId
-            };
-            await _groupDocumentService.CreateGroupDocument(groupDocument);
+            });
             return _mapper.Map<DocumentDTO>(result);
         }
     }

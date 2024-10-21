@@ -1,4 +1,5 @@
-﻿using FlightSystem.Domain.Services;
+﻿using Application.Settings.Commands.CheckCaptcha;
+using FlightSystem.Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,24 +9,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.Captcha
+namespace Application.Account.Query.Captcha
 {
     public class GetCaptchatQueryHandler : IRequestHandler<GetCaptchaQuery, FileContentResult>
     {
         private readonly ICaptchaService _captchaService;
         private readonly IHttpContextAccessor _contextAccessor;
-        private readonly ISettingService _settingService;
-        public GetCaptchatQueryHandler(ICaptchaService captchaService, IHttpContextAccessor contextAccessor, ISettingService settingService)
+        private readonly IMediator _mediator;
+        public GetCaptchatQueryHandler(ICaptchaService captchaService, IHttpContextAccessor contextAccessor, IMediator mediator)
         {
             _captchaService = captchaService;
             _contextAccessor = contextAccessor;
-            _settingService = settingService;
+            _mediator = mediator;
         }
 
-        public   async Task<FileContentResult> Handle(GetCaptchaQuery request, CancellationToken cancellationToken)
+        public async Task<FileContentResult> Handle(GetCaptchaQuery request, CancellationToken cancellationToken)
         {
             // check xem có enabled (true or false)
-            var checkCaptcha = await _settingService.CheckCaptcha();
+            var checkCaptcha = await _mediator.Send(new CheckCaptchaCommand());
             // neu true thi thuc hien 
             if (checkCaptcha == true)
             {

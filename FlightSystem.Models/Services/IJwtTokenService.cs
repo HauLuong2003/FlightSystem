@@ -11,6 +11,6 @@ namespace FlightSystem.Domain.Services
     {
         Task<string> GenerateToken(User user);
         Task<string> GenerateTokenVerification(string Email);
-       
+    
     }
 }

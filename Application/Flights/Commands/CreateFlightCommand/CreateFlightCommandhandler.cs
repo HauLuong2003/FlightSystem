@@ -1,4 +1,6 @@
-﻿using Application.DTOs;
+﻿using Application.Documents.Commands.CreateDocumentCommand;
+using Application.Documents.Commands.CreateGroupDocumentCommand;
+using Application.DTOs;
 using AutoMapper;
 using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
@@ -14,15 +16,14 @@ namespace Application.Flights.Commands.CreateFlightCommand
     public class CreateFlightCommandhandler : IRequestHandler<CreateFlightCommand, FlightDTO>
     {
         private readonly IFlightService _flightService;
-        private readonly IDocumentService _documentService;
-        private readonly IGroupDocumentService _groupDocumentService;
+
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public CreateFlightCommandhandler(IFlightService flightService, IMapper mapper, IDocumentService documentService, IGroupDocumentService groupDocumentService)
+        public CreateFlightCommandhandler(IFlightService flightService, IMapper mapper, IMediator mediator)
         {
             _flightService = flightService;
             _mapper = mapper;
-            _documentService = documentService;
-            _groupDocumentService = groupDocumentService;
+            _mediator = mediator;
         }
 
         public async Task<FlightDTO> Handle(CreateFlightCommand request, CancellationToken cancellationToken)
@@ -37,25 +38,23 @@ namespace Application.Flights.Commands.CreateFlightCommand
             // create Flight và trả về giá trí 
             var result = await _flightService.CreateFilght(flight);
             // sau đó tạo document cho FlightId
-            var document = new Document()
-            {
-                Document_Name = request.documentCommand.Document_Name,
-                //Version = 1,
-                Note = request.documentCommand.Note,
-                Document_File = request.documentCommand.Document_File,
-                Signature = request.documentCommand.Signature,
-                Creator = request.documentCommand.Creator,
-                FlightId = result.FlightId,// sử dụng Flight Id trả về
-                TypeId = request.documentCommand.TypeId,
-
-            };
-           var resultDoc = await _documentService.CreateDocument(document);
-            var groupDocument = new GroupDocument()
+           
+           var resultDoc = await _mediator.Send(new CreateDocument
+           {
+               Document_Name = request.documentCommand.Document_Name,             
+               Note = request.documentCommand.Note,
+               Document_File = request.documentCommand.Document_File,
+               Signature = request.documentCommand.Signature,
+               Creator = request.documentCommand.Creator,
+               FlightId = result.FlightId,// sử dụng Flight Id trả về
+               TypeId = request.documentCommand.TypeId,
+           });
+            
+            await _mediator.Send(new CreateGroupDocument
             {
                 DocumentId = resultDoc.DocumentId,
                 GroupId = request.documentCommand.GroupId,
-            };
-            await _groupDocumentService.CreateGroupDocument(groupDocument);
+            });
             
             return _mapper.Map<FlightDTO>(result);
         }

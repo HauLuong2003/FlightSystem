@@ -1,4 +1,5 @@
 ﻿using Application.Common.ServiceResponse;
+using Application.Users.Queries.GetUserByEmail;
 using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
@@ -8,28 +9,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.ChangePasswordCommand
+namespace Application.Account.Command.ChangePasswordCommand
 {
-    public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand,ServiceResponse>
+    public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, ServiceResponse>
     {
         private readonly IAccountService _accountService;
-        private readonly IUserService _userService;
-        public ChangePasswordCommandHandler(IAccountService accountService, IUserService userService)
+        private readonly IMediator _mediator;
+        public ChangePasswordCommandHandler(IAccountService accountService, IMediator mediator)
         {
             _accountService = accountService;
-            _userService = userService;
+            _mediator = mediator;
         }
 
         public async Task<ServiceResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            if(request == null)
+            if (request == null)
             {
                 return new ServiceResponse(false, "request is null");
 
             }
-            var user = await _userService.GetUserByEmail(request.Email);
+            var user = await _mediator.Send(new GetUserByEmailCommand { Email = request.Email });
             //kiễm tra password nhập vào và kiễm tra password mới 
-            if(user.Password ==  request.Password && request.NewPassword == request.ConfirmPassword)
+            if (user.Password == request.Password && request.NewPassword == request.ConfirmPassword)
             {
                 if (user.IsActive == false)
                 {
@@ -39,9 +40,9 @@ namespace Application.Account.ChangePasswordCommand
                 {
                     Email = request.Email,
                     Password = request.NewPassword
-                };               
+                };
                 var result = await _accountService.ChangePassword(newPass);
-                if(result == false)
+                if (result == false)
                 {
                     return new ServiceResponse(result, "Change password don't success");
                 }

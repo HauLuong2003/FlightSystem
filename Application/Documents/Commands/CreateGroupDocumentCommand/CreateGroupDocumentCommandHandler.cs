@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Documents.Commands.CreateGroupDocumentCommand
 {
-    public class CreateGroupDocumentCommandHandler : IRequestHandler<CreateGroupDocumentCommand, ServiceResponse>
+    public class CreateGroupDocumentCommandHandler : IRequestHandler<CreateGroupDocument, ServiceResponse>
     {
         private readonly IGroupDocumentService _groupDocumentService;
         public CreateGroupDocumentCommandHandler(IGroupDocumentService groupDocumentService)
@@ -18,7 +18,7 @@ namespace Application.Documents.Commands.CreateGroupDocumentCommand
             _groupDocumentService = groupDocumentService;
         }
 
-        public async Task<ServiceResponse> Handle(CreateGroupDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse> Handle(CreateGroupDocument request, CancellationToken cancellationToken)
         {
             if (request == null)
             {

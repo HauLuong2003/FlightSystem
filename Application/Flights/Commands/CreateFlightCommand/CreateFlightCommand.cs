@@ -20,6 +20,6 @@ namespace Application.Flights.Commands.CreateFlightCommand
         public DateTime Departure_Date { get; set; }
         [Required]
         public TimeSpan TimeFlight { get; set; }
-        public CreateDocumentCommand documentCommand { get; set; }
+        public CreateDocument documentCommand { get; set; }
     }
 }

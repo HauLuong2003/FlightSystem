@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Documents.Commands.CreateGroupDocumentCommand
+namespace Application.DocumentTypes.Commands.CreateGroupDocumentTypeCommand
 {
-    public class CreateGroupDocumentCommand : IRequest<ServiceResponse>
+    public class CreateGroupDocumentType : IRequest<ServiceResponse>
     {
-        public Guid DocumentId { get; set; }
         public Guid GroupId { get; set; }
+        public Guid TypeId { get; set; }
     }
 }

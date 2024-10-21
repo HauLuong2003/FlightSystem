@@ -21,7 +21,7 @@ namespace Back_End.Controllers
     {
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentCommand command)
+        public async Task<IActionResult> CreateDocument([FromBody] CreateDocument command)
         {
             //lấy thông tin creator từ jwt 
             var creator = User.FindFirst(ClaimTypes.Email);

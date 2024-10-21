@@ -1,4 +1,6 @@
-﻿using Application.Common.ServiceResponse;
+﻿using Application.Account.Command.GenerateToken;
+using Application.Common.ServiceResponse;
+using Application.Settings.Commands.CheckCaptcha;
 using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
@@ -9,28 +11,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.LoginCommand
+namespace Application.Account.Command.LoginCommand
 {
     public class LoginCommandHanlder : IRequestHandler<Login, string>
     {
         private readonly IAccountService _accountService;
-        private readonly IJwtTokenService _jwtTokenService;
+        private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _contextAccessor;
-        private readonly ISettingService _settingService;
-        public LoginCommandHanlder(IAccountService accountService, IJwtTokenService jwtTokenService,IHttpContextAccessor httpContextAccessor,ISettingService settingService) 
+      
+        public LoginCommandHanlder(IAccountService accountService, IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _accountService = accountService;
-            _jwtTokenService = jwtTokenService;
+            _mediator = mediator;
             _contextAccessor = httpContextAccessor;
-            _settingService = settingService;
+            
         }
         public async Task<string> Handle(Login request, CancellationToken cancellationToken)
         {
-            if (request.Password == null || request.Email == null) {
+            if (request.Password == null || request.Email == null)
+            {
                 throw new ArgumentNullException(nameof(request), "Email or password is null");
             }
             // check captcha co true hay false
-            var checkCaptcha = await _settingService.CheckCaptcha();
+            var checkCaptcha = await _mediator.Send(new CheckCaptchaCommand());
             // neu true thi thuc hien
             if (checkCaptcha == true)
             {
@@ -50,7 +53,11 @@ namespace Application.Account.LoginCommand
                     Password = request.Password,
                 };
                 var loginUser = await _accountService.Login(login);
-                var jwt = await _jwtTokenService.GenerateToken(loginUser);
+                var jwt = await _mediator.Send(new GenerateTokenCommand
+                {
+                    User = loginUser,
+                });
+
                 return jwt;
             }
             // neu false thi thuc hien
@@ -62,10 +69,13 @@ namespace Application.Account.LoginCommand
                     Password = request.Password,
                 };
                 var loginUser = await _accountService.Login(login);
-                var jwt = await _jwtTokenService.GenerateToken(loginUser);
+                var jwt = await _mediator.Send(new GenerateTokenCommand
+                {
+                    User = loginUser,
+                });
                 return jwt;
             }
-               
+
         }
     }
 }

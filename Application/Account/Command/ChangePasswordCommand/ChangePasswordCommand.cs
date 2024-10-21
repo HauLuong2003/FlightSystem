@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.ChangePasswordCommand
+namespace Application.Account.Command.ChangePasswordCommand
 {
-    public class ChangePasswordCommand :IRequest<ServiceResponse>
+    public class ChangePasswordCommand : IRequest<ServiceResponse>
     {
         [Required]
-        public string Email {  get; set; }
+        public string Email { get; set; }
         [Required]
         public string Password { get; set; } = string.Empty;
         [Required]
-        public string  NewPassword { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
         [Required, Compare("NewPassword")]
         public string ConfirmPassword { get; set; } = string.Empty;
     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Documents.Commands.CreateDocumentCommand
 {
-    public class CreateDocumentCommand : IRequest<DocumentDTO>
+    public class CreateDocument : IRequest<DocumentDTO>
     {
         [Required]
         public string Document_Name { get; set; }

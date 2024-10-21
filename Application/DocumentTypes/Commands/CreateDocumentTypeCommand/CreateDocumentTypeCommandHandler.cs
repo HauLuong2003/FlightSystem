@@ -1,4 +1,5 @@
-﻿using Application.DTOs;
+﻿using Application.DocumentTypes.Commands.CreateGroupDocumentTypeCommand;
+using Application.DTOs;
 using AutoMapper;
 using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
@@ -16,12 +17,12 @@ namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
     {
         private readonly IDocumentTypeService _documentTypeService;
         private readonly IMapper _mapper;
-        private readonly IGroupDocumentTypeService _groupDocumentTypeService;
-        public CreateDocumentTypeCommandHandler(IDocumentTypeService documentTypeService, IMapper mapper,IGroupDocumentTypeService groupDocumentTypeService)
+        private readonly IMediator _mediator;
+        public CreateDocumentTypeCommandHandler(IDocumentTypeService documentTypeService, IMapper mapper,IMediator mediator)
         {
             _documentTypeService = documentTypeService;
             _mapper = mapper;
-            _groupDocumentTypeService = groupDocumentTypeService;
+            _mediator = mediator;
         }
 
         public async Task<DocumentTypeDTO> Handle(CreateDocumentTypeCommand request, CancellationToken cancellationToken)
@@ -37,13 +38,13 @@ namespace Application.DocumentTypes.Commands.CreateDocumentTypeCommand
                 Creator = request.Creator               
             };
             var result = await _documentTypeService.CreateDocumentType(documentType);
-            var groupDocumentType = new GroupDocumentType()
+            
+            await _mediator.Send(new CreateGroupDocumentType
             {
-                GroupId = request.GroupId,
-                TypeId = result.TypeId
-            };
-             await _groupDocumentTypeService.CreateGroupDocumentType(groupDocumentType);
-
+                 GroupId = request.GroupId,
+                 TypeId = result.TypeId
+            });
+            
             return _mapper.Map<DocumentTypeDTO>(result);
         }
     }

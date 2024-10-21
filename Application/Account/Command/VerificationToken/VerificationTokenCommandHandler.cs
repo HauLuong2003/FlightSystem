@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.VerificationToken
+namespace Application.Account.Command.VerificationToken
 {
     public class VerificationTokenCommandHandler : IRequestHandler<VerificationTokenCommand, ServiceResponse>
     {
@@ -20,8 +20,8 @@ namespace Application.Account.VerificationToken
 
         public async Task<ServiceResponse> Handle(VerificationTokenCommand request, CancellationToken cancellationToken)
         {
-            var Verification = await _sendEmailService.VerificationToken(request.Email,request.Token);
-            if(Verification == false)
+            var Verification = await _sendEmailService.VerificationToken(request.Email, request.Token);
+            if (Verification == false)
             {
                 return new ServiceResponse(Verification, "Token don't success");
             }

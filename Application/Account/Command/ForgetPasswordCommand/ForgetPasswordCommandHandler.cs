@@ -1,4 +1,6 @@
-﻿using Application.Account.LoginCommand;
+﻿using Application.Account.Command.GenerateToken;
+using Application.Account.Command.LoginCommand;
+using Application.Account.Command.SendEmail;
 using Application.Common.ServiceResponse;
 using FlightSystem.Domain.Services;
 using MediatR;
@@ -8,37 +10,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Account.ForgetPasswordCommand
+namespace Application.Account.Command.ForgetPasswordCommand
 {
     public class ForgetPassWordCommandHandler : IRequestHandler<ForgetPassWordCommand, string>
     {
-        private readonly ISendEmailService _sendEmailService;
+        private readonly IMediator _mediator;
         private readonly IAccountService _accountService;
-        private readonly IJwtTokenService _jwtTokenService;
-        public ForgetPassWordCommandHandler(ISendEmailService sendEmailService, IAccountService accountService, IJwtTokenService jwtTokenService)
+        
+        public ForgetPassWordCommandHandler(IAccountService accountService, IMediator mediator)
         {
-            _sendEmailService = sendEmailService;
+            _mediator = mediator;
             _accountService = accountService;
-            _jwtTokenService = jwtTokenService;
+            
         }
 
         public async Task<string> Handle(ForgetPassWordCommand request, CancellationToken cancellationToken)
         {
-            if(request.Email == null)
+            if (request.Email == null)
             {
                 throw new ArgumentException("Email is null");
             }
             var CheckEmail = await _accountService.FrogetPassword(request.Email);
-            if(CheckEmail == false)
+            if (CheckEmail == false)
             {
                 throw new ArgumentException("check email don't success or user don't active");
             }
-            var email = await _sendEmailService.SendEmail(request.Email);
-            if(email == false)
+            var email = await _mediator.Send(new SendEmailCommand
+            {
+                Email = request.Email,
+            });
+            if (email == false)
             {
                 throw new ArgumentException("send email don't success");
             }
-            var jwt = await _jwtTokenService.GenerateTokenVerification(request.Email);
+            var jwt = await _mediator.Send(new GenerateTokenVerificationCommand
+            {
+                Email = request.Email
+            });
             return jwt;
         }
     }

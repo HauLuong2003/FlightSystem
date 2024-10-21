@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Application.DocumentTypes.Commands.CreateGroupDocumentTypeCommand
 {
-    public class CreateGroupDocumentTypeCommandHandler : IRequestHandler<CreateGroupDocumentTypeCommand, ServiceResponse>
+    public class CreateGroupDocumentTypeCommandHandler : IRequestHandler<CreateGroupDocumentType, ServiceResponse>
     {
         private readonly IGroupDocumentTypeService _groupDocumentTypeService;
         public CreateGroupDocumentTypeCommandHandler(IGroupDocumentTypeService groupDocumentTypeService) 
         { 
             _groupDocumentTypeService = groupDocumentTypeService;
         }
-        public async Task<ServiceResponse> Handle(CreateGroupDocumentTypeCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResponse> Handle(CreateGroupDocumentType request, CancellationToken cancellationToken)
         {
            if(request == null)
             {
