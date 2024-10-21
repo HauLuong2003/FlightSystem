@@ -25,7 +25,7 @@ namespace Application.Settings.Queries.GetSettingByUser
            {
                 throw new ArgumentNullException(nameof(request));
            }
-           var setting = await _settingService.GetSetting(request.UserId);
+           var setting = await _settingService.GetSetting();
            return _mapper.Map<SettingDTO>(setting);
         }
     }

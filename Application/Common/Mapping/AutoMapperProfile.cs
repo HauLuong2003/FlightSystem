@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 
 using System.Reflection;
 using System.Runtime.InteropServices;

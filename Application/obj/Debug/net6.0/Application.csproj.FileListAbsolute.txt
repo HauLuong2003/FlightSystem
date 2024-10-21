@@ -1,8 +1,6 @@
 D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\Application.deps.json
 D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\Application.dll
 D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\Application.pdb
-D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\FlightSystem.Domain.dll
-D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\FlightSystem.Domain.pdb
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.csproj.AssemblyReference.cache
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.GeneratedMSBuildEditorConfig.editorconfig
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.AssemblyInfoInputs.cache
@@ -14,3 +12,5 @@ D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\refint\Application.dll
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.pdb
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\ref\Application.dll
 D:\Project_C#\FlightSystem\Application\obj\Debug\net6.0\Application.sourcelink.json
+D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\FlightSystem.Domain.dll
+D:\Project_C#\FlightSystem\Application\bin\Debug\net6.0\FlightSystem.Domain.pdb

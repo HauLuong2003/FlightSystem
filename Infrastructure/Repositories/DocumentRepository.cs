@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,11 @@ namespace Infrastructure.Repositories
             await _dbContext.AddAsync(document);
             await _dbContext.SaveChangesAsync();
             var flightDocument = await _dbContext.Flights.FirstOrDefaultAsync(f => f.FlightId == document.FlightId);
-            if (flightDocument != null)
+            if (flightDocument == null)
+            {
+                throw new ArgumentException("flight is null");
+            }
+            else
             {
                 if (flightDocument.Total_Document != 0)
                 {
@@ -39,25 +43,25 @@ namespace Infrastructure.Repositories
                     await _dbContext.SaveChangesAsync();
                 }
             }
-
             return document;
         }
 
         public async Task<bool> DeleteDocument(Guid Id)
         {
-           var documentId = await _dbContext.Documents.FindAsync(Id);
-            if (documentId == null) {
+           var document = await _dbContext.Documents
+                                .Include(f => f.Flight).FirstOrDefaultAsync(d=> d.DocumentId==Id);
+            if (document == null)
+            {
                 return false;
             }
-            var flightDocument = await _dbContext.Flights.FirstOrDefaultAsync(f => f.FlightId == documentId.FlightId);
-            if(flightDocument != null)
+            else
             {
-                flightDocument.Total_Document -= 1;
+                document.Flight.Total_Document -= 1;
                 await _dbContext.SaveChangesAsync();
+                _dbContext.Documents.Remove(document);
+                await _dbContext.SaveChangesAsync();
+                return true;
             }
-                _dbContext.Documents.Remove(documentId);
-            await _dbContext.SaveChangesAsync();
-            return true;
         }
 
         public async Task<List<Document>> GetDocument()

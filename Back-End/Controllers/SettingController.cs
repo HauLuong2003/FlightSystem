@@ -1,5 +1,4 @@
-﻿using Application.Settings.Commands.CreateSetting;
-using Application.Settings.Commands.UpdateSetting;
+﻿using Application.Settings.Commands.UpdateSetting;
 using Application.Settings.Queries.GetSettingByUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,19 +14,6 @@ namespace Back_End.Controllers
     [Authorize]
     public class SettingController : FlightSystemControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> CreateSetting(CreateSettingCommand command)
-        {
-            var id = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            var userId = Guid.Parse(id);
-            command.userId = userId;
-            var setting = await Mediator.Send(command);
-            return Ok(setting);
-        }
         [HttpPut]
         public async Task<IActionResult> UpdateSetting(UpdateSettingCommand command)
         {
@@ -37,13 +23,8 @@ namespace Back_End.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSetting()
         {
-            var id = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            var userId = Guid.Parse(id);
-            var setting = await Mediator.Send(new GetSettingQuery { UserId = userId });
+
+            var setting = await Mediator.Send(new GetSettingQuery());
             return Ok(setting);
         }
     }

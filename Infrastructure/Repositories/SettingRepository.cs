@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -18,16 +18,23 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Setting> CreateSetting(Setting setting)
+        public async Task<bool> CheckCaptcha()
         {
-            await _dbContext.Settings.AddAsync(setting);
-            await _dbContext.SaveChangesAsync();
-            return setting;
+            var setting = await _dbContext.Settings.FirstOrDefaultAsync();
+            if (setting == null)
+            {
+                return false;
+            }
+            if (setting.Captcha == true)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public async Task<Setting> GetSetting(Guid Id)
+        public async Task<Setting> GetSetting()
         {
-            var setting = await _dbContext.Settings.FirstOrDefaultAsync(s => s.UserId ==Id);
+            var setting = await _dbContext.Settings.FirstOrDefaultAsync();
             if (setting == null)
             {
                 return null!;

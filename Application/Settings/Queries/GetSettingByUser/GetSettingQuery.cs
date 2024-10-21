@@ -10,6 +10,6 @@ namespace Application.Settings.Queries.GetSettingByUser
 {
     public class GetSettingQuery:IRequest<SettingDTO>
     {
-        public Guid UserId { get; set; }
+       
     }
 }

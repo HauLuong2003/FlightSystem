@@ -15,6 +15,6 @@ namespace Application.Settings.Commands.UpdateSetting
 
         public string? Logo { get; set; }
 
-        public string? Captcha { get; set; }
+        public bool? Captcha { get; set; }
     }
 }

@@ -30,9 +30,10 @@ namespace Infrastructure.Repositories
                 var pathDoc = "FileDocument/" + fileName;
                 return pathDoc;
             }
-            catch(Exception)
+            catch(Exception )
             {
-                return string.Empty;
+                
+                return null!;
             }
         }
     }

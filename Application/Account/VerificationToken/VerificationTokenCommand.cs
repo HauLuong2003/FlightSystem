@@ -11,6 +11,8 @@ namespace Application.Account.VerificationToken
 {
     public class VerificationTokenCommand : IRequest<ServiceResponse>
     {
+        [Required]
+        public string Email {  get; set; } = string.Empty;
         [Required, StringLength(6, MinimumLength = 6)]
         public string Token {  get; set; } =string.Empty;
     }

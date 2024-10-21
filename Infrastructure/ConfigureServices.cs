@@ -87,6 +87,7 @@ namespace Infrastructure
             services.AddScoped<IPermissionService,PermissionRepository>();
             services.AddScoped<ISettingService,SettingRepository>();
             services.AddScoped<ISendEmailService, SendEmailRepository>();
+            services.AddScoped<ICaptchaService, CaptchaRepsitory>();
             return services;
         }
     }

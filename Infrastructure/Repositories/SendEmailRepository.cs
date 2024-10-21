@@ -32,10 +32,12 @@ namespace Infrastructure.Repositories
                 Email.From.Add(MailboxAddress.Parse(_configuration.GetSection("Email:UserName").Value));
                 // email nhận nội dung
                 Email.To.Add(MailboxAddress.Parse(email));
+                // tieu de 
                 Email.Subject = "Your verification code";
                 Random random = new Random();
-                //gửi random 6 số ngẫu nhiên
+                // random 6 số ngẫu nhiên
                 string verificationCode = random.Next(100000, 999999).ToString();
+                //noi dung email
                 Email.Body = new TextPart(MimeKit.Text.TextFormat.Plain) 
                 { 
                     Text = $"Your verification code is: {verificationCode}" 
@@ -65,17 +67,21 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> VerificationToken(string Verification)
+        public async Task<bool> VerificationToken(string email,string Verification)
         {
-            var user =await _dbContext.Users.FirstOrDefaultAsync(u => u.VerificationCode == Verification);
+            var user =await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
                 return false;
             }
-            // xác nhận đúng thì gán giá trị null vào vì sau này còn sử dụng
-            user.VerificationCode = null;
-            await _dbContext.SaveChangesAsync();
-            return true;
+            else if(user.VerificationCode == Verification)
+            {
+                // xác nhận đúng thì gán giá trị null vào vì sau này còn sử dụng
+                user.VerificationCode = null;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+           return false;
         }
     }
 }

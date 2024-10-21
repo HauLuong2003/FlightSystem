@@ -1,5 +1,5 @@
 ﻿using Application.Common.ServiceResponse;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
 using System;
@@ -13,11 +13,11 @@ namespace Application.Account.ResetPassWord
     public class ResetPassWordCommandHandler : IRequestHandler<ResetPassWordCommand, ServiceResponse>
     {
         private readonly IAccountService _accountService;
-        private readonly IUserService _userService;
-        public ResetPassWordCommandHandler(IAccountService accountService, IUserService userService)
+       
+        public ResetPassWordCommandHandler(IAccountService accountService)
         {
             _accountService = accountService;
-            _userService = userService;
+           
         }
         public async Task<ServiceResponse> Handle(ResetPassWordCommand request, CancellationToken cancellationToken)
         {

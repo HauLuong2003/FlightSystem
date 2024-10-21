@@ -32,7 +32,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Creator")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -84,7 +83,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Creator")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -148,7 +146,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Creator")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -229,9 +226,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Captcha")
+                    b.Property<bool?>("Captcha")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Logo")
                         .HasMaxLength(500)
@@ -241,14 +238,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("SettingId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Settings");
                 });
@@ -368,15 +358,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
-                {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.User", "User")
-                        .WithOne("Setting")
-                        .HasForeignKey("FlightSystem.Domain.Domain.Entities.Setting", "UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
                 {
                     b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
@@ -417,11 +398,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
                 {
                     b.Navigation("Groups");
-                });
-
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Setting");
                 });
 #pragma warning restore 612, 618
         }

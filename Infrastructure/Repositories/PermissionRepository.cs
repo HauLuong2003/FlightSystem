@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

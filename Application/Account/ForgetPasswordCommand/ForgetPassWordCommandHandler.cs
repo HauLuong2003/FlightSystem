@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Account.ForgetPasswordCommand
 {
-    public class ForgetPassWordCommandHandler : IRequestHandler<ForgetPassWordCommand, AccountResponse>
+    public class ForgetPassWordCommandHandler : IRequestHandler<ForgetPassWordCommand, string>
     {
         private readonly ISendEmailService _sendEmailService;
         private readonly IAccountService _accountService;
@@ -22,7 +22,7 @@ namespace Application.Account.ForgetPasswordCommand
             _jwtTokenService = jwtTokenService;
         }
 
-        public async Task<AccountResponse> Handle(ForgetPassWordCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(ForgetPassWordCommand request, CancellationToken cancellationToken)
         {
             if(request.Email == null)
             {
@@ -31,7 +31,7 @@ namespace Application.Account.ForgetPasswordCommand
             var CheckEmail = await _accountService.FrogetPassword(request.Email);
             if(CheckEmail == false)
             {
-                throw new ArgumentException("check email don't success");
+                throw new ArgumentException("check email don't success or user don't active");
             }
             var email = await _sendEmailService.SendEmail(request.Email);
             if(email == false)
@@ -39,7 +39,7 @@ namespace Application.Account.ForgetPasswordCommand
                 throw new ArgumentException("send email don't success");
             }
             var jwt = await _jwtTokenService.GenerateTokenVerification(request.Email);
-            return new AccountResponse { Token = jwt};
+            return jwt;
         }
     }
 }

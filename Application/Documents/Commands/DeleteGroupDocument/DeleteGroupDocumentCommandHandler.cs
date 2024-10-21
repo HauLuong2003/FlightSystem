@@ -1,5 +1,5 @@
 ﻿using Application.Common.ServiceResponse;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
 using System;

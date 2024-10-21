@@ -1,4 +1,5 @@
-﻿using Application.Account.ChangePasswordCommand;
+﻿using Application.Account.Captcha;
+using Application.Account.ChangePasswordCommand;
 using Application.Account.ForgetPasswordCommand;
 using Application.Account.LoginCommand;
 using Application.Account.ResetPassWord;
@@ -17,7 +18,7 @@ namespace Back_End.Controllers
     public class AuthoController : FlightSystemControllerBase
     {
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
             var logins = await Mediator.Send(login);
@@ -41,16 +42,25 @@ namespace Back_End.Controllers
         [HttpPost("Token")]
         public async Task<IActionResult> Verification ([FromBody] VerificationTokenCommand command)
         {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            command.Email = email;
             var verification = await Mediator.Send(command);
             return Ok(verification);
         }
-        [HttpPost, Authorize(Policy = "Verification")]
+        [HttpPost("ResetPassword"), Authorize(Policy = "Verification")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPassWordCommand command)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             command.Email = email;
             var verification = await Mediator.Send(command);
             return Ok(verification);
+        }
+
+        [HttpGet("Captcha")]
+        public async Task<IActionResult> GetCaptcha()
+        {
+            var captcha = await Mediator.Send(new GetCaptchaQuery());
+            return Ok(captcha);
         }
     }
 }

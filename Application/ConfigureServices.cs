@@ -19,13 +19,22 @@ namespace Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            // Register MediatR for CQRS
             services.AddMediatR(ctg =>
             {
                 ctg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 //validation
                 ctg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             });
-
+            services.AddHttpContextAccessor();
+            services.AddMvc().AddSessionStateTempDataProvider();
+         
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(60);// Thời gian session tồn tại
+                options.Cookie.HttpOnly = true;// Đảm bảo cookie chỉ có thể truy cập qua HTTP
+                options.Cookie.IsEssential = true;// Cần thiết cho hoạt động của ứng dụng
+            });
             return services;
         }
     }

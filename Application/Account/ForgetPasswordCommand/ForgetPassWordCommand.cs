@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Account.ForgetPasswordCommand
 {
-    public class ForgetPassWordCommand:IRequest<AccountResponse>
+    public class ForgetPassWordCommand:IRequest<string>
     {
         [Required,EmailAddress]
         public string Email { get; set; }=string.Empty; 

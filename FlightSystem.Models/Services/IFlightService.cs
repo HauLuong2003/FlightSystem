@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +12,7 @@ namespace FlightSystem.Domain.Services
         Task<Flight> CreateFilght(Flight flight);
         Task<List<Flight>> GetFlight();
         Task<Flight> GetFlightById(Guid Id);
+        Task<Flight> UpdateFlight(Guid Id,Flight flight);
+        Task<bool> DeleteFlight(Guid Id);
     }
 }

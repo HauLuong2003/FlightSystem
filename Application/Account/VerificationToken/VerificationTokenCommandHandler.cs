@@ -20,7 +20,7 @@ namespace Application.Account.VerificationToken
 
         public async Task<ServiceResponse> Handle(VerificationTokenCommand request, CancellationToken cancellationToken)
         {
-            var Verification = await _sendEmailService.VerificationToken(request.Token);
+            var Verification = await _sendEmailService.VerificationToken(request.Email,request.Token);
             if(Verification == false)
             {
                 return new ServiceResponse(Verification, "Token don't success");

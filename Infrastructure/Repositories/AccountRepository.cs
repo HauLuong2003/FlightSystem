@@ -1,5 +1,4 @@
-﻿
-using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
 using MediatR;
@@ -23,21 +22,31 @@ namespace Infrastructure.Repositories
         public async Task<bool> ChangePassword(User user)
         {
             var users = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-            if (users == null)
+            if (users == null) return false;
+            
+            else if (users.IsActive == true && users.VerificationCode == null)
             {
-                return false;
+                users.Password = user.Password;
+                await _dbContext.SaveChangesAsync();
+                return true;
             }
-            users.Password = user.Password;
-            await _dbContext.SaveChangesAsync();
-            return true;
+            return false;
         }
 
         public async Task<bool> FrogetPassword(string Email)
         {
             // kiễm tra email có tồn tại hay không
-            var userEmail = await _dbContext.Users.AnyAsync(u => u.Email == Email);
-           // trả về kết quả
-            return userEmail;
+            var userEmail = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == Email);
+            // trả về kết quả
+            if (userEmail == null) 
+            {
+                return false;
+            }
+            else if(userEmail.IsActive == true)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<User> Login(User login)
@@ -45,19 +54,15 @@ namespace Infrastructure.Repositories
             var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
             if (account == null)
             {
-                throw new ArgumentNullException(nameof(account),"user is null");
+                throw new ArgumentNullException("user is null");
             }
             else if (account.Password != login.Password || account.IsActive == false)
             {
-                throw new ArgumentNullException(nameof(account), "login don't success");
+                throw new ArgumentException("login don't success or account don't active");
             }
             return account;
         }
 
-        public Task<bool> Logout()
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

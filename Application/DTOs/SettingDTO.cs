@@ -1,5 +1,5 @@
 ﻿using Application.Common.Mapping;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,10 +11,11 @@ namespace Application.DTOs
 {
     public class SettingDTO : IMapFrom<Setting>
     {
-        public string? Theme { get; set; }
+        public Guid Id { get; set; }
+        public string Theme { get; set; } = string.Empty;
         
-        public string? Logo { get; set; }
+        public string Logo { get; set; } = string.Empty ;
         
-        public string? Captcha { get; set; }
+        public bool Captcha { get; set; } 
     }
 }

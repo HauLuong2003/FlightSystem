@@ -1,5 +1,5 @@
 ﻿using Application.Common.Mapping;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.DTOs

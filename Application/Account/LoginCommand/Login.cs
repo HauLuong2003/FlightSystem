@@ -1,5 +1,5 @@
 ﻿using Application.Common.ServiceResponse;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace Application.Account.LoginCommand
 {
-    public class Login : IRequest<AccountResponse>
+    public class Login : IRequest<string>
     {
-        [Required, EmailAddress]
+        [Required(ErrorMessage ="Email required"), EmailAddress]
         public string Email { get; set; } = string.Empty;
-        [Required, MinLength(6)]
+        [Required(ErrorMessage = "Password required"), MinLength(6)]
         public string Password { get; set; } = string.Empty;
+        [ StringLength(6, MinimumLength = 6)]
+        public string? Captcha { get; set; } = string.Empty;
     }
 }

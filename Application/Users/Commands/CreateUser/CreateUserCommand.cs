@@ -1,5 +1,5 @@
 ﻿using Application.DTOs;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;

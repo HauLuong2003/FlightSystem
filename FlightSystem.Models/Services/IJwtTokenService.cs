@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +11,6 @@ namespace FlightSystem.Domain.Services
     {
         Task<string> GenerateToken(User user);
         Task<string> GenerateTokenVerification(string Email);
+       
     }
 }

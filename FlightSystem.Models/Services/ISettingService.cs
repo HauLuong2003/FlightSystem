@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace FlightSystem.Domain.Services
 {
     public interface ISettingService
     {
-        Task<Setting> GetSetting(Guid Id);
+        Task<Setting> GetSetting();
         Task<Setting> updateSetting(Guid Id, Setting setting);
-        Task<Setting> CreateSetting(Setting setting);
+        Task<bool> CheckCaptcha();
     }
 }

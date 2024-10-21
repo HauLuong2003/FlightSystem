@@ -1,6 +1,6 @@
 ﻿using Application.DTOs;
 using AutoMapper;
-using FlightSystem.Domain.Domain.Entities;
+using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
 using System;

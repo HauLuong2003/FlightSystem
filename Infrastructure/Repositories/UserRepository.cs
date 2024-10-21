@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +24,12 @@ namespace Infrastructure.Repositories
             user.Create_at = DateTime.Now;
             user.Update_at = DateTime.Now;
             var groupUser = await _dbContext.Groups.FirstOrDefaultAsync(g => g.GroupId == user.GroupId); 
-            if (groupUser != null)
+            if (groupUser == null)
             {
-                groupUser.Members += 1;
-                await _dbContext.SaveChangesAsync();
+                throw new ArgumentException("group is null");
             }
+            groupUser.Members += 1;
+            await _dbContext.SaveChangesAsync();
             await _dbContext.Users.AddAsync(user);          
             await _dbContext.SaveChangesAsync();
             return user;
@@ -36,20 +37,21 @@ namespace Infrastructure.Repositories
         //code xử lý xóa user
         public async Task<bool> DeleteUser(Guid Id)
         {
-            var userId = await _dbContext.Users.FindAsync(Id);
-            if (userId == null)
+            var userId = await _dbContext.Users
+                                 .Include(u => u.Group).FirstOrDefaultAsync(u => u.UserId == Id);
+            if (userId == null || userId.Group == null)
             {
-                return false;  
+                return false;
             }
-            var groupUser = await _dbContext.Groups.FirstOrDefaultAsync(g => g.GroupId == userId.GroupId);
-            if (groupUser != null)
+            else
             {
-                //groupUser.Members -= 1;
+              
+                _dbContext.Users.Remove(userId);
                 await _dbContext.SaveChangesAsync();
+                userId.Group.Members -= 1;
+                await _dbContext.SaveChangesAsync();
+                return true;
             }
-            _dbContext.Users.Remove(userId);
-            await _dbContext.SaveChangesAsync();
-            return true;
         }
         // code xử lý lấy thông tin list user
         public async Task<List<User>> GetAllUser()

@@ -1,4 +1,4 @@
-﻿using FlightSystem.Domain.Domain.Entities;
+﻿using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Infrastructure.Repositories
 {
     public class JwtTokenRepository : IJwtTokenService
@@ -23,6 +24,7 @@ namespace Infrastructure.Repositories
             _configuration = configuration;
             _dbContext = dbContext;
         }
+
         public async Task<string> GenerateToken(User user)
         {
             //Lấy permission từ group của user
@@ -38,7 +40,7 @@ namespace Infrastructure.Repositories
                 // payload
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, user.UserId.ToString()),
-                new Claim("permission" , permission ?? "no permission"),
+                new Claim("Permission" , permission ?? "no permission"),
                 new Claim("GroupId", user.GroupId.ToString()),
                 new Claim(ClaimTypes.Role, role ?? "user")
             };
@@ -56,12 +58,13 @@ namespace Infrastructure.Repositories
 
         public async Task<string> GenerateTokenVerification(string Email)
         {
+
             List<Claim> claims = new List<Claim>
             {
                 //yêu cầu là cặp khóa-giá trị chứa thông tin về người dùng
                 // payload
                  new Claim(ClaimTypes.Email, Email),
-                 new Claim("permission" , "Verification"),
+                 new Claim("Permission" , "Verification"),
             };
             var Key = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(_configuration.GetSection("AppSettings:Token").Value));
@@ -74,5 +77,7 @@ namespace Infrastructure.Repositories
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
         }
+
+      
     }
 }

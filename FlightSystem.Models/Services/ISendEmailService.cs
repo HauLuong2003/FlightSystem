@@ -9,6 +9,6 @@ namespace FlightSystem.Domain.Services
     public interface ISendEmailService
     {
         Task<bool> SendEmail(string email);
-        Task<bool> VerificationToken(string Verification);
+        Task<bool> VerificationToken(string email,string Verification);
     }
 }
