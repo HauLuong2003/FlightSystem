@@ -4,15 +4,12 @@ using Application.Account.Command.ForgetPasswordCommand;
 using Application.Account.Command.LoginCommand;
 using Application.Account.Command.ResetPassWord;
 using Application.Account.Command.VerificationToken;
-using Application.Users.Queries.GetUserById;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System.Net.Http;
 using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Application.Account.Command.RefreshToken;
 
 namespace Back_End.Controllers
 {
@@ -21,6 +18,7 @@ namespace Back_End.Controllers
     
     public class AuthoController : FlightSystemControllerBase
     {
+       
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] Login login)
@@ -66,25 +64,40 @@ namespace Back_End.Controllers
             var captcha = await Mediator.Send(new GetCaptchaQuery());
             return Ok(captcha);
         }
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var refreshTokenExpires = Request.Cookies["refreshTokenExpires"];
+        
+            // Kiểm tra nếu không có refresh token
+            if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(refreshTokenExpires))
+            {
+                return Unauthorized("No Refresh Token found.");
+            }
+            // Kiểm tra thời gian hết hạn
 
-        //[HttpPost("Refresh-Token")]
-        //public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
-        //{
-        //    var refreshToken = Request.Cookies["refreshToken"];
-        //    var refreshTokenExpires = Request.Cookies["refreshTokenExpires"];
+            if (!DateTime.TryParse(refreshTokenExpires, out var TokenExpires) || TokenExpires < DateTime.Now)
+            {
+                return Unauthorized("Refresh Token has expired.");
+            }
+            var RefreshToken = refreshToken!;
           
-        //    if (string.IsNullOrEmpty(refreshToken))
+            var token = await Mediator.Send(new RefreshTokenCommand{ RefreshToken = RefreshToken });
+            return Ok(token);
+        }
+        //[HttpPost("Logout"),Authorize]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    var token = Request.Headers["Authorization"].ToString().Replace("Bearer ","");
+        //    if(string.IsNullOrEmpty(token))
         //    {
-        //        return Unauthorized("Invalid Refresh Token."); 
+        //        return BadRequest("Invalid token");
         //    }
-
-        //    else if (DateTime.TryParse(refreshTokenExpires, out DateTime expires) && expires < DateTime.Now)
-        //    {
-        //        return Unauthorized("Token expired."); // Token đã hết hạn
-        //    }
-
-        //    var token = await Mediator.Send(command);
-        //    return Ok(token);
+        //    var userId = User.FindFirstValue("UserId");
+        //    var Id = Guid.Parse(userId);
+        //    await Mediator.Send(new LogoutCommand { Token = token, Id = Id });
+        //    return Ok("Logged out successfully");
         //}
     }
 }

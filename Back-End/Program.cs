@@ -7,6 +7,8 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
+using Infrastructure.Repositories;
 namespace Back_End
 {
     public class Program
@@ -36,7 +38,11 @@ namespace Back_End
 
                 options.OperationFilter<SecurityRequirementsOperationFilter>(); 
             });
-            
+            builder.Services.AddControllers()
+             .AddJsonOptions(options =>
+             {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+             });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -45,9 +51,8 @@ namespace Back_End
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-           
-
             app.UseHttpsRedirection();
+        
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();

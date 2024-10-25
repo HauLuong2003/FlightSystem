@@ -20,6 +20,8 @@ namespace FlightSystem.Domain.Entities
         public bool IsActive { get; set; }
         [StringLength(6)]
         public string? VerificationCode { get; set; } = null;
+        [StringLength(500)]
+        public string? RefreshToken {  get; set; }
         public DateTime? Create_at { get; set; }
 
         public DateTime? Update_at { get; set; }

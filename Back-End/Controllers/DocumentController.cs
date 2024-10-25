@@ -61,19 +61,20 @@ namespace Back_End.Controllers
                 {
                     return Unauthorized("Group or Permission information is missing from the token.");
                 }
+                var groupId = Guid.Parse(groupID.Value);
+                // gửi sang Handler để xử lý
+                var groupHasAccess = await Mediator.Send(new CheckDocumentAccessQuery { DocumentId = Id, GroupId = groupId });
+                if (groupHasAccess == false)
+                {
+                    return Forbid("Your group does not have access to this document.");
+                }
                 // Kiễm tra permission xem có được Write không
-                if (permisson == "Read Only" || permisson == "No Permission")
+                else if (permisson == "Read Only" || permisson == "No Permission")
                 {
                     // Trả về không cho phép truy cập
                     return Forbid("Your  does not have access to this document.");
                 }
-                var groupId = Guid.Parse(groupID.Value);
-                // gửi sang Handler để xử lý
-                var groupHasAccess = await Mediator.Send(new CheckDocumentAccessQuery { DocumentId = Id, GroupId = groupId });
-                if(groupHasAccess == false)
-                {
-                    return Forbid("Your group does not have access to this document.");
-                }
+                
                 var document = await Mediator.Send(command);
                 return Ok(document);
             }
@@ -109,12 +110,6 @@ namespace Back_End.Controllers
                 {
                     return Unauthorized("Group or Permission information is missing from the token.");
                 }
-                // Kiễm tra permission xem có được Write không
-                if (permisson == "Read Only" || permisson == "No Permission")
-                {
-                    // Trả về không cho phép truy cập
-                    return Forbid("Your group does not have access to this document.");
-                }
                 var groupId = Guid.Parse(groupID.Value);
                 // gửi sang Handler để xử lý
                 var groupHasAccess = await Mediator.Send(new CheckDocumentAccessQuery { DocumentId = Id, GroupId = groupId });
@@ -122,6 +117,13 @@ namespace Back_End.Controllers
                 {
                     return Forbid("Your group does not have access to this document.");
                 }
+                // Kiễm tra permission xem có được Write không
+                else if (permisson == "Read Only" || permisson == "No Permission")
+                {
+                    // Trả về không cho phép truy cập
+                    return Forbid("Your group does not have access to this document.");
+                }
+              
                 var document = await Mediator.Send(new DeleteDocumentCommand { DocumentId = Id });
                 return Ok(document);
             }

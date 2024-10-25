@@ -13,6 +13,6 @@ namespace Application.DTOs
     {
         public Guid PermissionId { get; set; }        
         public string Permission_Name { get; set; } = string.Empty;
-    
+        public ICollection<GroupDTO>? Groups { get; set; }
     }
 }

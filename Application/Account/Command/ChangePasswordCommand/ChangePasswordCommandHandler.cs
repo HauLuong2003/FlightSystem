@@ -28,7 +28,7 @@ namespace Application.Account.Command.ChangePasswordCommand
                 return new ServiceResponse(false, "request is null");
 
             }
-            var user = await _mediator.Send(new GetUserByEmailCommand { Email = request.Email });
+            var user = await _mediator.Send(new GetUserByEmailQuery { Email = request.Email });
             //kiễm tra password nhập vào và kiễm tra password mới 
             if (user.Password == request.Password && request.NewPassword == request.ConfirmPassword)
             {

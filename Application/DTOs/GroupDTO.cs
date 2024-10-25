@@ -16,11 +16,12 @@ namespace Application.DTOs
         public string Group_Name { get; set; } = string.Empty;
         public string? Members {  get; set; }
         public string? Note { get; set; }
-        public string Creator { get; set; }
+        public string Creator { get; set; } = string.Empty;
         public DateTime? Create_at { get; set; }
         public DateTime? Update_at { get; set; }
         public Guid PermissionId { get; set; }
-       // public  PermissionDTO? PermissionDTO { get; set; }
-        //public List<UserDTO>? Users { get; set; }
+        public PermissionDTO Permission { get; set; }
+        public ICollection<GroupDocumentDTO> GroupDocuments { get; set; }
+        public ICollection<GroupDocumentTypeDTO> GroupDocumentTypes { get; set; }
     }
 }

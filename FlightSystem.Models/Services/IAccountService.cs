@@ -12,5 +12,6 @@ namespace FlightSystem.Domain.Services
       Task<User>  Login(User login);
       Task<bool> ChangePassword(User login);
       Task<bool> FrogetPassword(string Email);
+      Task<User> GetUserRefreshToken(string RefreshToken);
     }
 }

@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories
             //Lấy permission từ group của user
             var permission = await _dbContext.Users
                     .Where(u => u.Email == user.Email)
-                    .Select(g => g.Group!.Premisstion!.Permission_Name)
+                    .Select(g => g.Group!.Permission!.Permission_Name)
                      .FirstOrDefaultAsync();
             var role = await _dbContext.Users.Where(u => u.UserId == user.UserId)
                         .Select(g => g.Group!.Group_Name).FirstOrDefaultAsync();
@@ -53,7 +53,7 @@ namespace Infrastructure.Repositories
             //HMAC SHA sẽ được sử dụng để ký mã thông báo, đây là thuật toán thường được sử dụng và an toàn cho JWT.
             var credentials = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256Signature);
             var token = new JwtSecurityToken(claims: claims,
-                            expires: DateTime.Now.AddMinutes(60), 
+                            expires: DateTime.Now.AddMinutes(15), 
                             signingCredentials: credentials);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt; 
@@ -81,6 +81,10 @@ namespace Infrastructure.Repositories
             return jwt;
         }
 
-      
+        public string GenerateRefreshToken()
+        {
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        }
+
     }
 }

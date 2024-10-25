@@ -22,7 +22,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Document", b =>
                 {
                     b.Property<Guid>("DocumentId")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.DocumentType", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.DocumentType", b =>
                 {
                     b.Property<Guid>("TypeId")
                         .ValueGeneratedOnAdd()
@@ -106,7 +106,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("DocumentTypes");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Flight", b =>
                 {
                     b.Property<Guid>("FlightId")
                         .ValueGeneratedOnAdd()
@@ -136,7 +136,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Group", b =>
                 {
                     b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
@@ -174,7 +174,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocument", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.GroupDocument", b =>
                 {
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
@@ -189,7 +189,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("GroupDocuments");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocumentType", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.GroupDocumentType", b =>
                 {
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
@@ -204,7 +204,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("GroupDocumentsTypes");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Permission", b =>
                 {
                     b.Property<Guid>("PermissionId")
                         .ValueGeneratedOnAdd()
@@ -220,7 +220,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Setting", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Setting", b =>
                 {
                     b.Property<Guid>("SettingId")
                         .ValueGeneratedOnAdd()
@@ -243,7 +243,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
@@ -276,6 +276,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<DateTime?>("Update_at")
                         .HasColumnType("datetime2");
 
@@ -290,15 +294,15 @@ namespace Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Document", b =>
                 {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Flight", "Flight")
+                    b.HasOne("FlightSystem.Domain.Entities.Flight", "Flight")
                         .WithMany("Documents")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.DocumentType", "DocumentType")
+                    b.HasOne("FlightSystem.Domain.Entities.DocumentType", "DocumentType")
                         .WithMany("Documents")
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -309,9 +313,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Flight");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Group", b =>
                 {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Permission", "Premisstion")
+                    b.HasOne("FlightSystem.Domain.Entities.Permission", "Premisstion")
                         .WithMany("Groups")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -320,15 +324,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Premisstion");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocument", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.GroupDocument", b =>
                 {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Document", "Document")
+                    b.HasOne("FlightSystem.Domain.Entities.Document", "Document")
                         .WithMany("GroupDocuments")
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
+                    b.HasOne("FlightSystem.Domain.Entities.Group", "Group")
                         .WithMany("GroupDocuments")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -339,15 +343,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.GroupDocumentType", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.GroupDocumentType", b =>
                 {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
+                    b.HasOne("FlightSystem.Domain.Entities.Group", "Group")
                         .WithMany("GroupDocumentTypes")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.DocumentType", "DocumentType")
+                    b.HasOne("FlightSystem.Domain.Entities.DocumentType", "DocumentType")
                         .WithMany("GroupDocumentTypes")
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -358,9 +362,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.User", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.User", b =>
                 {
-                    b.HasOne("FlightSystem.Domain.Domain.Entities.Group", "Group")
+                    b.HasOne("FlightSystem.Domain.Entities.Group", "Group")
                         .WithMany("Users")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,24 +373,24 @@ namespace Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Document", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Document", b =>
                 {
                     b.Navigation("GroupDocuments");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.DocumentType", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.DocumentType", b =>
                 {
                     b.Navigation("Documents");
 
                     b.Navigation("GroupDocumentTypes");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Flight", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Flight", b =>
                 {
                     b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Group", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Group", b =>
                 {
                     b.Navigation("GroupDocumentTypes");
 
@@ -395,7 +399,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("FlightSystem.Domain.Domain.Entities.Permission", b =>
+            modelBuilder.Entity("FlightSystem.Domain.Entities.Permission", b =>
                 {
                     b.Navigation("Groups");
                 });

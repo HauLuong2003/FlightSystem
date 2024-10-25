@@ -77,8 +77,9 @@ namespace Infrastructure.Repositories
         public async Task<Document> GetDocumentById(Guid id)
         {
             var document = await _dbContext.Documents.Include(d => d.GroupDocuments)                                                       
-                                                      .ThenInclude(gd => gd.Group)
-                                                      .FirstOrDefaultAsync(d => d.DocumentId == id);
+                                                     .ThenInclude(gd => gd.Group)
+                                                     .ThenInclude(g => g.Permission )
+                                                     .FirstOrDefaultAsync(d => d.DocumentId == id);
             if (document == null) 
             { 
                throw new ArgumentNullException(nameof(document),"document is null");

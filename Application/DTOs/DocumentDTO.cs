@@ -25,7 +25,7 @@ namespace Application.DTOs
         public DateTime? Update_at { get; set; }
         public string Creator { get; set; } = string.Empty;
         public Guid FlightId { get; set; }
-      
+        public ICollection<GroupDocumentDTO>? GroupDocuments { get; set; }
         public Guid TypeId { get; set; }
       
     }

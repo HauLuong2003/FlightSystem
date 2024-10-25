@@ -1,6 +1,7 @@
 ﻿using Application.Account.Command.GenerateToken;
-using Application.Common.ServiceResponse;
+using Application.Account.Command.RefreshToken;
 using Application.Settings.Commands.CheckCaptcha;
+using Application.Users.Commands.UpdateUser;
 using FlightSystem.Domain.Entities;
 using FlightSystem.Domain.Services;
 using MediatR;
@@ -57,7 +58,7 @@ namespace Application.Account.Command.LoginCommand
                 {
                     User = loginUser,
                 });
-
+                await _mediator.Send(new SetRefreshToken { user = loginUser });
                 return jwt;
             }
             // neu false thi thuc hien
@@ -73,6 +74,7 @@ namespace Application.Account.Command.LoginCommand
                 {
                     User = loginUser,
                 });
+                await _mediator.Send(new SetRefreshToken { user = loginUser});
                 return jwt;
             }
 

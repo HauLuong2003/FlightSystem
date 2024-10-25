@@ -85,6 +85,7 @@ namespace Infrastructure.Repositories
             userID.Phone = user.Phone;
             userID.IsActive = user.IsActive;
             userID.Update_at = DateTime.Now;
+            userID.RefreshToken = user.RefreshToken;
             await _dbContext.SaveChangesAsync();
             return userID;
         }

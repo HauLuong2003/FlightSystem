@@ -20,7 +20,7 @@ namespace FlightSystem.Domain.Entities
         public int? Members { set; get; }
         [ForeignKey("PermissionId")]
         public Guid PermissionId { get; set; }
-        public Permission? Premisstion { get; set; }
+        public Permission? Permission { get; set; }
         public ICollection<GroupDocument> GroupDocuments { get; set; }
         public ICollection<GroupDocumentType> GroupDocumentTypes { get; set; }
 

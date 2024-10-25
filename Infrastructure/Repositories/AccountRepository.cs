@@ -49,6 +49,16 @@ namespace Infrastructure.Repositories
             return false;
         }
 
+        public async Task<User> GetUserRefreshToken(string RefreshToken)
+        {
+           var user = await _dbContext.Users.FirstOrDefaultAsync(u=>u.RefreshToken == RefreshToken);
+            if (user == null)
+            {
+                throw new ArgumentNullException("user is null");
+            }
+            return user;
+        }
+
         public async Task<User> Login(User login)
         {
             var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);

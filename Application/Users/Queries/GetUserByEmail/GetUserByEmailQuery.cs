@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using FlightSystem.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Users.Queries.GetUserByEmail
 {
-    public class GetUserByEmailCommand : IRequest<UserDTO>
+    public class GetUserByEmailQuery : IRequest<User>
     {
         [Required,EmailAddress]
         public string Email { get; set; } = string.Empty;
