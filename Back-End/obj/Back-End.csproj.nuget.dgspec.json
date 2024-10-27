@@ -367,6 +367,10 @@
               "target": "Package",
               "version": "[6.34.0, )"
             },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.8.16, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[8.0.10, )"

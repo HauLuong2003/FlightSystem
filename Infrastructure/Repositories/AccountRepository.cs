@@ -51,10 +51,10 @@ namespace Infrastructure.Repositories
 
         public async Task<User> GetUserRefreshToken(string RefreshToken)
         {
-           var user = await _dbContext.Users.FirstOrDefaultAsync(u=>u.RefreshToken == RefreshToken);
+           var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.RefreshToken == RefreshToken);
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("RefreshToken is null");
             }
             return user;
         }

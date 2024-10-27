@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Application.Account.Command.RefreshToken;
+using Application.Account.Command.Logout;
 
 namespace Back_End.Controllers
 {
@@ -19,7 +20,6 @@ namespace Back_End.Controllers
     public class AuthoController : FlightSystemControllerBase
     {
        
-
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
@@ -86,18 +86,27 @@ namespace Back_End.Controllers
             var token = await Mediator.Send(new RefreshTokenCommand{ RefreshToken = RefreshToken });
             return Ok(token);
         }
-        //[HttpPost("Logout"),Authorize]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    var token = Request.Headers["Authorization"].ToString().Replace("Bearer ","");
-        //    if(string.IsNullOrEmpty(token))
-        //    {
-        //        return BadRequest("Invalid token");
-        //    }
-        //    var userId = User.FindFirstValue("UserId");
-        //    var Id = Guid.Parse(userId);
-        //    await Mediator.Send(new LogoutCommand { Token = token, Id = Id });
-        //    return Ok("Logged out successfully");
-        //}
+        [HttpPost("Logout"), Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Invalid token");
+            }
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            if (role == "Admin")
+            {
+                await Mediator.Send(new LogoutCommand { Token = token });
+                return Ok("Logged out successfully");
+            }
+            else
+            {
+                var userId = User.FindFirstValue("UserId");
+                var Id = Guid.Parse(userId);
+                await Mediator.Send(new LogoutCommand { Token = token, Id = Id });
+                return Ok("Logged out successfully");
+            }
+        }
     }
 }

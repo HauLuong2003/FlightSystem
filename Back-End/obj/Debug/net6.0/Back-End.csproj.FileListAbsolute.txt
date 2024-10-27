@@ -94,3 +94,5 @@ D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\FlightSystem.Domain.dll
 D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\FlightSystem.Domain.pdb
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\Pipelines.Sockets.Unofficial.dll
+D:\Project_C#\FlightSystem\Back-End\bin\Debug\net6.0\StackExchange.Redis.dll

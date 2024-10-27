@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System.Text;
 
 namespace Infrastructure
@@ -76,7 +77,14 @@ namespace Infrastructure
             services.AddScoped<ISettingService,SettingRepository>();
             services.AddScoped<ISendEmailService, SendEmailRepository>();
             services.AddScoped<ICaptchaService, CaptchaRepsitory>();
+            services.AddScoped<ITokenBlacklistService,TokenBlackListRepository>();
+            services.AddScoped<TokenValidationMiddleware>();
 
+            services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                var configuration = "redis-14308.c252.ap-southeast-1-1.ec2.redns.redis-cloud.com:14308,password=VquHXwYJwqykH4GBXlNhVZ3O4WQusqIX";
+                return ConnectionMultiplexer.Connect(configuration);
+            });
             return services;
         }
 

@@ -51,8 +51,9 @@ namespace Back_End
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<TokenValidationMiddleware>();
             app.UseHttpsRedirection();
-        
+   
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
