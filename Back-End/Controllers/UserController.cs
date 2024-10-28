@@ -14,7 +14,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UserController : FlightSystemControllerBase
     {
         // thêm mới user
@@ -63,7 +63,7 @@ namespace Back_End.Controllers
             var users = await Mediator.Send(new GetUserByGroupQuery { GroupId = Id });
             return Ok(users);
         }
-        [HttpGet("userActive/{active}")]
+        [HttpGet("userActive/{Active}")]
         public async Task<IActionResult> GetUserByActive(bool Active)
         {
             var users = await Mediator.Send(new GetUserByActive { IsActive = Active});

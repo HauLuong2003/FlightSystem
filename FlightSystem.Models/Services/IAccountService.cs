@@ -9,9 +9,11 @@ namespace FlightSystem.Domain.Services
 {
     public interface IAccountService
     {
-      Task<User>  Login(User login);
+      Task<User> Login(string Email);
       Task<bool> ChangePassword(User login);
       Task<bool> FrogetPassword(string Email);
       Task<User> GetUserRefreshToken(string RefreshToken);
+      Task UpdateActiveAccount(Guid Id, bool Active);
+      Task UpdateRefreshToken(Guid Id, string RefreshToken);
     }
 }

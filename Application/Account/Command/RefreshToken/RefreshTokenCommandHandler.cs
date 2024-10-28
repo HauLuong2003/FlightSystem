@@ -23,17 +23,17 @@ namespace Application.Account.Command.RefreshToken
         // refresh token
         public async Task<string> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            //lấy user theo email
+            //lấy user theo Refreshtoken
              var user = await _mediator.Send(new GetUserByRefreshTokenQuery { RefreshToken = request.RefreshToken });
             if (user.RefreshToken == null)
             {
-                throw new ArgumentException("user.RefreshToken is null");
+                throw new ArgumentException("user RefreshToken is null");
             }
             // kiễm tra xem Refresh token có giống nhau không 
            else if(user.RefreshToken.Equals(request.RefreshToken))
            {
                 var jwt = await _mediator.Send(new GenerateTokenCommand { User = user});
-                await _mediator.Send(new SetRefreshToken { user = user });
+                await _mediator.Send(new SetRefreshToken { Id = user.UserId });
                 return jwt;
            }
             throw new UnauthorizedAccessException("Invalid refresh token.");

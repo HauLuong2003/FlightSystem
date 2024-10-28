@@ -19,13 +19,13 @@ namespace Application.Account.Command.LoginCommand
         private readonly IAccountService _accountService;
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _contextAccessor;
-      
-        public LoginCommandHanlder(IAccountService accountService, IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        private readonly IHashPassword _hashPassword;
+        public LoginCommandHanlder(IAccountService accountService, IMediator mediator, IHttpContextAccessor httpContextAccessor, IHashPassword hashPassword)
         {
             _accountService = accountService;
             _mediator = mediator;
             _contextAccessor = httpContextAccessor;
-            
+            _hashPassword = hashPassword;
         }
         public async Task<string> Handle(Login request, CancellationToken cancellationToken)
         {
@@ -39,6 +39,7 @@ namespace Application.Account.Command.LoginCommand
             if (checkCaptcha == true)
             {
                 var storedCaptcha = _contextAccessor.HttpContext.Session.GetString("Captcha");
+                // nếu captcha null or sai thì in ra lỗi
                 if (storedCaptcha == null || request.Captcha != storedCaptcha)
                 {
                     throw new ArgumentNullException(nameof(storedCaptcha), "Captcha code is null or false");
@@ -48,34 +49,42 @@ namespace Application.Account.Command.LoginCommand
                 //{
                 //    throw new ArgumentException(nameof(request), "Email must have the extension @vietjetair.com");
                 //}
-                var login = new User()
+                // lấy thông tin user
+                var loginUser = await _accountService.Login(request.Email);
+                // kiễm tra password nếu sai thì trả về lỗi sai password
+                if (!_hashPassword.VerifyPasswordHash(request.Password, loginUser.Password, loginUser.PasswordSalt))
                 {
-                    Email = request.Email,
-                    Password = request.Password,
-                };
-                var loginUser = await _accountService.Login(login);
-                var jwt = await _mediator.Send(new GenerateTokenCommand
+                    return "password is incorrect";
+                }
+                //nếu đúng thì trả về jwt
+                else
                 {
-                    User = loginUser,
-                });
-                await _mediator.Send(new SetRefreshToken { user = loginUser });
-                return jwt;
+                    var jwt = await _mediator.Send(new GenerateTokenCommand
+                    {
+                        User = loginUser,
+                    });
+                    await _mediator.Send(new SetRefreshToken { Id = loginUser.UserId });
+                    return jwt;
+                }
             }
             // neu false thi thuc hien
             else
             {
-                var login = new User()
+                var loginUser = await _accountService.Login(request.Email);
+                if (!_hashPassword.VerifyPasswordHash(request.Password, loginUser.Password, loginUser.PasswordSalt))
                 {
-                    Email = request.Email,
-                    Password = request.Password,
-                };
-                var loginUser = await _accountService.Login(login);
+                    return "password is incorrect";
+                }
+                else
+                {
+
                 var jwt = await _mediator.Send(new GenerateTokenCommand
                 {
                     User = loginUser,
                 });
-                await _mediator.Send(new SetRefreshToken { user = loginUser});
-                return jwt;
+                    await _mediator.Send(new SetRefreshToken { Id = loginUser.UserId });
+                    return jwt;
+                }
             }
 
         }

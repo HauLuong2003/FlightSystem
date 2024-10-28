@@ -28,7 +28,6 @@ namespace Application.Users.Commands.UpdateUser
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password,
                 Phone = request.Phone,
                 IsActive = request.IsActive,
                 GroupId = request.GroupId

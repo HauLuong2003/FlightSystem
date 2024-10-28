@@ -79,7 +79,7 @@ namespace Infrastructure
             services.AddScoped<ICaptchaService, CaptchaRepsitory>();
             services.AddScoped<ITokenBlacklistService,TokenBlackListRepository>();
             services.AddScoped<TokenValidationMiddleware>();
-
+            services.AddScoped<IHashPassword, HashPasswordRepository>();
             services.AddSingleton<IConnectionMultiplexer>(sp =>
             {
                 var configuration = "redis-14308.c252.ap-southeast-1-1.ec2.redns.redis-cloud.com:14308,password=VquHXwYJwqykH4GBXlNhVZ3O4WQusqIX";

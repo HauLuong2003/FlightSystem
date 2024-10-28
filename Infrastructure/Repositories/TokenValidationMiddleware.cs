@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories
                 await context.Response.WriteAsync("Token is blacklisted.");
                 return;
             }
-            //nếu không trong blackList thì sẽ tiếp tục thực hiện
+            //nếu không trong blackList thì tiếp tục thực hiện
             await next(context);
         }
     }

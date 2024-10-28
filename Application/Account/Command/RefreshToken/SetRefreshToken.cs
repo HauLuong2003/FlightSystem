@@ -10,6 +10,7 @@ namespace Application.Account.Command.RefreshToken
 {
     public class SetRefreshToken : IRequest<Unit>
     {
-        public User user {  get; set; }
+        public Guid Id {  get; set; }
+      
     }
 }

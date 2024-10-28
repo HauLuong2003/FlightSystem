@@ -16,11 +16,12 @@ namespace Application.Users.Commands.CreateUser
     {
         private readonly IUserService _userService; //IUserService để thực hiện việc tạo người dùng
         private readonly IMapper _mapper;// IMapper để ánh xạ từ entity User sang UserDTO.
-
-        public CreateUserCommandHandler(IUserService userService, IMapper mapper)
+        private readonly IHashPassword _hashPassword;
+        public CreateUserCommandHandler(IUserService userService, IMapper mapper, IHashPassword hashPassword)
         {
             _userService = userService;
             _mapper = mapper;
+            _hashPassword = hashPassword;
         }
 
         public async Task<UserDTO> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -32,14 +33,16 @@ namespace Application.Users.Commands.CreateUser
             //{
             //    throw new ArgumentNullException("Email must have the extension @vietjetair.com");
             //}
+            _hashPassword.CreatePasswordHash(request.Password, out string passwordHash, out string passwordSalt);
             var userEntity = new User()
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password,
+                Password = passwordHash,
                 Phone = request.Phone,
                 IsActive = request.IsActive,
-                GroupId = request.GroupId
+                GroupId = request.GroupId,
+                PasswordSalt = passwordSalt
             };
             //gọi đến service để thực hiện 
             var result = await _userService.CreateUser(userEntity);

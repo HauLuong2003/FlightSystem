@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.UpdateUser;
+﻿using Application.Account.Command.UpdateActiveAccount;
+using Application.Users.Commands.UpdateUser;
 using Application.Users.Queries.GetUserByEmail;
 using Application.Users.Queries.GetUserById;
 using FlightSystem.Domain.Entities;
@@ -36,17 +37,7 @@ namespace Application.Account.Command.Logout
                 var user = await _mediator.Send(new GetUserByIdQuery { Id = request.Id });
 
                 user.IsActive = false;
-                await _mediator.Send(new UpdateUserCommand
-                {
-                    UserId = user.UserId,
-                    Name = user.Name,
-                    Email = user.Email,
-                    Password = user.Password,
-                    Phone = user.Phone,
-                    IsActive = user.IsActive,
-                    GroupId = user.GroupId,
-
-                });
+                await _mediator.Send(new UpdateActiveCommand { Id = user.UserId, IsActive = user.IsActive });
                 return Unit.Value;
             }
         }

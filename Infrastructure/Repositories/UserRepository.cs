@@ -80,12 +80,10 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(user),"user is null");
             }
             userID.Name = user.Name;          
-            userID.Password = user.Password;
             userID.Email = user.Email;
             userID.Phone = user.Phone;
             userID.IsActive = user.IsActive;
             userID.Update_at = DateTime.Now;
-            userID.RefreshToken = user.RefreshToken;
             await _dbContext.SaveChangesAsync();
             return userID;
         }

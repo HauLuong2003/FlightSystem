@@ -27,6 +27,8 @@ namespace Infrastructure.Repositories
             else if (users.IsActive == true && users.VerificationCode == null)
             {
                 users.Password = user.Password;
+                users.PasswordSalt = user.PasswordSalt;
+                users.Update_at = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
@@ -59,20 +61,42 @@ namespace Infrastructure.Repositories
             return user;
         }
 
-        public async Task<User> Login(User login)
+        public async Task<User> Login(string Email)
         {
-            var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
+            var account = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == Email);
             if (account == null)
             {
                 throw new ArgumentNullException("user is null");
             }
-            else if (account.Password != login.Password || account.IsActive == false)
+            else if ( account.IsActive == false)
             {
-                throw new ArgumentException("login don't success or account don't active");
+                throw new ArgumentException(" account don't active");
             }
             return account;
         }
 
+        public async Task UpdateActiveAccount(Guid Id, bool Active)
+        {
+            var user = await _dbContext.Users.FindAsync(Id);
+            if (user == null)
+            {
+                throw new ArgumentNullException("user is null");
+            }
+            user.IsActive = Active;
+            user.Update_at = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
 
+        }
+
+        public async Task UpdateRefreshToken(Guid Id, string RefreshToken)
+        {
+            var user = await _dbContext.Users.FindAsync(Id);
+            if (user == null)
+            {
+                throw new ArgumentNullException("user is null");
+            }
+            user.RefreshToken = RefreshToken;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

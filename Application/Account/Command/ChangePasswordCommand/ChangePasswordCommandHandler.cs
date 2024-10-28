@@ -15,10 +15,12 @@ namespace Application.Account.Command.ChangePasswordCommand
     {
         private readonly IAccountService _accountService;
         private readonly IMediator _mediator;
-        public ChangePasswordCommandHandler(IAccountService accountService, IMediator mediator)
+        private readonly IHashPassword _hashPassword;
+        public ChangePasswordCommandHandler(IAccountService accountService, IMediator mediator, IHashPassword hashPassword)
         {
             _accountService = accountService;
             _mediator = mediator;
+            _hashPassword = hashPassword;
         }
 
         public async Task<ServiceResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
@@ -30,16 +32,15 @@ namespace Application.Account.Command.ChangePasswordCommand
             }
             var user = await _mediator.Send(new GetUserByEmailQuery { Email = request.Email });
             //kiễm tra password nhập vào và kiễm tra password mới 
-            if (user.Password == request.Password && request.NewPassword == request.ConfirmPassword)
+            if (_hashPassword.VerifyPasswordHash(request.Password,user.Password,user.PasswordSalt) == true && request.NewPassword == request.ConfirmPassword)
             {
-                if (user.IsActive == false)
-                {
-                    return new ServiceResponse(false, "account don't active");
-                }
+                // tạo mật khẩu băm vs salt
+                _hashPassword.CreatePasswordHash(request.NewPassword, out string passwordHash, out string passwordSalt);                
                 var newPass = new User()
                 {
                     Email = request.Email,
-                    Password = request.NewPassword
+                    Password = passwordHash,
+                    PasswordSalt = passwordSalt
                 };
                 var result = await _accountService.ChangePassword(newPass);
                 if (result == false)
@@ -48,7 +49,7 @@ namespace Application.Account.Command.ChangePasswordCommand
                 }
                 return new ServiceResponse(result, "change password success");
             }
-            return new ServiceResponse(false, "Password is don't or new Password is don't");
+            return new ServiceResponse(false, "Password is don't ");
         }
     }
 }

@@ -14,15 +14,14 @@ namespace Application.Account.Command.RefreshToken
     public class SetRefreshTokenHandler : IRequestHandler<SetRefreshToken, Unit>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IJwtTokenService _jwtTokenService;
-       
-        private readonly IUserService _userService;
-        public SetRefreshTokenHandler(IHttpContextAccessor httpContextAccessor, IJwtTokenService jwtTokenService, IUserService userService)
+        private readonly IJwtTokenService _jwtTokenService;      
+        private readonly IAccountService _accountService;
+        public SetRefreshTokenHandler(IHttpContextAccessor httpContextAccessor, IJwtTokenService jwtTokenService, IAccountService accountService)
         {
             _httpContextAccessor = httpContextAccessor;
             _jwtTokenService = jwtTokenService;
-            
-            _userService = userService;
+
+            _accountService = accountService;
         }
         // gửi refresh token vs các thông tin lên cooki và lưu refresh token vào database
         public async Task<Unit> Handle(SetRefreshToken request, CancellationToken cancellationToken)
@@ -38,8 +37,8 @@ namespace Application.Account.Command.RefreshToken
             _httpContextAccessor.HttpContext.Response.Cookies.Append("refreshToken", refreshToken, cookie);
             // Lưu thời gian hết hạn vào cookie
             _httpContextAccessor.HttpContext.Response.Cookies.Append("refreshTokenExpires", DateTime.Now.AddDays(2).ToString("o"), cookie);
-            request.user.RefreshToken = refreshToken;
-            await _userService.UpdateUser(request.user.UserId,request.user);
+        
+            await _accountService.UpdateRefreshToken(request.Id, refreshToken);
             return Unit.Value;
         }
     }

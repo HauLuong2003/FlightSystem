@@ -13,11 +13,11 @@ namespace Application.Account.Command.ResetPassWord
     public class ResetPassWordCommandHandler : IRequestHandler<ResetPassWordCommand, ServiceResponse>
     {
         private readonly IAccountService _accountService;
-
-        public ResetPassWordCommandHandler(IAccountService accountService)
+        private readonly IHashPassword _hashPassword;
+        public ResetPassWordCommandHandler(IAccountService accountService, IHashPassword hashPassword)
         {
             _accountService = accountService;
-
+            _hashPassword = hashPassword;
         }
         public async Task<ServiceResponse> Handle(ResetPassWordCommand request, CancellationToken cancellationToken)
         {
@@ -29,10 +29,12 @@ namespace Application.Account.Command.ResetPassWord
             {
                 return new ServiceResponse(false, "password don't same ");
             }
+            _hashPassword.CreatePasswordHash(request.Password,out string passwordHash,out string passwordSalt);
             var user = new User()
             {
                 Email = request.Email,
-                Password = request.Password,
+                Password = passwordHash,
+                PasswordSalt = passwordSalt
             };
             var result = await _accountService.ChangePassword(user);
             if (result == false)
