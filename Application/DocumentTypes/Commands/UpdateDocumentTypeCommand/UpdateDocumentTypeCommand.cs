@@ -13,7 +13,7 @@ namespace Application.DocumentTypes.Commands.UpdateDocumentTypeCommand
     {
         [Required]
         public Guid TypeId { get; set; }
-
+        [Required]
         public string Type_Name { get; set; } = string.Empty;
 
         public string? Note { get; set; }

@@ -13,10 +13,13 @@ namespace Application.Flights.Commands.UpdateFlightCommand
     {
         [Required]
         public Guid Id { get; set; }
-
+        [Required]
         public string FlightNo { get; set; } = string.Empty;
+        [Required]
         public string Rotue { get; set; } = string.Empty;
+        [Required]
         public DateTime Departure_Date { get; set; }
+        [Required]
         public TimeSpan TimeFlight { get; set; }
     }
 }

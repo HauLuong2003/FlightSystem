@@ -14,7 +14,7 @@ namespace Back_End.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : FlightSystemControllerBase
     {
         // thêm mới user
