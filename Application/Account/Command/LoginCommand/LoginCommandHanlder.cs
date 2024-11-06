@@ -1,5 +1,6 @@
 ﻿using Application.Account.Command.GenerateToken;
 using Application.Account.Command.RefreshToken;
+using Application.Common.InterfaceService;
 using Application.Settings.Commands.CheckCaptcha;
 using Application.Users.Commands.UpdateUser;
 using FlightSystem.Domain.Entities;
@@ -18,13 +19,13 @@ namespace Application.Account.Command.LoginCommand
     {
         private readonly IAccountService _accountService;
         private readonly IMediator _mediator;
-        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly ISessionService _sessionService;
         private readonly IHashPassword _hashPassword;
-        public LoginCommandHanlder(IAccountService accountService, IMediator mediator, IHttpContextAccessor httpContextAccessor, IHashPassword hashPassword)
+        public LoginCommandHanlder(IAccountService accountService, IMediator mediator, ISessionService sessionService, IHashPassword hashPassword)
         {
             _accountService = accountService;
             _mediator = mediator;
-            _contextAccessor = httpContextAccessor;
+            _sessionService = sessionService;
             _hashPassword = hashPassword;
         }
         public async Task<string> Handle(Login request, CancellationToken cancellationToken)
@@ -38,7 +39,7 @@ namespace Application.Account.Command.LoginCommand
             // neu true thi thuc hien
             if (checkCaptcha == true)
             {
-                var storedCaptcha = _contextAccessor.HttpContext.Session.GetString("Captcha");
+                var storedCaptcha = _sessionService.GetSessionValue("Captcha");
                 // nếu captcha null or sai thì in ra lỗi
                 if (storedCaptcha == null || request.Captcha != storedCaptcha)
                 {

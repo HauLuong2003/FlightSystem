@@ -1,4 +1,5 @@
-﻿using Application.Settings.Commands.CheckCaptcha;
+﻿using Application.Common.InterfaceService;
+using Application.Settings.Commands.CheckCaptcha;
 using FlightSystem.Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -14,12 +15,12 @@ namespace Application.Account.Query.Captcha
     public class GetCaptchatQueryHandler : IRequestHandler<GetCaptchaQuery, FileContentResult>
     {
         private readonly ICaptchaService _captchaService;
-        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly ISessionService _sessionService;
         private readonly IMediator _mediator;
-        public GetCaptchatQueryHandler(ICaptchaService captchaService, IHttpContextAccessor contextAccessor, IMediator mediator)
+        public GetCaptchatQueryHandler(ICaptchaService captchaService, ISessionService sessionService, IMediator mediator)
         {
             _captchaService = captchaService;
-            _contextAccessor = contextAccessor;
+            _sessionService = sessionService;
             _mediator = mediator;
         }
 
@@ -32,7 +33,7 @@ namespace Application.Account.Query.Captcha
             {
                 var text = _captchaService.GenerateRandomText();
                 var (image, captcha) = _captchaService.GenerateCaptcha(text);
-                _contextAccessor.HttpContext.Session.SetString("Captcha", captcha);
+                _sessionService.SetSessionValue("Captcha", captcha);
                 // Trả về trực tiếp FileContentResult
                 return new FileContentResult(image, "image/png");
             }

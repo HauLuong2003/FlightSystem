@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FlightSystem.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff81ffa792b3bf9b39b2779399911b3e2be3065a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fce54d96873a665dd63ea5ee9b59b167d4dc5c9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("FlightSystem.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FlightSystem.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
